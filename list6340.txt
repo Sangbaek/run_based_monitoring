@@ -1,0 +1,10 @@
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00040.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00041.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00042.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00043.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00044.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00045.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00046.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00047.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00048.hipo
+/work/clas12/rg-b/production/recon/pass0/v1/mon/006340/mon_clas_006340.evio.00049.hipo
