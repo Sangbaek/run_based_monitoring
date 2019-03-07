@@ -24,9 +24,8 @@ for(arg in args.drop(1)) {
   out.cd('/'+run)
 
   (0..<6).each{
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/elec/H_trig_LTCCn_theta_S'+(it+1))
+    def h2 = dir.getObject('/elec/H_trig_LTCCn_theta_S'+(it+1))
+    def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle("LTCC Number of Photoelectrons")
     h1.setTitleX("LTCC Number of Photoelectrons")
@@ -34,7 +33,7 @@ for(arg in args.drop(1)) {
     // def f1 = ROOTFitter.fit(h1)
 
     grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
   }
