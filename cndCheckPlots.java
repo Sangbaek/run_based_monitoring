@@ -142,7 +142,7 @@ public class cndCheckPlots {
 						H_CND_vt_pad[iL].setTitle("CND vertex time vs pad (layer "+(iL+1)+")");
 						H_CND_vt_pad[iL].setTitleX("CND counter #");
 						H_CND_vt_pad[iL].setTitleY("CND vt (ns)");
-						title=String.format("H_CND_time_z_neutral%d",iL+1)
+						title=String.format("H_CND_time_z_neutral%d",iL+1);
 						// H_CND_time_z_neutral[iL] = new H2F("H_CND_time_z_neutral","H_CND_time_z_neutral",50,0,40,100,-5,5);
 						H_CND_time_z_neutral[iL] = new H2F(title,"H_CND_time_z_neutral",50,0,40,100,-5,5);
 						H_CND_time_z_neutral[iL].setTitle("CND time vs z for neutral (layer "+(iL+1)+")");
@@ -152,16 +152,16 @@ public class cndCheckPlots {
 						H_CND_time_z_charged[iL].setTitle("CND vt vs z (negative tracks) (layer "+(iL+1)+")");
 						H_CND_time_z_charged[iL].setTitleX("CND z");
 						H_CND_time_z_charged[iL].setTitleY("CND vt");
-						title=String.format("H_CND_time_negative%d",iL+1)
-						H_CND_time_negative[iL] = new H2F(title,title,50,0,40,100,-3,3);
+						title=String.format("H_CND_time_negative%d",iL+1);
+						H_CND_time_negative[iL] = new H1F(title,title,100,-5,5);
 						H_CND_time_negative[iL].setTitle("CND time (negative tracks) (layer "+(iL+1)+")");
 						H_CND_time_negative[iL].setTitleX("CND time");
-						title=String.format("H_CND_time_positive%d",iL+1)
-						H_CND_time_positive[iL] = new H2F(title,title,50,0,40,100,-3,3);
+						title=String.format("H_CND_time_positive%d",iL+1);
+						H_CND_time_positive[iL] = new H1F(title,title,100,-5,5);
 						H_CND_time_positive[iL].setTitle("CND time (positive tracks) (layer "+(iL+1)+")");
 						H_CND_time_positive[iL].setTitleX("CND time");
-						title=String.format("H_CND_time_all%d",iL+1)
-						H_CND_time_all[iL] = new H2F(title,title,50,0,40,100,-3,3);
+						title=String.format("H_CND_time_all%d",iL+1);
+						H_CND_time_all[iL] = new H1F(title,title,100,-5,5);
 						H_CND_time_all[iL].setTitle("CND time (all tracks) (layer "+(iL+1)+")");
 						H_CND_time_all[iL].setTitleX("CND time");
 
@@ -927,7 +927,7 @@ public class cndCheckPlots {
 								TDirectory dirout = new TDirectory();
 								dirout.mkdir("/cnd/");
 								dirout.cd("/cnd/");
-								for(int iL=0;iL<3;iL++)dirout.addDataSet(H_CND_time_z_neutral[iL],H_CND_time_negative[iL],H_CND_time_positive[iL],H_CND_time_all[iL);
+								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_z_neutral[iL],H_CND_time_negative[iL],H_CND_time_positive[iL],H_CND_time_all[iL]);
 								if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_CND_"+runNum+".hipo");
 
 								if(!write_volatile){
