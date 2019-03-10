@@ -97,7 +97,7 @@ public class HTCC{
 					String histitle = String.format("HTCC ADC S%d, Ring %d, %s",s+1,r+1,stringSide);
 					H_HTCC_adc[counter] = new H1F(String.format("H_HTCC_adc%d",s+1),histitle,100,0,10000);
 					histitle = String.format("HTCC NPHE S%d, Ring %d, %s",s+1,r+1,stringSide);
-					H_HTCC_nphe[counter] = new H1F(String.format("H_HTCC_nphe%d",s+1),histitle,100,0,50);
+					H_HTCC_nphe[counter] = new H1F(String.format("H_HTCC_nphe_s%d_r%d_side%d",s+1,r+1,side+1),histitle,100,0,50);
 					histitle = String.format("HTCC UNMATCHED NPHE S%d, Ring %d, %s",s+1,r+1,stringSide);
 					H_HTCC2_nphe[counter] = new H1F(String.format("H_HTCC2_nphe%d",s+1),histitle,100,0,50);
 				}
@@ -128,7 +128,7 @@ public class HTCC{
                         }
                 }
                 return -1;
-        }    
+        }
         public void getElecEBECal(DataBank bank){
                 e_ecal_E=0;
 		for(int k = 0; k < bank.rows(); k++){
@@ -164,14 +164,14 @@ public class HTCC{
                                 e_HTCC_Y = bank.getFloat("y",k);
                                 e_HTCC_Z = bank.getFloat("z",k);
 
-                        }    
+                        }
                         if(bank.getByte("detector",k)==16 && pind==e_part_ind){
                                 //H_e_LTCC_nphe.fill(bank.getShort("nphe",k));
                                 //H_e_LTCC_xy.fill(bank.getFloat("x",k) , bank.getFloat("y",k));
                                 //e_LTCC = (float)bank.getShort("nphe",k);
                                 e_LTCC = (float)bank.getFloat("nphe",k);
-                        }    
-                }    
+                        }
+                }
         }
         public void getElecEBTOF(DataBank bank){
                 for(int k = 0; k < bank.rows(); k++){
@@ -187,9 +187,9 @@ public class HTCC{
                                 e_TOF_X = bank.getFloat("x",k);
                                 e_TOF_Y = bank.getFloat("y",k);
                                 e_TOF_Z = bank.getFloat("z",k);
-                        }    
-                }    
-        }    
+                        }
+                }
+        }
         public void fillEBTrack(DataBank bank){
                 e_track_ind=-1;
                 for(int k = 0; k < bank.rows(); k++){
@@ -197,16 +197,16 @@ public class HTCC{
                         if(pind==e_part_ind){
                                 e_track_chi2 =  bank.getFloat("chi2",k);
                                 e_track_ind = bank.getShort("index",k);
-                        }    
-                }    
-        }    
+                        }
+                }
+        }
         public void getTrigTBTrack(DataBank bank){
                  if(e_track_ind>-1 && e_track_ind<bank.rows() ){
                          e_track_chi2 = bank.getFloat("chi2" , e_track_ind);
                          e_sect = bank.getInt("sector", e_track_ind);
                  }
         }
-        public void getTBTrack(DataBank bank){ 
+        public void getTBTrack(DataBank bank){
                  if(e_track_ind>-1 && e_track_ind<bank.rows()){
                          e_track_chi2 = bank.getFloat("chi2" , e_track_ind);
                          e_sect = bank.getInt("sector", e_track_ind);
@@ -220,7 +220,7 @@ public class HTCC{
 			 vDCR2pos.rotateZ( -3.141597f*(e_sect-1)/3f );
 			 e_DCR2_the = (float)Math.toDegrees(vDCR2pos.theta());
 			 e_DCR2_phi = (float)Math.toDegrees(vDCR2pos.phi());
-                 }    
+                 }
         }
 	public void fill_eHists(){
 		H_e_theta_mom[e_sect-1].fill(e_mom,e_theta);
@@ -303,7 +303,7 @@ public class HTCC{
 			H_e_side_phi[sect-1].fill(e_DCR2_phi,side-1.5f);
 			H_e_Ring_theta[6].fill(e_DCR2_the,ring);
 			H_e_side_phi[6].fill(e_DCR2_phi,side-1.5f);
-		
+
 		}
 		for(int r=0;r<bank.rows();r++){
 			if(r!=bestmatch){
@@ -323,11 +323,11 @@ public class HTCC{
 		if(event.hasBank("RUN::config")){
 			DataBank confbank = event.getBank("RUN::config");
 			long TriggerWord = confbank.getLong("trigger",0);
-			for (int i = 31; i >= 0; i--) {trigger_bits[i] = (TriggerWord & (1 << i)) != 0;} 
+			for (int i = 31; i >= 0; i--) {trigger_bits[i] = (TriggerWord & (1 << i)) != 0;}
 			if(event.hasBank("RUN::rf")){
 				for(int r=0;r<event.getBank("RUN::rf").rows();r++){
 					if(event.getBank("RUN::rf").getInt("id",r)==1)RFtime=event.getBank("RUN::rf").getFloat("time",r);
-				}    
+				}
 			}
                 DataBank partBank = null, trackBank = null, trackDetBank = null, ecalBank = null, cherenkovBank = null, scintillBank = null;
                 if(userTimeBased){
@@ -469,15 +469,15 @@ public class HTCC{
                 Scanner read;
                 try {
                         read = new Scanner(file);
-                        do { 
+                        do {
                                 String filename = read.next();
                                 toProcessFileNames.add(filename);
 
                         }while (read.hasNext());
                         read.close();
-                }catch(IOException e){ 
+                }catch(IOException e){
                         e.printStackTrace();
-                }   
+                }
                 int progresscount=0;int filetot = toProcessFileNames.size();
                 for (String runstrg : toProcessFileNames) if( count<maxevents ){
                         progresscount++;
@@ -488,15 +488,24 @@ public class HTCC{
                         HipoDataSource reader = new HipoDataSource();
                         reader.open(runstrg);
                         int filecount = 0;
-                        while(reader.hasEvent()&& count<maxevents ) { 
+                        while(reader.hasEvent()&& count<maxevents ) {
                                 DataEvent event = reader.getNextEvent();
                                 ana.processEvent(event);
                                 filecount++;count++;
                                 if(count%10000 == 0) System.out.println(count/1000 + "k events (this is HTCC analysis on "+runstrg+") ; progress : "+progresscount+"/"+filetot);
-                        }   
+                        }
                         reader.close();
-                }   
+                }
                 System.out.println("Total : " + count + " events");
                 ana.plot();
-        }   
+								ana.write();
+        }
+				public void write() {
+								TDirectory dirout = new TDirectory();
+								dirout.mkdir("/HTCC/");
+								dirout.cd("/HTCC/");
+								for(int s=0;s<48;s++){
+												dirout.addDataSet(H_HTCC_nphe[s]);
+				}
+
 }

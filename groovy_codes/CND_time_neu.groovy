@@ -2,10 +2,10 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import ROOTFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("ECAL Sampling Fraction per sector")
-  gr.setTitleY("ECAL Sampling Fraction per sector")
+def grtl = (1..3).collect{
+  def gr = new GraphErrors('layer'+sl_num)
+  gr.setTitle("CND time per layer")
+  gr.setTitleY("CND time per layer")
   gr.setTitleX("run number")
   return gr
 }
@@ -23,17 +23,19 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<6).each{
+  (0..<3).each{
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1))
-    h1.setName("sec"+(it+1))
-    h1.setTitle("ECAL Sampling Fraction")
-    h1.setTitleX("ECAL Sampling Fraction")
+    iL=it+1
+    def h2 = dir.getObject(String.format("/cnd/H_CND_time_z_neutral%d",iL)
+    def h1 = h2.projectionY()
+    h1.setName("neutral, layer"+iL)
+    h1.setTitle("CND time - start time")
+    h1.setTitleX("CND time - start time")
 
     def f1 = ROOTFitter.fit(h1)
 
-    // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
@@ -44,4 +46,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ECAL_Sampl.hipo')
+out.writeFile('out_CND_time_neutral.hipo')

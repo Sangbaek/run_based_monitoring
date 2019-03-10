@@ -30,12 +30,12 @@ for(arg in args.drop(1)) {
     h1.setTitle("LTCC Number of Photoelectrons")
     h1.setTitleX("LTCC Number of Photoelectrons")
 
-    // def f1 = ROOTFitter.fit(h1)
+    def f1 = ROOTFitter.fit(h1)
 
-    grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
-    // out.addDataSet(f1)
+    out.addDataSet(f1)
   }
 }
 
@@ -43,4 +43,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('LTCC_nphe.hipo')
+out.writeFile('LTCC_nphe_sector.hipo')

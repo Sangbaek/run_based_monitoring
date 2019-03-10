@@ -2,10 +2,12 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import ROOTFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("ECAL Sampling Fraction per sector")
-  gr.setTitleY("ECAL Sampling Fraction per sector")
+def grtl = (1..36).collect{
+  sec_num = it.intdiv(6)
+  sl_num = it%6
+  def gr = new GraphErrors('sec'+sec_num +'sl'+sl_num)
+  gr.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr.setTitleX("run number")
   return gr
 }
@@ -23,17 +25,19 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<6).each{
+  (0..<36).each{
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1))
-    h1.setName("sec"+(it+1))
-    h1.setTitle("ECAL Sampling Fraction")
-    h1.setTitleX("ECAL Sampling Fraction")
+    sec_num = (it+1).intdiv(6)
+    sl_num = (it+1)%6
+    def h1 = dir.getObject(String.format('/dc/DC_residuals_trkDoca_%d_%d',sec_num,sl_num))
+    h1.setName("sec"+sec_num+"sl"+sl_num)
+    h1.setTitle("DC residuals per sector per superlayer")
+    h1.setTitleX("DC residuals per sector per superlayer")
 
     def f1 = ROOTFitter.fit(h1)
 
-    // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
@@ -44,4 +48,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ECAL_Sampl.hipo')
+out.writeFile('out_DC_residuals_sec_sl.hipo')

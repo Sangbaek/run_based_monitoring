@@ -2,10 +2,10 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import ROOTFitter
 
-def grtl = (1..6).collect{
+def grtl = (1..24).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("ECAL Sampling Fraction per sector")
-  gr.setTitleY("ECAL Sampling Fraction per sector")
+  gr.setTitle("HTCC Number of Photoelectrons")
+  gr.setTitleY("HTCC Number of Photoelectrons per sector per ring")
   gr.setTitleX("run number")
   return gr
 }
@@ -23,18 +23,22 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<6).each{
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1))
-    h1.setName("sec"+(it+1))
-    h1.setTitle("ECAL Sampling Fraction")
-    h1.setTitleX("ECAL Sampling Fraction")
+for (s = 0; i <6; s++) {
+  for (r = 0; r <4; r++) {
+
+    int counter = r + 4*s ;
+
+    def h1 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side0',s,r)) //left
+    def h2 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side1',s,r)) //right
+    h1.Add(h2)
+    h1.setName("sec"+s +"ring"+r)
+    h1.setTitle("HTCC Number of Photoelectrons")
+    h1.setTitleX("HTCC Number of Photoelectrons")
 
     def f1 = ROOTFitter.fit(h1)
 
     // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
   }
@@ -44,4 +48,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ECAL_Sampl.hipo')
+out.writeFile('HTCC_nphe_sector_ring.hipo')
