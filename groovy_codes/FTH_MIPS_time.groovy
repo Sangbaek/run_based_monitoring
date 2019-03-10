@@ -2,11 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import ROOTFitter
 
-  def gr = new GraphErrors('FTH MIPS time')
-  gr.setTitle("FTH MIPS time - start time (peak value)")
-  gr.setTitleY("FTH MIPS time - start time (peak value)")
-  gr.setTitleX("run number")
-  return gr
+  def grtl = new GraphErrors('FTH MIPS time')
+  grtl.setTitle("FTH MIPS time - start time (peak value)")
+  grtl.setTitleY("FTH MIPS time - start time (peak value)")
+  grtl.setTitleX("run number")
+  return grtl
 
 
 TDirectory out = new TDirectory()
@@ -27,7 +27,7 @@ for(arg in args.drop(1)) {
   def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+  grtl.addPoint(run, f1.getParameter(1), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(f1)
 
