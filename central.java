@@ -27,30 +27,31 @@ public class central {
 	public H2F H_CTOF_pos, H_CTOF_edep_phi, H_CTOF_edep_z, H_CTOF_path_mom;
 	public H2F H_vz_DC_CVT, H_phi_DC_CVT, H_CVT_CTOF_phi, H_CVT_CTOF_z, H_CVT_t_STT, H_CVT_t_pad;
 	public H1F[] H_CVT_t;
+	public H1F H_CVT_t_pos, H_CVT_t_neg;
 	public central(int reqrunNum, boolean reqTimeBased, boolean reqwrite_volatile) {
 		runNum = reqrunNum;userTimeBased=reqTimeBased;
 		write_volatile = reqwrite_volatile;
-		//CTOF_shft = new float[]{0.00f , -108.81f , -105.97f , -103.48f , -109.72f , -107.39f , -104.89f , -109.08f , -107.77f , -104.47f , 
-		//			-109.55f , -107.23f , -105.16f , -108.38f , 0.00f , -104.24f , -108.10f , -106.98f , -104.59f , -108.12f , 
-		//			-106.89f , -104.63f , -108.99f , -106.41f , -105.22f , -108.29f , -106.25f , -103.80f , -108.60f , -106.13f , 
-		//			-103.67f , -107.81f , -106.08f , -103.66f , -108.02f , -106.51f , -105.12f , -108.38f , -107.36f , -104.17f , 
+		//CTOF_shft = new float[]{0.00f , -108.81f , -105.97f , -103.48f , -109.72f , -107.39f , -104.89f , -109.08f , -107.77f , -104.47f ,
+		//			-109.55f , -107.23f , -105.16f , -108.38f , 0.00f , -104.24f , -108.10f , -106.98f , -104.59f , -108.12f ,
+		//			-106.89f , -104.63f , -108.99f , -106.41f , -105.22f , -108.29f , -106.25f , -103.80f , -108.60f , -106.13f ,
+		//			-103.67f , -107.81f , -106.08f , -103.66f , -108.02f , -106.51f , -105.12f , -108.38f , -107.36f , -104.17f ,
 		//			-108.31f , -105.56f , -102.91f , -107.76f , -106.62f , -103.89f , -108.73f , -106.88f , -104.80f , -106.36f};//2052
 
-		//CTOF_shft = new float[]{0.00f , -557.95f , -552.60f , -560.09f , -556.33f , -557.89f , -559.68f , -559.52f , -563.12f , -559.26f , 
-		//			-555.64f , -555.37f , -566.83f , -558.37f , 0.00f , -557.06f , -572.78f , -205.33f , -568.07f , -200.87f , 
-		//			-550.44f , -222.76f , -541.37f , -252.70f , -545.07f , -553.92f , -238.36f , -554.90f , -218.27f , -539.17f , 
-		//			-224.08f , -543.47f , -222.41f , -553.31f , -542.48f , -542.28f , -557.34f , -541.96f , -552.40f , -551.26f , 
+		//CTOF_shft = new float[]{0.00f , -557.95f , -552.60f , -560.09f , -556.33f , -557.89f , -559.68f , -559.52f , -563.12f , -559.26f ,
+		//			-555.64f , -555.37f , -566.83f , -558.37f , 0.00f , -557.06f , -572.78f , -205.33f , -568.07f , -200.87f ,
+		//			-550.44f , -222.76f , -541.37f , -252.70f , -545.07f , -553.92f , -238.36f , -554.90f , -218.27f , -539.17f ,
+		//			-224.08f , -543.47f , -222.41f , -553.31f , -542.48f , -542.28f , -557.34f , -541.96f , -552.40f , -551.26f ,
 		//			-542.06f , -239.25f , -539.38f , -229.84f , -563.36f , -266.99f , -549.68f , -203.33f , -555.38f , -420.01f};//2195
-		//CTOF_shft = new float[]{0.00f , -299.73f , -297.20f , -294.74f , -300.75f , -298.03f , -295.33f , -299.77f , -298.33f , -294.47f , 
-		//			-300.32f , -297.32f , -295.15f , -299.03f , 0.00f , -294.54f , -298.85f , -298.03f , -295.60f , -299.52f , 
-		//			-297.84f , -294.92f , -299.51f , -296.78f , -295.84f , -299.06f , -296.87f , -294.73f , -299.62f , -296.65f , 
-		//			-294.08f , -298.50f , -296.86f , -294.34f , -299.30f , -297.71f , -295.99f , -299.43f , -298.16f , -294.76f , 
+		//CTOF_shft = new float[]{0.00f , -299.73f , -297.20f , -294.74f , -300.75f , -298.03f , -295.33f , -299.77f , -298.33f , -294.47f ,
+		//			-300.32f , -297.32f , -295.15f , -299.03f , 0.00f , -294.54f , -298.85f , -298.03f , -295.60f , -299.52f ,
+		//			-297.84f , -294.92f , -299.51f , -296.78f , -295.84f , -299.06f , -296.87f , -294.73f , -299.62f , -296.65f ,
+		//			-294.08f , -298.50f , -296.86f , -294.34f , -299.30f , -297.71f , -295.99f , -299.43f , -298.16f , -294.76f ,
 		//			-299.15f , -296.72f , -294.17f , -299.01f , -297.59f , -294.53f , -299.59f , -297.51f , -295.47f , -297.36f};//2383
-		//CTOF_shft = new float[]{0.00f , -301.09f , -298.33f , -295.57f , -301.58f , -298.70f , -295.93f , -300.22f , -298.70f , -295.47f , 
-		//			-300.80f , -297.82f , -295.74f , -299.63f , 0.00f , -294.88f , -299.22f , -298.66f , -295.95f , -299.18f , 
-		//			-297.50f , -294.83f , -299.31f , -296.56f , -295.67f , -299.12f , -296.83f , -294.34f , -299.45f , -296.44f , 
-		//			-293.88f , -298.34f , -296.83f , -295.05f , -299.40f , -297.57f , -295.61f , -299.46f , -298.14f , -294.77f , 
-		//			-299.22f , -297.05f , -294.38f , -299.45f , -298.18f , -295.27f , -300.25f , -298.39f , -296.41f , -297.84f};//2478 
+		//CTOF_shft = new float[]{0.00f , -301.09f , -298.33f , -295.57f , -301.58f , -298.70f , -295.93f , -300.22f , -298.70f , -295.47f ,
+		//			-300.80f , -297.82f , -295.74f , -299.63f , 0.00f , -294.88f , -299.22f , -298.66f , -295.95f , -299.18f ,
+		//			-297.50f , -294.83f , -299.31f , -296.56f , -295.67f , -299.12f , -296.83f , -294.34f , -299.45f , -296.44f ,
+		//			-293.88f , -298.34f , -296.83f , -295.05f , -299.40f , -297.57f , -295.61f , -299.46f , -298.14f , -294.77f ,
+		//			-299.22f , -297.05f , -294.38f , -299.45f , -298.18f , -295.27f , -300.25f , -298.39f , -296.41f , -297.84f};//2478
                 CTOF_shft = new float[]{0.00f , -300.51f , -297.72f , -295.05f , -301.03f , -298.19f , -295.41f , -299.74f , -298.30f , -295.21f ,
                                         -300.22f , -297.35f , -295.28f , -299.14f , 0.00f , -294.51f , -298.80f , -298.30f , -295.49f , -298.81f ,
                                         -297.23f , -294.44f , -298.96f , -296.27f , -295.30f , -298.74f , -296.44f , -293.98f , -299.07f , -296.08f ,
@@ -142,14 +143,22 @@ public class central {
 			H_CVT_t[p].setTitle(String.format("pad %d time",p+1));
 			H_CVT_t[p].setTitleX("t (ns)");
 		}
+		H_CVT_t_pos = new H1F("H_CVT_t_pos","H_CVT_t_pos",250,MinCTOF,MaxCTOF);
+		H_CVT_t_pos.setTitle("integrated over all pads CTOF time, positive");
+		H_CVT_t_pos.setTitleX("t (ns)");
+
+		H_CVT_t_neg = new H1F("H_CVT_t_neg","H_CVT_t_neg",250,MinCTOF,MaxCTOF);
+		H_CVT_t_neg.setTitle("integrated over all pads CTOF time, negative");
+		H_CVT_t_neg.setTitleX("t (ns)");
+
 	}
-	public double Vangle(Vector3 v1, Vector3 v2){ 
-		double res = 0; 
+	public double Vangle(Vector3 v1, Vector3 v2){
+		double res = 0;
 		double l1 = v1.mag();
 		double l2 = v2.mag();
 		double prod = v1.dot(v2);
-		if( l1 * l2 !=0 && Math.abs(prod)<l1*l2 )res = Math.toDegrees( Math.acos(prod/(l1*l2) ) ); 
-		return res; 
+		if( l1 * l2 !=0 && Math.abs(prod)<l1*l2 )res = Math.toDegrees( Math.acos(prod/(l1*l2) ) );
+		return res;
 	}
 	public void FillTracks(DataBank DCbank, DataBank CVTbank){
 		for(int iDC=0;iDC<DCbank.rows();iDC++){
@@ -185,6 +194,7 @@ public class central {
 					float z = CTOFbank.getFloat("z",iCTOF)*0.1f;
 					float t = CTOFbank.getFloat("time",iCTOF);
 					float p = CTOFbank.getFloat("pathLength",iCTOF);
+					int charge = CTOFbank.getInt("q",iCTOF);
 					float phi = (float)Math.toDegrees(Math.atan2(y,x));
 					float beta =  mom/(float)Math.sqrt(mom*mom+0.93827f*0.93827f);
 					//float DelPhi = phi-cphi+190;
@@ -205,6 +215,8 @@ public class central {
 						H_CVT_t_pad.fill(pad,CTOFTime-STT);
 						H_CVT_t[pad].fill(CTOFTime-STT);
 						H_CVT_t[49].fill(CTOFTime-STT);
+						if (charge>0) H_CVT_t_pos.fill(CTOFTime-STT);
+						if (charge<0) H_CVT_t_neg.fill(CTOFTime-STT);
 						matched = true;
 					}
 				}
@@ -248,8 +260,10 @@ public class central {
 		can_central.cd(10);can_central.draw(H_CVT_t[1]);for(int p=1;p<49;p++)can_central.draw(H_CVT_t[p],"same");
 		can_central.getPad(10).getAxisX().setRange(MinCTOF,MaxCTOF);
 		can_central.cd(11);can_central.draw(H_CVT_t[49]);
+		can_central.cd(12);can_central.draw(H_CVT_t_pos);
+		can_central.cd(13);can_central.draw(H_CVT_t_neg);
 		for(int p=0;p<12;p++){
-			can_central.cd(12+p);can_central.draw(H_CVT_t[16+p]);
+			can_central.cd(12+2+p);can_central.draw(H_CVT_t[16+p]);
 		}
 		if(runNum>0){
 			if(!write_volatile)can_central.save(String.format("plots"+runNum+"/central.png"));
@@ -277,14 +291,15 @@ public class central {
                 dirout.cd("/ctof/");
                 dirout.addDataSet(H_CVT_t_pad,H_CTOF_edep_phi);
                 for(int p=0;p<50;p++)dirout.addDataSet(H_CVT_t[p]);
-                
+								dirout.addDataSet(H_CVT_t_pos);
+								dirout.addDataSet(H_CVT_t_neg);
 		if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rga/spring18/plots"+runNum+"/out_CTOF_"+runNum+".hipo");
-                
+
 		if(!write_volatile){
 			if(runNum>0)dirout.writeFile("plots"+runNum+"/out_CTOF_"+runNum+".hipo");
 			else dirout.writeFile("plots/out_CTOF.hipo");
 		}
-        }   
+        }
 
 ////////////////////////////////////////////////
         public static void main(String[] args) {
@@ -304,7 +319,7 @@ public class central {
                 Scanner read;
                 try {
                         read = new Scanner(file);
-                        do { 
+                        do {
                                 String filename = read.next();
                                 toProcessFileNames.add(filename);
 
