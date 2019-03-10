@@ -90,6 +90,7 @@ public class monitor2p2GeV {
 
 	public H2F H_CVT_ft, H_CVT_pt, H_CVT_pf, H_CVT_zf, H_CVT_zp, H_CVT_zt;
 	public H1F H_CVT_p, H_CVT_t, H_CVT_f, H_CVT_z, H_CVT_chi2, H_CVT_ndf, H_CVT_pathlength;
+	public H1F H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg, H_CVT_chi2_elec;
 
 	public H1F[] H_MM_epip_Spip, H_MM_epip_Se;
 	public H1F H_MM_epip, H_MM_epip_zoom, H_pip_vtd, H_pip_vz_ve_diff, H_pip_Dphi;
@@ -823,6 +824,12 @@ public class monitor2p2GeV {
 		H_CVT_z = new H1F("H_CVT_z","H_CVT_z",100,-25,25);
 		H_CVT_z.setTitle("CVT z vertex");
 		H_CVT_z.setTitleX("z (cm)");
+		H_CVT_z_pos = new H1F("H_CVT_z_pos","H_CVT_z_pos",100,-25,25);
+		H_CVT_z_pos.setTitle("CVT z vertex for positives");
+		H_CVT_z_pos.setTitleX("z (cm)");
+		H_CVT_z_neg = new H1F("H_CVT_z_neg","H_CVT_z_neg",100,-25,25);
+		H_CVT_z_neg.setTitle("CVT z vertex for negatives");
+		H_CVT_z_neg.setTitleX("z (cm)");
 		H_CVT_e_corr_vz = new H2F("H_CVT_e_corr_vz","H_CVT_e_corr_vz",100,-25,25,100,-25,25);
 		H_CVT_e_corr_vz.setTitle("Vertex correlation");
 		H_CVT_e_corr_vz.setTitleX("vz e (cm)");
@@ -846,6 +853,16 @@ public class monitor2p2GeV {
 		//H_CVT_chi2 = new H1F("H_CVT_chi2","H_CVT_chi2",100,0,2000);
 		H_CVT_chi2.setTitle("CVT #chi^2");
 		H_CVT_chi2.setTitleX("#chi^2");
+		H_CVT_z_pos = new H1F("H_CVT_chi2_pos","H_CVT_chi2_pos",100,0,200);
+		H_CVT_chi2_pos.setTitle("CVT #chi^2 for positives");
+		H_CVT_chi2_pos.setTitleX("#chi^2");
+		H_CVT_chi2_neg = new H1F("H_CVT_chi2_neg","H_CVT_chi2_neg",100,0,200);
+		H_CVT_chi2_neg.setTitle("CVT #chi^2 for negatives");
+		H_CVT_chi2_neg.setTitleX("#chi^2");
+		H_CVT_chi2_elec = new H1F("H_CVT_chi2_elec","H_CVT_chi2_elec",100,0,200);
+		H_CVT_chi2_elec.setTitle("CVT #chi^2 for electrons");
+		H_CVT_chi2_elec.setTitleX("#chi^2");
+
 	       	H_CVT_ndf = new H1F("H_CVT_ndf","H_CVT_ndf",10,0.5,10.5);
 		H_CVT_ndf.setTitle("CVT NDF");
 		H_CVT_ndf.setTitleX("NDF");
@@ -3099,12 +3116,19 @@ public class monitor2p2GeV {
                                 if(            PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_e_corr_vz.fill(e_vz,CVT_vz);
                                 if( vzCutIs             && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_e_corr_phi.fill(e_phi,CVT_phi);
                                 if( vzCutIs && PhiCutIs             && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_ndf.fill(CVT_ndf);
-                                if( vzCutIs && PhiCutIs && NDFcutIs              && pathCutIs && ThetaCut && CVT_elast)H_CVT_chi2.fill(CVT_chi2);
+                                if( vzCutIs && PhiCutIs && NDFcutIs              && pathCutIs && ThetaCut && CVT_elast){
+																				H_CVT_chi2.fill(CVT_chi2);
+																				if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
+																				if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
+																				//if (pID==-11) H_CVT_chi2_elec.fill(CVT_chi2);
+																}
                                 if( vzCutIs && PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast){
                                         H_CVT_p.fill(CVT_mom);
                                         H_CVT_t.fill(CVT_theta);
                                         H_CVT_f.fill(CVT_phi);
                                         H_CVT_z.fill(CVT_vz);
+																				if (CVTcharge>0) H_CVT_z_pos.fill(CVT_vz);
+																				if (CVTcharge<0) H_CVT_z_neg.fill(CVT_vz);
                                         H_CVT_ft.fill(CVT_phi,CVT_theta);
                                         H_CVT_pt.fill(CVT_theta,CVT_mom);
                                         H_CVT_pf.fill(CVT_phi,CVT_mom);
@@ -3671,7 +3695,12 @@ public class monitor2p2GeV {
 		can_CVT.draw(elast_corr_ang,"same");
 		can_CVT.cd(19);can_CVT.draw(H_CVT_pathlength);
 		can_CVT.cd(20);can_CVT.draw(H_CVT_corr_e_mom);
-		can_CVT.cd(19);can_CVT.draw(H_elast_W);
+		can_CVT.cd(21);can_CVT.draw(H_elast_W);
+		can_CVT.cd(22);can_CVT.draw(H_CVT_z_pos);
+		can_CVT.cd(23);can_CVT.draw(H_CVT_z_neg);
+		can_CVT.cd(24);can_CVT.draw(H_CVT_chi2_pos);
+		can_CVT.cd(25);can_CVT.draw(H_CVT_chi2_neg);
+		// can_CVT.cd(26);can_CVT.draw(H_CVT_chi2_elec);
 
 		if(runNum>0){
 			if(!write_volatile)can_CVT.save(String.format("plots"+runNum+"/cvt.png"));
@@ -4227,6 +4256,7 @@ public class monitor2p2GeV {
 		dirout.mkdir("/cvt/");
 		dirout.cd("/cvt/");
 		dirout.addDataSet(H_CVT_chi2,H_CVT_ndf,H_CVT_ft,H_CVT_pt,H_CVT_pf,H_CVT_zf,H_CVT_zp,H_CVT_zt,H_CVT_e_corr_vz);
+		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
 		//dirout.mkdir("");
 		//dirout.cd("");
 
