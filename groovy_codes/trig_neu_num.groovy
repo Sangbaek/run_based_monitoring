@@ -6,7 +6,6 @@ def grtl = new GraphErrors('trig_sector_neutral_rat')
 grtl.setTitle("Neutrals per trigger per sector")
 grtl.setTitleY("Neutrals per trigger per sector")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()
