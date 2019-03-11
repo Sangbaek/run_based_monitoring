@@ -188,7 +188,7 @@ public class central {
 					float cy = CVTbank.getFloat("c_y",iCVT)*0.1f;
 					float cz = CVTbank.getFloat("c_z",iCVT)*0.1f;
 					float cphi = (float)Math.toDegrees(Math.atan2(cy,cx));
-					int charge = CTOFbank.getInt("q",iCVT);
+					int charge = CVTbank.getInt("q",iCVT);
 					int pad = CTOFbank.getInt("component",iCTOF);
 					float x = CTOFbank.getFloat("x",iCTOF)*0.1f;
 					float y = CTOFbank.getFloat("y",iCTOF)*0.1f;
