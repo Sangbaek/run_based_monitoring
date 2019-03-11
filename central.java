@@ -243,7 +243,8 @@ public class central {
 	public void plot() {
 		EmbeddedCanvas can_central  = new EmbeddedCanvas();
                 can_central.setSize(2000,3000);
-                can_central.divide(4,6);
+                // can_central.divide(4,6);
+								can_central.divide(4,7);
                 can_central.setAxisTitleSize(18);
                 can_central.setAxisFontSize(18);
                 can_central.setTitleSize(18);
@@ -260,8 +261,8 @@ public class central {
 		can_central.cd(10);can_central.draw(H_CVT_t[1]);for(int p=1;p<49;p++)can_central.draw(H_CVT_t[p],"same");
 		can_central.getPad(10).getAxisX().setRange(MinCTOF,MaxCTOF);
 		can_central.cd(11);can_central.draw(H_CVT_t[49]);
-		can_central.cd(12);can_central.draw(H_CVT_t_pos);
-		can_central.cd(13);can_central.draw(H_CVT_t_neg);
+		can_central.cd(12);can_central.draw(H_CVT_t_pos);//test drawing for CTOF time for positive
+		can_central.cd(13);can_central.draw(H_CVT_t_neg);//test drawing for CTOF time for negative
 		for(int p=0;p<12;p++){
 			can_central.cd(12+2+p);can_central.draw(H_CVT_t[16+p]);
 		}

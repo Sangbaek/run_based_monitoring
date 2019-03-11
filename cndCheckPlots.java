@@ -767,14 +767,14 @@ public class cndCheckPlots {
 										can_cnd.cd(15+iL);can_cnd.draw(H_CVT_CND_phi[iL]);
 								}
 								can_cnd.cd(18);can_cnd.draw(H_CND_beta_energy);
-								can_cnd.cd(34);can_cnd.draw(H_CND_beta_p);can_cnd.draw(BetaPProt,"same");can_cnd.draw(BetaPPion,"same");can_cnd.getPad().getAxisZ().setLog(true);
+								can_cnd.cd(34+9);can_cnd.draw(H_CND_beta_p);can_cnd.draw(BetaPProt,"same");can_cnd.draw(BetaPPion,"same");can_cnd.getPad().getAxisZ().setLog(true);
 								can_cnd.cd(19);can_cnd.draw(H_CND_beta_e_neutral);
 								for(int iL=0;iL<3;iL++){
 										can_cnd.cd(21+iL);can_cnd.draw(H_CND_time_z_charged[iL]);
 										can_cnd.cd(24+iL);can_cnd.draw(H_CND_time_z_neutral[iL]);
-										can_cnd.cd(27+iL);can_cnd.draw(H_CND_time_negative[iL]);
-										can_cnd.cd(30+iL);can_cnd.draw(H_CND_time_positive[iL]);
-										can_cnd.cd(33+iL);can_cnd.draw(H_CND_time_all[iL]);
+										can_cnd.cd(27+iL);can_cnd.draw(H_CND_time_negative[iL]);//Test plot for cnd time, negative
+										can_cnd.cd(30+iL);can_cnd.draw(H_CND_time_positive[iL]);//Test plot for cnd time, positive
+										can_cnd.cd(33+iL);can_cnd.draw(H_CND_time_all[iL]);//Test plot for cnd time, all
 								}
 								//can_cnd.cd(26);can_cnd.draw(RFTIME);
 								//can_cnd.cd(27);can_cnd.getPad().getAxisZ().setLog(true);can_cnd.draw(H_CND_t_t);
@@ -784,7 +784,7 @@ public class cndCheckPlots {
 								for(int iL=0;iL<3;iL++){
 										can_cnd.cd(30+9+iL);can_cnd.draw(H_CND_edep_phi[iL]);
 								}
-								can_cnd.cd(33);can_cnd.draw(H_CND_beta_pn);can_cnd.draw(BetaPProt,"same");can_cnd.draw(BetaPPion,"same");
+								can_cnd.cd(33+9);can_cnd.draw(H_CND_beta_pn);can_cnd.draw(BetaPProt,"same");can_cnd.draw(BetaPPion,"same");
 								/*for(int iL=0;iL<3;iL++){
 								  can_cnd.cd(36+iL);can_cnd.draw(H_CND_res[iL]);
 								  }*/

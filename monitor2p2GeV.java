@@ -30,6 +30,7 @@ public class monitor2p2GeV {
         public int trig_muon_sect;
 	public float trig_HTCC_theta;
 	public int e_part_ind, e_sect, e_track_ind, hasLTCC, ngammas, pip_part_ind, pip_track_ind, pip_sect, pim_part_ind, pim_track_ind, pim_sect, foundCVT, CVTcharge;
+	public int CVTpid;
 	public int found_e_FMM, found_eTraj, found_eHTCC;
 	public float[] e_FMMmom, e_FMMtheta, e_FMMphi, e_FMMvz;
 	public float e_mom, e_theta, e_phi, e_vx, e_vy, e_vz, e_Ivy, e_Ivz, e_ecal_X, e_ecal_Y, e_ecal_Z, e_ecal_E, e_track_chi2, e_vert_time, e_vert_time_RF, e_Q2, e_xB, e_W;
@@ -74,7 +75,7 @@ public class monitor2p2GeV {
 	public H1F H_negHBTrk_sect, H_posHBTrk_sect, H_negRECHB_sect, H_posRECHB_sect;
 	public H1F H_negTBTrk_sect, H_posTBTrk_sect, H_negREC_sect, H_posREC_sect;
 
-	public H1F[] H_dcm_vz, H_dcm_chi2;
+	public H1F[] H_dcm_vz, H_dcm_chi2, H_dce_chi2;
 	public H2F[] H_R1_dcm_XY, H_R2_dcm_XY, H_R3_dcm_XY, H_R1_dcm_uXY, H_R2_dcm_uXY, H_R3_dcm_uXY;
 	public H2F[] H_R1phiDm_mom;
 
@@ -1418,7 +1419,11 @@ public class monitor2p2GeV {
 			H_dcp_vz[s] = new H1F(String.format("H_dcp_vz_s%d",s+1),String.format("H_dcp_vz_s%d",s+1),100,-25,25);
 			H_dcp_vz[s].setTitle(String.format("S%d vz DC pos mom>1.5 GeV",s+1));
 		}
-
+		//electrons
+		H_dce_chi2 = new H1F[6];
+		for(int s=0;s<6;s++){
+			H_dce_chi2[s] = new H1F(String.format("H_dce_chi2_S%d",s+1),String.format("S%d #chi^2 DC elec",s+1),100,0,500);
+		}
 		G_accCharge = new GraphErrors();
 		G_accCharge.setMarkerSize(1);
 		G_accCharge.setTitleX("event number");
@@ -2292,6 +2297,7 @@ public class monitor2p2GeV {
 					H_R3_dcp_uXY[6].fill(bXos.getFloat("ux",Xind3),bXos.getFloat("uy",Xind3));
 					H_R1phiDp_mom[6].fill(mom,phiR1D);
 				}
+				// if (pid == 11) H_dce_chi2[s].fill(bank.getFloat("chi2" , k));
 			}
 		}
 	}
@@ -2395,6 +2401,7 @@ public class monitor2p2GeV {
 					CVT_phi = phi0;
 					CVT_vz = z0;
 					CVTcharge = bank.getInt("q",k);
+					CVTpid = bank.getInt("pid")
 					CVT_chi2 = chi2;
 					CVT_ndf = ndf;
 					CVT_pathlength = pathlength;
@@ -3120,7 +3127,7 @@ public class monitor2p2GeV {
 																				H_CVT_chi2.fill(CVT_chi2);
 																				if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
 																				if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
-																				//if (pID==-11) H_CVT_chi2_elec.fill(CVT_chi2);
+																				//if (CVTpid == 11) H_CVT_chi2_elec.fill(CVT_chi2);
 																}
                                 if( vzCutIs && PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast){
                                         H_CVT_p.fill(CVT_mom);
@@ -3591,9 +3598,9 @@ public class monitor2p2GeV {
                 can_trig_sect.cd(66);can_trig_sect.draw(H_trig_sector_deut_rat);
 		can_trig_sect.cd(67);can_trig_sect.draw(H_muon_trig_sector_count);
 		can_trig_sect.cd(68);can_trig_sect.draw(H_trig_sector_muon_rat);
-		can_trig_sect.cd(69);can_trig_sect.draw(H_trig_sector_positive_rat);
-		can_trig_sect.cd(70);can_trig_sect.draw(H_trig_sector_negative_rat);
-		can_trig_sect.cd(71);can_trig_sect.draw(H_trig_sector_neutral_rat);
+		can_trig_sect.cd(69);can_trig_sect.draw(H_trig_sector_positive_rat);//test drawing for trig, positive rat
+		can_trig_sect.cd(70);can_trig_sect.draw(H_trig_sector_negative_rat);//test drawing for trig, negative rat
+		can_trig_sect.cd(71);can_trig_sect.draw(H_trig_sector_neutral_rat);//test drawing for, trig neutral rat
 
 		if(runNum>0){
 			if(!write_volatile)can_trig_sect.save(String.format("plots"+runNum+"/trig_sect.png"));
@@ -3662,7 +3669,8 @@ public class monitor2p2GeV {
 
 		EmbeddedCanvas can_CVT = new EmbeddedCanvas();
 		can_CVT.setSize(3500,1500);
-		can_CVT.divide(7,3);
+		// can_CVT.divide(7,3);
+		can_CVT.divide(7,4);
 		can_CVT.setAxisTitleSize(24);
 		can_CVT.setAxisFontSize(24);
 		can_CVT.setTitleSize(24);
@@ -3695,12 +3703,12 @@ public class monitor2p2GeV {
 		can_CVT.draw(elast_corr_ang,"same");
 		can_CVT.cd(19);can_CVT.draw(H_CVT_pathlength);
 		can_CVT.cd(20);can_CVT.draw(H_CVT_corr_e_mom);
-		can_CVT.cd(21);can_CVT.draw(H_elast_W);
-		can_CVT.cd(22);can_CVT.draw(H_CVT_z_pos);
-		can_CVT.cd(23);can_CVT.draw(H_CVT_z_neg);
-		can_CVT.cd(24);can_CVT.draw(H_CVT_chi2_pos);
-		can_CVT.cd(25);can_CVT.draw(H_CVT_chi2_neg);
-		// can_CVT.cd(26);can_CVT.draw(H_CVT_chi2_elec);
+		can_CVT.cd(21);can_CVT.draw(H_elast_W); // the number inside cd was 19, corrected.
+		can_CVT.cd(22);can_CVT.draw(H_CVT_z_pos);//Test drawing for vz_pos cvt
+		can_CVT.cd(23);can_CVT.draw(H_CVT_z_neg);//Test drawing for vz_neg cvt
+		can_CVT.cd(24);can_CVT.draw(H_CVT_chi2_pos);//Test drawing for chi2_pos cvt
+		can_CVT.cd(25);can_CVT.draw(H_CVT_chi2_neg);//Test drawing for chi2_neg cvt
+		// can_CVT.cd(26);can_CVT.draw(H_CVT_chi2_elec);//Test drawing for chi2_elec cvt
 
 		if(runNum>0){
 			if(!write_volatile)can_CVT.save(String.format("plots"+runNum+"/cvt.png"));
@@ -4189,6 +4197,27 @@ public class monitor2p2GeV {
 			can_dcp_vz_phi.save(String.format("plots/dc_p_vz_phi.png"));
 			System.out.println(String.format("save plots/dc_p_vz_phi.png"));
 		}
+		// Test drawing for dc_e_chi2 for electrons
+		EmbeddedCanvas can_dce_chi2 = new EmbeddedCanvas();
+		can_dce_chi2.setSize(4200,5400);
+		can_dce_chi2.divide(3,2);
+		can_dce_chi2.setAxisTitleSize(24);
+		can_dce_chi2.setAxisFontSize(24);
+		can_dce_chi2.setTitleSize(24);
+		for(int s=0;s<7;s++){
+			can_dce_chi2.cd(0+s);can_dce_chi2.draw(H_dce_chi2[s]);
+		}
+		if(runNum>0){
+			if(!write_volatile)can_dce_chi2.save(String.format("plots"+runNum+"/dc_e_chi2.png"));
+			if(write_volatile)can_dce_chi2.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/dc_e_chi2.png"));
+			System.out.println(String.format("save plots"+runNum+"/dc_e_chi2.png"));
+		}
+		else{
+			can_dce_chi2.save(String.format("plots/dc_e_chi2.png"));
+			System.out.println(String.format("save plots/dc_e_chi2.png"));
+		}
+
+
 	}
         public void write() {
                 TDirectory dirout = new TDirectory();
@@ -4233,7 +4262,7 @@ public class monitor2p2GeV {
 		dirout.addDataSet(H_dcp_R1th_R1ph,H_dcp_R1the_mom,H_dcp_R1ph_mom,H_dcp_pvz_phi,H_dcp_pvz_p,H_dcp_pvz_theta);
 		dirout.addDataSet(H_negHBTrk_sect,H_negTBTrk_sect,H_posHBTrk_sect,H_posTBTrk_sect,H_dcm_phiK_mom,H_dcp_phiK_mom,H_dcm_pvt_pvz,H_dcp_pvt_pvz);
 		dirout.addDataSet(H_negRECHB_sect , H_posRECHB_sect , H_negREC_sect , H_posREC_sect);
-		for(int s=0;s<6;s++)dirout.addDataSet(H_dcp_vz[s],H_dcp_chi2[s],H_dcm_vz[s],H_dcm_chi2[s]);
+		for(int s=0;s<6;s++)dirout.addDataSet(H_dcp_vz[s],H_dcp_chi2[s],H_dcm_vz[s],H_dcm_chi2[s]);//,H_dce_chi2[s]);
 		dirout.mkdir("/trig/");
 		dirout.cd("/trig/");
 		dirout.addDataSet(H_trig_sector_count,H_trig_sector_elec,H_trig_sector_elec_rat,H_rand_trig_sector_count,H_Nclust_ev,H_clust1_E,H_clust2_E);
