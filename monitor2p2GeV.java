@@ -30,7 +30,6 @@ public class monitor2p2GeV {
         public int trig_muon_sect;
 	public float trig_HTCC_theta;
 	public int e_part_ind, e_sect, e_track_ind, hasLTCC, ngammas, pip_part_ind, pip_track_ind, pip_sect, pim_part_ind, pim_track_ind, pim_sect, foundCVT, CVTcharge;
-	public int CVTpid;
 	public int found_e_FMM, found_eTraj, found_eHTCC;
 	public float[] e_FMMmom, e_FMMtheta, e_FMMphi, e_FMMvz;
 	public float e_mom, e_theta, e_phi, e_vx, e_vy, e_vz, e_Ivy, e_Ivz, e_ecal_X, e_ecal_Y, e_ecal_Z, e_ecal_E, e_track_chi2, e_vert_time, e_vert_time_RF, e_Q2, e_xB, e_W;
@@ -2415,7 +2414,6 @@ public class monitor2p2GeV {
 					CVT_phi = phi0;
 					CVT_vz = z0;
 					CVTcharge = bank.getInt("q",k);
-					CVTpid = bank.getInt("pid")
 					CVT_chi2 = chi2;
 					CVT_ndf = ndf;
 					CVT_pathlength = pathlength;
@@ -4237,9 +4235,9 @@ public class monitor2p2GeV {
 		can_dce_chi2.setAxisTitleSize(24);
 		can_dce_chi2.setAxisFontSize(24);
 		can_dce_chi2.setTitleSize(24);
-		for(int s=0;s<7;s++){
-			can_dce_chi2.cd(0+s);can_dce_chi2.draw(H_dce_chi2[s]);
-		}
+		// for(int s=0;s<7;s++){
+		// 	can_dce_chi2.cd(0+s);can_dce_chi2.draw(H_dce_chi2[s]);
+		// }
 		if(runNum>0){
 			if(!write_volatile)can_dce_chi2.save(String.format("plots"+runNum+"/dc_e_chi2.png"));
 			if(write_volatile)can_dce_chi2.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/dc_e_chi2.png"));
