@@ -498,8 +498,9 @@ public class HTCC{
                 }
                 System.out.println("Total : " + count + " events");
                 ana.plot();
-								ana.write();
+								ana.write(); //for H_HTCC_nphe
         }
+				//new module for HTCC to write H_HTCC_nphe
 				public void write() {
 								TDirectory dirout = new TDirectory();
 								dirout.mkdir("/HTCC/");

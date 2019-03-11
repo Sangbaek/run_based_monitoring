@@ -141,6 +141,8 @@ public class monitor2p2GeV {
 	public H2F H_elast_e_p_th, H_elast_W_sect, H_CVT_corr_e_mom;
 	public H1F H_CVT_e_vz_diff, H_CVT_e_phi_diff, H_elast_W;
 
+	public H1F H_e_RFtime1 , H_pi_RFtime1 ;
+
 	public monitor2p2GeV(int reqrunNum, float reqEB, boolean reqTimeBased, boolean reqwrite_volatile ) {
 		runNum = reqrunNum;EB=reqEB;userTimeBased=reqTimeBased;
 		write_volatile = reqwrite_volatile;
@@ -924,6 +926,13 @@ public class monitor2p2GeV {
 		H_e_vt2 = new H1F("H_e_vt2","H_e_vt2",100,-1,1);
 		H_e_vt2.setTitle("electron vertex time");
 		H_e_vt2.setTitleX("t (ns)");
+		H_e_RFtime1 = new H1F("H_e_RFtime1","H_e_RFtime1",100,-1,1);
+		H_e_RFtime1.setTitle("electron RF time");
+		H_e_RFtime1.setTitleX("t (ns)");
+		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",100,-1,1);
+		H_pi_RFtime1.setTitle("pion vertex time");
+		H_pi_RFtime1.setTitleX("t (ns)");
+
 		//H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,100,250,500,100,250);
 		//if(runNum>0 && runNum<3210)H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,550,600,500,550,600);
 		H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,tofvt1,tofvt2,500,tofvt1,tofvt2);
@@ -1859,6 +1868,7 @@ public class monitor2p2GeV {
 				e_vert_time_RF = time1;
 				H_e_vt1.fill(e_vert_time_RF);
 				H_e_vt2.fill(time2);
+				H_e_RFtime1.fill(RFtime1);
                                 e_TOF_X = bank.getFloat("x",k);
                                 e_TOF_Y = bank.getFloat("y",k);
                                 e_TOF_Z = bank.getFloat("z",k);
@@ -1868,6 +1878,10 @@ public class monitor2p2GeV {
 				//float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.938f*0.938f );
 				float pipDCbeta = pip_mom/epip;
 				pip_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
+				H_pi_RFtime1.fill(RFtime1);
+			}
+			if(pind==pim_part_ind){
+				H_pi_RFtime1.fill(RFtime1);
 			}
 		}
 	}
@@ -3813,6 +3827,25 @@ public class monitor2p2GeV {
 			System.out.println(String.format("save plots/e_rec_mon.png"));
 		}
 
+		EmbeddedCanvas can_RF = new EmbeddedCanvas(); //test plot for RF variables for run-based monitoring
+		can_RF.setSize(600,1200);
+		can_RF.divide(1,2);
+		can_RF.setAxisTitleSize(24);
+		can_RF.setAxisFontSize(24);
+		can_RF.setTitleSize(24);
+		can_RF.cd(0);can_RF.draw(H_e_RFtime1);
+		can_RF.cd(1);can_RF.draw(H_pi_RFtime1);
+		if(runNum>0){
+			if(!write_volatile)can_RF.save(String.format("plots"+runNum+"/RF.png"));
+			if(write_volatile)can_RF.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/RF.png"));
+			System.out.println(String.format("save plots"+runNum+"/RF.png"));
+		}
+		else{
+			can_RF.save(String.format("plots/RF.png"));
+			System.out.println(String.format("save plots/RF.png"));
+		}
+
+
 		for(int iP=0;iP<4;iP++){
 			EmbeddedCanvas can_e_FMM = new EmbeddedCanvas();
 			can_e_FMM.setSize(3600,2400);
@@ -4286,6 +4319,9 @@ public class monitor2p2GeV {
 		dirout.cd("/cvt/");
 		dirout.addDataSet(H_CVT_chi2,H_CVT_ndf,H_CVT_ft,H_CVT_pt,H_CVT_pf,H_CVT_zf,H_CVT_zp,H_CVT_zt,H_CVT_e_corr_vz);
 		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
+		dirout.mkdir("/RF/"); // saving pi_RFtime1's
+		dirout.cd("/RF/");
+		dirout.addDataSet(H_e_RFtime1, H_pi_RFtime1);
 		//dirout.mkdir("");
 		//dirout.cd("");
 
