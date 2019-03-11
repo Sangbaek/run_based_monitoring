@@ -7,6 +7,11 @@ grtl.setTitle("peak CTOF time, negative")
 grtl.setTitleY("peak CTOF time, negative")
 grtl.setTitleX("run number")
 
+def grtl2 = new GraphErrors('ctof_time_sigma')
+grtl2.setTitle("sigma CTOF time, negative")
+grtl2.setTitleY("sigma CTOF time, negative")
+grtl2.setTitleX("run number")
+
 TDirectory out = new TDirectory()
 
 for(arg in args) {
@@ -22,7 +27,8 @@ for(arg in args) {
   def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+  grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(f1)
 
@@ -35,4 +41,5 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('out_CTOF_time_neg.hipo')

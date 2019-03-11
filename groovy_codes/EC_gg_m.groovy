@@ -2,9 +2,9 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
 
-def grtl = new GraphErrors('gg_m')
+def grtl = new GraphErrors('gg_m_sigma')
 grtl.setTitle("#gamma #gamma invariant mass ECAL")
-grtl.setTitleY("#gamma #gamma invariant mass")
+grtl.setTitleY("#gamma #gamma invariant mass (sigma)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -18,8 +18,9 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/gg/H_gg_m')
+  def f1 = ROOTFitter.fit(h1)
 
-  grtl.addPoint(run, h1.getMean(), 0, 0)
+  grtl.addPoint(run, f1.getParameter(2), 0, 0)
 
   out.mkdir('/'+run)
   out.cd('/'+run)

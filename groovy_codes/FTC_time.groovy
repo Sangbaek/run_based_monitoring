@@ -6,7 +6,11 @@ import ROOTFitter
   grtl.setTitle("FTC time - start time (peak value)")
   grtl.setTitleY("FTC time - start time (peak value)")
   grtl.setTitleX("run number")
-  return grtl
+
+  def grtl2 = new GraphErrors('FTH MIPS time sigma')
+  grtl.setTitle("FTC time - start time (sigma)")
+  grtl.setTitleY("FTC time - start time (sigma)")
+  grtl.setTitleX("run number")
 
 
 TDirectory out = new TDirectory()
@@ -28,6 +32,7 @@ for(arg in args.drop(1)) {
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(f1)
 
@@ -37,4 +42,5 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('out_FTC_time.hipo')

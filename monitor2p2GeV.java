@@ -1880,6 +1880,7 @@ public class monitor2p2GeV {
 				H_pi_RFtime1.fill(RFtime1);
 			}
 			if(pind==pim_part_ind){
+				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
 				H_pi_RFtime1.fill(RFtime1);
 			}
 		}

@@ -4,10 +4,18 @@ import ROOTFitter
 
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+sl_num)
-  gr.setTitle("CND time per layer")
-  gr.setTitleY("CND time per layer")
+  gr.setTitle("CND time (peak value) per layer")
+  gr.setTitleY("CND time (peak value) per layer")
   gr.setTitleX("run number")
   return gr
+}
+
+def grtl2 = (1..3).collect{
+  def gr2 = new GraphErrors('layer'+sl_num+'sigma')
+  gr2.setTitle("CND time (sigma) per layer")
+  gr2.setTitleY("CND time (sigma) per layer")
+  gr2.setTitleX("run number")
+  return gr2
 }
 
 TDirectory out = new TDirectory()
@@ -37,6 +45,7 @@ for(arg in args.drop(1)) {
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
   }
@@ -46,4 +55,5 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('out_CND_time_neutral.hipo')

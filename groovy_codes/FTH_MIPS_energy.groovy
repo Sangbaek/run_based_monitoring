@@ -4,8 +4,8 @@ import ROOTFitter
 
 def grtl = (1..2).collect{
   def gr = new GraphErrors('layer'+it)
-  gr.setTitle("FTH MIPS energy per layer")
-  gr.setTitleY("FTH MIPS energy per layer")
+  gr.setTitle("FTH MIPS (peak value) energy per layer")
+  gr.setTitleY("FTH MIPS (peak value) energy per layer")
   gr.setTitleX("run number")
   return gr
 }
