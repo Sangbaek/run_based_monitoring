@@ -856,13 +856,13 @@ public class monitor2p2GeV {
 		H_CVT_chi2.setTitle("CVT #chi^2");
 		H_CVT_chi2.setTitleX("#chi^2");
 		H_CVT_z_pos = new H1F("H_CVT_chi2_pos","H_CVT_chi2_pos",100,0,200);
-		H_CVT_chi2_pos.setTitle("CVT #chi^2 for positives");
+		// H_CVT_chi2_pos.setTitle("CVT #chi^2 for positives");
 		H_CVT_chi2_pos.setTitleX("#chi^2");
 		H_CVT_chi2_neg = new H1F("H_CVT_chi2_neg","H_CVT_chi2_neg",100,0,200);
-		H_CVT_chi2_neg.setTitle("CVT #chi^2 for negatives");
+		// H_CVT_chi2_neg.setTitle("CVT #chi^2 for negatives");
 		H_CVT_chi2_neg.setTitleX("#chi^2");
 		H_CVT_chi2_elec = new H1F("H_CVT_chi2_elec","H_CVT_chi2_elec",100,0,200);
-		H_CVT_chi2_elec.setTitle("CVT #chi^2 for electrons");
+		// H_CVT_chi2_elec.setTitle("CVT #chi^2 for electrons");
 		H_CVT_chi2_elec.setTitleX("#chi^2");
 
 	       	H_CVT_ndf = new H1F("H_CVT_ndf","H_CVT_ndf",10,0.5,10.5);
@@ -3139,7 +3139,6 @@ public class monitor2p2GeV {
 																				H_CVT_chi2.fill(CVT_chi2);
 																				if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
 																				if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
-																				//if (CVTpid == 11) H_CVT_chi2_elec.fill(CVT_chi2);
 																}
                                 if( vzCutIs && PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast){
                                         H_CVT_p.fill(CVT_mom);
