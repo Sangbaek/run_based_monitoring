@@ -508,6 +508,13 @@ public class HTCC{
 								for(int s=0;s<48;s++){
 												dirout.addDataSet(H_HTCC_nphe[s]);
 								}
+								if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_CND_"+runNum+".hipo");
 
+								if(!write_volatile){
+										if(runNum>0)dirout.writeFile("plots"+runNum+"/out_HTCC_"+runNum+".hipo");
+										else dirout.writeFile("plots/out_HTCC.hipo");
+								}
 				}
+
+
 }
