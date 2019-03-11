@@ -5,7 +5,7 @@ import ROOTFitter
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+sl_num)
   gr.setTitle("CND time (peak value)per layer")
-  gr.setTitleY("CND tim (peak value) per layer")
+  gr.setTitleY("CND time (peak value) per layer")
   gr.setTitleX("run number")
   return gr
 }
