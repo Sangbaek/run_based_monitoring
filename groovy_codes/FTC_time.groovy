@@ -7,7 +7,7 @@ import ROOTFitter
   grtl.setTitleY("FTC time - start time (peak value)")
   grtl.setTitleX("run number")
 
-  def grtl2 = new GraphErrors('FTH MIPS time sigma')
+  def grtl2 = new GraphErrors('FTH MIPS time, sigma')
   grtl.setTitle("FTC time - start time (sigma)")
   grtl.setTitleY("FTC time - start time (sigma)")
   grtl.setTitleX("run number")

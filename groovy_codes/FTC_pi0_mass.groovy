@@ -8,7 +8,7 @@ import ROOTFitter
   grtl.setTitleX("run number")
   return grtl
 
-  def grtl2 = new GraphErrors('FTH MIPS time')
+  def grtl2 = new GraphErrors('FTH MIPS time, sigma')
   grtl2.setTitle("FTC pi0 mass (sigma)")
   grtl2.setTitleY("FTC pi0 mass (sigma)")
   grtl2.setTitleX("run number")
