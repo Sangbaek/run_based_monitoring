@@ -188,13 +188,13 @@ public class central {
 					float cy = CVTbank.getFloat("c_y",iCVT)*0.1f;
 					float cz = CVTbank.getFloat("c_z",iCVT)*0.1f;
 					float cphi = (float)Math.toDegrees(Math.atan2(cy,cx));
+					int charge = CTOFbank.getInt("q",iCVT);
 					int pad = CTOFbank.getInt("component",iCTOF);
 					float x = CTOFbank.getFloat("x",iCTOF)*0.1f;
 					float y = CTOFbank.getFloat("y",iCTOF)*0.1f;
 					float z = CTOFbank.getFloat("z",iCTOF)*0.1f;
 					float t = CTOFbank.getFloat("time",iCTOF);
 					float p = CTOFbank.getFloat("pathLength",iCTOF);
-					int charge = CTOFbank.getInt("q",iCTOF);
 					float phi = (float)Math.toDegrees(Math.atan2(y,x));
 					float beta =  mom/(float)Math.sqrt(mom*mom+0.93827f*0.93827f);
 					//float DelPhi = phi-cphi+190;
