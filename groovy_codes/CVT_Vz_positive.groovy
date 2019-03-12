@@ -1,10 +1,12 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-
+// import ROOTFitter
 
 def grtl = new GraphErrors('cvt_z_pos')
-grtl.setTitle("VZ (peak value), positives")
-grtl.setTitleY("VZ (peak value), positives")
+grtl.setTitle("VZ (Average), positives")
+grtl.setTitleY("VZ (Average), positives")
+// grtl.setTitle("VZ (peak value), positives")
+// grtl.setTitleY("VZ (peak value), positives")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -19,12 +21,13 @@ for(arg in args) {
 
   def h1 = dir.getObject('/cvt/H_CVT_z_pos')
 
-  def f1 = ROOTFitter.fit(h1)
+  // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  // grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  grtl.addPoint(run, h1.getMean(), 0, 0)
   out.addDataSet(h1)
-  out.addDataSet(f1)
+  // out.addDataSet(f1)
 
   out.mkdir('/'+run)
   out.cd('/'+run)

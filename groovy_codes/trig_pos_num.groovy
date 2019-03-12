@@ -23,7 +23,7 @@ for(arg in args.drop(1)) {
 
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/trig/H_Trig_sector_positive_rat')
+    def h1 = dir.getObject('/trig/H_trig_sector_positive_rat')
     (1..6).each{
       grtl.addPoint(run, h1.getBinContent(h1.getBin(it)), 0, 0)
     }

@@ -12,16 +12,6 @@ def grtl = (1..36).collect{
   return gr
 }
 
-def grtl2 = (1..6).collect{
-  sec_num = it
-  def gr = new GraphErrors('sec'+sec_num +'sigma')
-  gr.setTitle("DC residuals (peak value) per sector")
-  gr.setTitleY("DC residuals (peak value) per sector")
-  gr.setTitleX("run number")
-  return gr
-}
-
-
 TDirectory out = new TDirectory()
 
 for(arg in args.drop(1)) {

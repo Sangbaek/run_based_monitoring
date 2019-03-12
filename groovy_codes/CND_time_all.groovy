@@ -1,19 +1,19 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import ROOTFitter
+// import ROOTFitter
 
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+sl_num)
-  gr.setTitle("CND time (peak value) per layer")
-  gr.setTitleY("CND time (peak value) per layer")
+  gr.setTitle("CND time (Mean) per layer")
+  gr.setTitleY("CND time (Mean) per layer")
   gr.setTitleX("run number")
   return gr
 }
 
 def grtl2 = (1..3).collect{
   def gr2 = new GraphErrors('layer'+sl_num+'sigma')
-  gr2.setTitle("CND time (sigma) per layer")
-  gr2.setTitleY("CND time (sigma) per layer")
+  gr2.setTitle("CND time (Sigma) per layer")
+  gr2.setTitleY("CND time (Sigma) per layer")
   gr2.setTitleX("run number")
   return gr2
 }
@@ -41,13 +41,15 @@ for(arg in args.drop(1)) {
     h1.setTitle("CND time - start time")
     h1.setTitleX("CND time - start time")
 
-    def f1 = ROOTFitter.fit(h1)
+    // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
+    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    // grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
+    grtl[it].addPoint(run, h1.GetMean(), 0, 0)
+    grtl2[it].addPoint(run, h1.GetStdDev(), 0, 0)
     out.addDataSet(h1)
-    out.addDataSet(f1)
+    // out.addDataSet(f1)
   }
 }
 
