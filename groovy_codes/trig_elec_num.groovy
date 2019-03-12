@@ -1,6 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import ROOTFitter
+// import ROOTFitter
 
 def grtl = new GraphErrors('trig_sector_elec_rat')
 grtl.setTitle("Electrons per trigger per sector")
