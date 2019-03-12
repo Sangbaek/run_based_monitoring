@@ -138,7 +138,7 @@ public class cndCheckPlots {
 						H_CVT_CND_phi[iL].setTitle("CND #phi vs CVT #phi (layer "+(iL+1)+")");
 						H_CVT_CND_phi[iL].setTitleX("CND #phi (^o)");
 						H_CVT_CND_phi[iL].setTitleY("CVT #phi (^o)");
-						H_CND_vt_pad[iL] = new H2F("H_CND_phi_pad","H_CND_phi_pad",48,0,48,50,-1,1);
+						H_CND_vt_pad[iL] = new H2F("H_CND_vt_pad","H_CND_vt_pad",48,0,48,50,-1,1);
 						H_CND_vt_pad[iL].setTitle("CND vertex time vs pad (layer "+(iL+1)+")");
 						H_CND_vt_pad[iL].setTitleX("CND counter #");
 						H_CND_vt_pad[iL].setTitleY("CND vt (ns)");
@@ -515,8 +515,7 @@ public class cndCheckPlots {
 								}
 								H_CVT_CND_phi[layer-1].fill(cndPhi,cvtPhi);
 								if(charge==-1)H_CND_time_z_charged[layer-1].fill(z,vtP);
-								if(charge==-1)H_CND_time_negative[layer-1].fill(time-STT);
-								if(charge== 1)H_CND_time_positive[layer-1].fill(time-STT);
+								if(charge== 1)H_CND_time_positive[layer-1].fill(time-STT); //pion or proton?
 								H_CND_time_all[layer-1].fill(time-STT);
 								if(charge==-1 && z<(25.+2.5*(layer-1)))H_CND_t_t.fill(timeC,timeCVT);
 								//only include one hit from cluster

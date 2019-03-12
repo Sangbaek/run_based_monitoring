@@ -1880,6 +1880,9 @@ public class monitor2p2GeV {
 				H_pi_RFtime1.fill(RFtime1);
 			}
 			if(pind==pim_part_ind){
+				float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.139f*0.139f );
+				//float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.938f*0.938f );
+				float pipDCbeta = pip_mom/epip;
 				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
 				H_pi_RFtime1.fill(RFtime1);
 			}
@@ -2791,6 +2794,7 @@ public class monitor2p2GeV {
 			RFtime1=0;
 			for(int r=0;r<event.getBank("RUN::rf").rows();r++){
 				if(event.getBank("RUN::rf").getInt("id",r)==1)RFtime1=event.getBank("RUN::rf").getFloat("time",r);
+				//try else for RFtime2
 			}
 			RFtime2 = 0f;//bank.getFloat("time",1);
 		}
