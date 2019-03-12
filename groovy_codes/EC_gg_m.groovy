@@ -1,5 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
+import ROOTFitter
 
 
 def grtl = new GraphErrors('gg_m_sigma')
