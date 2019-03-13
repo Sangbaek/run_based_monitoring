@@ -19,6 +19,8 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
+  def h1 = dir.getObject('/cvt/H_CVT_z_neg')
+
   // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
