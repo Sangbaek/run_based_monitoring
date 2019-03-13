@@ -1,6 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import ROOTFitter
+// import ROOTFitter
 
   def grtl = new GraphErrors('FTH MIPS time')
   grtl.setTitle("FTC pi0 mass (peak value)")
@@ -30,10 +30,12 @@ for(arg in args.drop(1)) {
   def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl.addPoint(run, f1.getParameter(1), 0, 0)
-  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
+  grtl.addPoint(run, h1.getMean(), 0, 0)
+  grtl2.addPoint(run, h1.getStdDev(), 0, 0)
+  // grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  // grtl2.addPoint(run, f1.getParameter(2), 0, 0)
   out.addDataSet(h1)
-  out.addDataSet(f1)
+  // out.addDataSet(f1)
 
 }
 

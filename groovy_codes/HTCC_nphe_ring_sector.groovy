@@ -1,6 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import ROOTFitter
+// import ROOTFitter
 
 def grtl = (1..24).collect{
   def gr = new GraphErrors('sec'+it)
@@ -35,12 +35,14 @@ for (s = 0; i <6; s++) {
     h1.setTitle("HTCC Number of Photoelectrons")
     h1.setTitleX("HTCC Number of Photoelectrons")
 
-    def f1 = ROOTFitter.fit(h1)
+    // def f1 = ROOTFitter.fit(h1)
 
     // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
+    // grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[counter].addPoint(run, h1.getMean(), 0, 0)
+    grtl[counter].addPoint(run, h1.getStdDev(), 0, 0)
     out.addDataSet(h1)
-    out.addDataSet(f1)
+    // out.addDataSet(f1)
   }
 }
 

@@ -31,12 +31,12 @@ for(arg in args.drop(1)) {
     h1.setTitle("VZ for negative")
     h1.setTitleX("VZ for negative")
 
-    def f1 = ROOTFitter.fit(h1)
+    // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
-    out.addDataSet(f1)
+    // out.addDataSet(f1)
   }
 }
 
