@@ -38,7 +38,7 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (6..<8).each{
+  (0..<36).each{
     sec_num = it.intdiv(6)+1
     sl_num = (it+1)%6
     if (sl_num==0) sl_num=6
