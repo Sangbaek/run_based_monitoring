@@ -20,8 +20,6 @@ for(arg in args.drop(1)) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
 
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
@@ -30,6 +28,8 @@ for(arg in args.drop(1)) {
       grtl[it].addPoint(run, h1.getBinContent(it), 0, 0)
     }
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    out.mkdir('/'+run)
+    out.cd('/'+run)
     out.addDataSet(h1)
     // out.addDataSet(f1)
 }
