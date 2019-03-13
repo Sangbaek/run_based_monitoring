@@ -12,13 +12,14 @@ def grtl = (1..36).collect{
   return gr
 }
 
-def grtl2 = (1..6).collect{
-  sec_num = it
-  def gr = new GraphErrors('sec'+sec_num +'sigma')
-  gr.setTitle("DC residuals (peak value) per sector")
-  gr.setTitleY("DC residuals (peak value) per sector")
-  gr.setTitleX("run number")
-  return gr
+def grtl2 = (1..36).collect{
+  sec_num = it.intdiv(6)
+  sl_num = it%6
+  def gr2 = new GraphErrors('sec'+sec_num +'sl'+sl_num+'sigma')
+  gr2.setTitle("DC residuals (peak value) per sector")
+  gr2.setTitleY("DC residuals (peak value) per sector")
+  gr2.setTitleX("run number")
+  return gr2
 }
 
 
@@ -60,4 +61,5 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('out_DC_residuals_sec_sl.hipo')
