@@ -2,14 +2,56 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = (1..6).collect{
+def grtl1 = (1..6).collect{
   sec_num = it
-  def gr = new GraphErrors('sec'+sec_num+'sl'+1)
-  gr.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr.setTitleY("DC residuals (peak value) per sector per superlayer")
-  gr.setTitleX("run number")
-  return gr
+  def gr1 = new GraphErrors('sec'+sec_num+'sl'+1)
+  gr1.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr1.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr1.setTitleX("run number")
+  return gr1
 }
+def grtl2 = (1..6).collect{
+  sec_num = it
+  def gr2 = new GraphErrors('sec'+sec_num+'sl'+2)
+  gr2.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr2.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr2.setTitleX("run number")
+  return gr2
+}
+def grtl3 = (1..6).collect{
+  sec_num = it
+  def gr3 = new GraphErrors('sec'+sec_num+'sl'+3)
+  gr3.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr3.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr3.setTitleX("run number")
+  return gr3
+}
+def grtl4 = (1..6).collect{
+  sec_num = it
+  def gr4 = new GraphErrors('sec'+sec_num+'sl'+4)
+  gr4.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr4.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr4.setTitleX("run number")
+  return gr4
+}
+def grtl5 = (1..6).collect{
+  sec_num = it
+  def gr5 = new GraphErrors('sec'+sec_num+'sl'+5)
+  gr5.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr5.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr5.setTitleX("run number")
+  return gr5
+}
+def grtl6 = (1..6).collect{
+  sec_num = it
+  def gr6 = new GraphErrors('sec'+sec_num+'sl'+6)
+  gr6.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr6.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr6.setTitleX("run number")
+  return gr6
+}
+
+
 
 TDirectory out = new TDirectory()
 
