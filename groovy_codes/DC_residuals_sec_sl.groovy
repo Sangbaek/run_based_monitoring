@@ -3,7 +3,7 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..36).collect{
-  sec_num = it.intdiv(6)
+  sec_num = (it-1).intdiv(6)+1
   sl_num = it%6
   def gr = new GraphErrors('sec'+sec_num +'sl'+sl_num)
   gr.setTitle("DC residuals (peak value) per sector per superlayer")
@@ -13,7 +13,7 @@ def grtl = (1..36).collect{
 }
 
 def grtl2 = (1..36).collect{
-  sec_num = it.intdiv(6)
+  sec_num = (it-1).intdiv(6)
   sl_num = it%6
   def gr2 = new GraphErrors('sec'+sec_num +'sl'+sl_num+'sigma')
   gr2.setTitle("DC residuals (peak value) per sector per superlayer")
@@ -21,6 +21,9 @@ def grtl2 = (1..36).collect{
   gr2.setTitleX("run number")
   return gr2
 }
+
+int sec_num=0;
+int sl_num=0;
 
 
 TDirectory out = new TDirectory()
@@ -37,7 +40,7 @@ for(arg in args.drop(1)) {
   out.cd('/'+run)
 
   (0..<36).each{
-    sec_num = (it+1).intdiv(6)
+    sec_num = it.intdiv(6)+1
     sl_num = (it+1)%6
     def h2 = dir.getObject(String.format('/dc/DC_residuals_trkDoca_%d_%d',sec_num,sl_num))
     def h1 = h2.projectionY()
