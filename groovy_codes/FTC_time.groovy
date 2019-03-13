@@ -28,13 +28,13 @@ for(arg in args.drop(1)) {
   def h1 = dir.getObject('/ft/hi_cal_time_ch')
   def h2 = dir.getObject('/ft/hi_cal_time_neu')
   h1.Add(h2)
-  def f1 = ROOTFitter.fit(h1)
+  // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   // grtl.addPoint(run, f1.getParameter(1), 0, 0)
   // grtl2.addPoint(run, f1.getParameter(2), 0, 0)
   grtl.addPoint(run, h1.getMean(), 0, 0)
-  grtl2.addPoint(run, h1.getStdDev(), 0, 0)
+  grtl2.addPoint(run, h1.getRMS(), 0, 0)
   out.addDataSet(h1)
   // out.addDataSet(f1)
 
