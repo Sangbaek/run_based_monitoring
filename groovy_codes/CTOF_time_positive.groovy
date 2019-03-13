@@ -21,6 +21,7 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
+  def h1 = dir.getObject('/ctof/H_CVT_t_pos')
 
   // def f1 = ROOTFitter.fit(h1)
 
