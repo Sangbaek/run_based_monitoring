@@ -45,7 +45,7 @@ for (s = 0; i <6; s++) {
     // out.addDataSet(f1)
   }
 }
-
+}
 
 out.mkdir('/timelines')
 out.cd('/timelines')
