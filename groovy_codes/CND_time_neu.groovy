@@ -3,7 +3,7 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..3).collect{
-  def gr = new GraphErrors('layer'+sl_num)
+  def gr = new GraphErrors('layer'+it)
   gr.setTitle("CND time (Average) per layer")
   gr.setTitleY("CND time (Average) per layer")
   gr.setTitleX("run number")
@@ -11,7 +11,7 @@ def grtl = (1..3).collect{
 }
 
 def grtl2 = (1..3).collect{
-  def gr2 = new GraphErrors('layer'+sl_num+'sigma')
+  def gr2 = new GraphErrors('layer'+it+'sigma')
   gr2.setTitle("CND time (Sigma) per layer")
   gr2.setTitleY("CND time (Sigma) per layer")
   gr2.setTitleX("run number")
