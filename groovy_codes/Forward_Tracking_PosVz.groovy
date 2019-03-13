@@ -44,4 +44,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('out_negative_VZ.hipo')
+out.writeFile('out_positive_VZ.hipo')
