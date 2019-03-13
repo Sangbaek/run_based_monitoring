@@ -43,7 +43,7 @@ public class ana_2p2 {
 		central ana_cen = new central(runNum,useTB,useVolatile);
 		occupancies ana_occ = new occupancies(runNum,useVolatile);
 		HTCC ana_htc = new HTCC(runNum,EB,useTB,useVolatile);
-		cndCheckPlots ana_cnd = new cndCheckPlots(runNum,useTB,useVolatile);		
+		cndCheckPlots ana_cnd = new cndCheckPlots(runNum,useTB,useVolatile);
 		FT ana_ft = new FT(runNum,useTB,useVolatile);
 		dst_mon ana_dst_mon = new dst_mon(runNum,EB);
                 List<String> toProcessFileNames = new ArrayList<String>();
@@ -51,7 +51,7 @@ public class ana_2p2 {
                 Scanner read;
                 try {
                         read = new Scanner(file);
-                        do { 
+                        do {
                                 String filename = read.next();
                                 if(runNum==0 || filename.contains(String.format("%d",runNum) ) ){
 					toProcessFileNames.add(filename);
@@ -110,6 +110,7 @@ public class ana_2p2 {
 		ana_tof.write();
 		ana_occ.plot();
 		ana_htc.plot();
+		ana_htc.write();
 		ana_cnd.fit();
 		ana_cnd.plot();
 		ana_cnd.write();
