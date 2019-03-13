@@ -21,7 +21,8 @@ for(arg in args) {
   def h1 = dir.getObject('/gg/H_gg_m')
   def f1 = ROOTFitter.fit(h1)
 
-  grtl.addPoint(run, f1.getParameter(2), 0, 0)
+  // grtl.addPoint(run, f1.getParameter(2), 0, 0)
+  grtl.addPoint(run, h1.getRMS(), 0, 0)
 
   out.mkdir('/'+run)
   out.cd('/'+run)
