@@ -51,7 +51,7 @@ for(arg in args.drop(1)) {
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, h11.getMean(), 0, 0)
-    out.addDataSet(h1)
+    out.addDataSet(h11)
     // out.addDataSet(f1)
   }
 }
@@ -60,4 +60,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('out_DC_residuals_sec_sl.hipo')
+out.writeFile('out_DC_residuals_sec.hipo')
