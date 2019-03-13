@@ -2,9 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = (1..6).collect{
-  sec_num = it
-  def gr = new GraphErrors('sec'+sec_num+'sl'+1)
+def grtl = (1..36).collect{
+  sec_num = (it-1).intdiv(6)+1
+  sl_num = it%6
+  if (sl_num == 0) sl_num = 6
+  def gr = new GraphErrors('sec'+sec_num+'sl'+sl_num)
   gr.setTitle("DC residuals (peak value) per sector per superlayer")
   gr.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr.setTitleX("run number")
