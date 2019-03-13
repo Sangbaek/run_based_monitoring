@@ -26,7 +26,7 @@ for(arg in args.drop(1)) {
   out.cd('/'+run)
 
   def h1 = dir.getObject('/ft/hpi0mass')
-  h1.add(h2)
+  // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
