@@ -29,7 +29,7 @@ public class FT {
 	public double startTime, rfTime;
 
 	public double rfPeriod;
-	
+
 	public H1F summary;
 	//Hodoscope
                public H1F[] hi_hodo_eall, hi_hodo_ematch, hi_hodo_tmatch;
@@ -37,16 +37,16 @@ public class FT {
                public H2F[] hi_hodo_ematch_2D, hi_hodo_tmatch_2D;
 
 	//Calorimeter
-	public H1F hi_cal_nclusters, hi_cal_clsize, hi_cal_clsize_ch, hi_cal_e_all, hi_cal_e_ch, hi_cal_e_neu, hi_cal_theta_ch, hi_cal_phi_ch, hi_cal_time_ch, hi_cal_time_cut_ch, hi_cal_time_neu, hi_cal_time_cut_neu; 
+	public H1F hi_cal_nclusters, hi_cal_clsize, hi_cal_clsize_ch, hi_cal_e_all, hi_cal_e_ch, hi_cal_e_neu, hi_cal_theta_ch, hi_cal_phi_ch, hi_cal_time_ch, hi_cal_time_cut_ch, hi_cal_time_neu, hi_cal_time_cut_neu;
 	public H2F hi_cal_clsize_en, hi_cal_time_e_ch, hi_cal_time_theta_ch, hi_cal_time_e_neu, hi_cal_time_theta_neu;
 	public F1D ftime_ch, ftime_neu;
-		
+
 	//pi0
 	public H1F hpi0sum;
 	public F1D fpi0;
 	public H2F hmassangle;
-		
-		
+
+
 	public FT(int reqrunNum, boolean reqTimeBased, boolean reqwrite_volatile) {
 		runNum = reqrunNum;
 		userTimeBased=reqTimeBased;
@@ -56,7 +56,7 @@ public class FT {
 		startTime=-1000;
 		rfTime=-1000;
 		trigger = 0;
-		
+
 		rfPeriod = 4.008;
 
 		H1F summary = new H1F("summary","summary",6,1,7);
@@ -155,7 +155,7 @@ public class FT {
         	hi_cal_time_theta_neu.setTitleY("T-T_start (ns)");
 
 		//Pi0 Histograms
-        	hpi0sum = new H1F("hpi0sum", 200,50., 250.);
+        	hpi0sum = new H1F("hpi0sum","hpi0sum", 200,50., 250.);
         	hpi0sum.setTitleX("M (MeV)");
         	hpi0sum.setTitleY("Counts");
         	hpi0sum.setTitle("2#gamma invariant mass");
@@ -172,7 +172,7 @@ public class FT {
         	hmassangle.setTitleX("M (MeV)");
         	hmassangle.setTitleY("Angle (deg)");
         	hmassangle.setTitle("Angle vs. Mass");
-		
+
 	}
 
 	public void fillFTHodo(DataBank HodoHits, DataBank HodoClusters) {
@@ -288,7 +288,7 @@ public class FT {
                     }
                 }
             }
-		
+
 	if(gammas.size()>=2) {
 		for (int i1 = 0; i1 < gammas.size(); i1++) {
                 	for (int i2 = i1 + 1; i2 < gammas.size(); i2++) {
@@ -309,7 +309,7 @@ public class FT {
 	}
 
         public void processEvent(DataEvent event) {
-		
+
 		DataBank recRun    = null;
         	DataBank recBankEB = null;
         	DataBank recEvenEB = null;
@@ -348,7 +348,7 @@ public class FT {
 			if (ftHodoHits != null && ftHodoClusters != null) fillFTHodo(ftHodoHits, ftHodoClusters);
 			if (ftCalClusters != null) fillFTCalo(ftParticles, ftCalClusters);
 		} //End if ftParticle is not null
-		
+
 
 	}
 
@@ -386,7 +386,7 @@ public class FT {
         	fcharge.setParameter(0, hAmp);
         	fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
         	fcharge.setParameter(1, hMean);
-        	fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30        
+        	fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
         	fcharge.setParameter(2, 0.3);//Changed from 2
         	fcharge.setParLimits(2, 0.1, 1);//Changed from 0.5-10
         	fcharge.setParameter(3, 0.2*hAmp);
@@ -423,7 +423,7 @@ public class FT {
 		can_FT.cd(6);can_FT.draw(hi_hodo_tmatch[0]);
 		can_FT.cd(7);can_FT.getPad(7).getAxisZ().setLog(true);can_FT.draw(hi_hodo_tmatch_2D[0]);
 		can_FT.cd(9);can_FT.draw(hi_hodo_tmatch[1]);
-		can_FT.cd(10);can_FT.getPad(10).getAxisZ().setLog(true);can_FT.draw(hi_hodo_tmatch_2D[1]);	
+		can_FT.cd(10);can_FT.getPad(10).getAxisZ().setLog(true);can_FT.draw(hi_hodo_tmatch_2D[1]);
 		can_FT.cd(12);can_FT.getPad(12).getAxisY().setLog(true);can_FT.draw(hi_cal_nclusters);
 		can_FT.cd(13);can_FT.getPad(13).getAxisY().setLog(true);can_FT.draw(hi_cal_clsize);can_FT.draw(hi_cal_clsize_ch,"same");
 		can_FT.cd(14);can_FT.getPad(14).getAxisZ().setLog(true);can_FT.draw(hi_cal_clsize_en);
@@ -438,7 +438,7 @@ public class FT {
 		can_FT.cd(23);can_FT.draw(hi_cal_time_theta_neu);
 		can_FT.cd(24);can_FT.draw(hpi0sum);can_FT.draw(fpi0,"same");
 		can_FT.cd(25);can_FT.draw(hmassangle);
-		
+
 
 		if(runNum>0){
 			if(!write_volatile)can_FT.save(String.format("plots"+runNum+"/FT.png"));
@@ -461,7 +461,7 @@ public class FT {
 		dirout.addDataSet(hi_cal_nclusters,hi_cal_clsize,hi_cal_clsize_ch,hi_cal_clsize_en,hi_cal_e_ch,hi_cal_e_all,hi_cal_theta_ch,hi_cal_phi_ch,hi_cal_time_ch,hi_cal_time_cut_ch,hi_cal_time_e_ch);
 		dirout.addDataSet(hi_cal_time_theta_ch,hi_cal_time_neu,hi_cal_time_cut_neu,hi_cal_time_e_neu,hi_cal_time_theta_neu,hpi0sum,hmassangle);
                 if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_FT_"+runNum+".hipo");
-                
+
 		if(!write_volatile){
 			if(runNum>0)dirout.writeFile("plots"+runNum+"/out_FT_"+runNum+".hipo");
 			else dirout.writeFile("plots/out_FT.hipo");
@@ -485,13 +485,13 @@ public class FT {
                 Scanner read;
                 try {
                         read = new Scanner(file);
-                        do { 
+                        do {
                                 String filename = read.next();
                                 toProcessFileNames.add(filename);
 
                         }while (read.hasNext());
                         read.close();
-                }catch(IOException e){ 
+                }catch(IOException e){
                         e.printStackTrace();
                 }
 		int maxevents = 50000000;
@@ -520,4 +520,3 @@ public class FT {
 		ana.write();
         }
 }
-
