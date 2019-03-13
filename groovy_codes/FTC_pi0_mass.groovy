@@ -25,7 +25,7 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  def h1 = dir.getObject('/ft/hpi0mass')
+  def h1 = dir.getObject('/ft/hpi0sum')
   // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
 
