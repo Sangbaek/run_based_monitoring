@@ -35,7 +35,7 @@ for(arg in args.drop(1)) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     iL=it+1
-    def h1 = dir.getObject(String.format("/cnd/H_CND_time_pos%d",iL)
+    def h1 = dir.getObject(String.format("/cnd/H_CND_time_pos%d",iL))
     // h1.setName("positive, layer"+iL)
     // h1.setTitle("CND time - start time")
     // h1.setTitleX("CND time - start time")

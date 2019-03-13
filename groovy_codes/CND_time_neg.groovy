@@ -12,8 +12,8 @@ def grtl = (1..3).collect{
 
 def grtl2 = (1..3).collect{
   def gr2 = new GraphErrors('layer'+sl_num+'Sigma')
-  gr2.setTitle("CND time (Siga) per layer")
-  gr2.setTitleY("CND time (Siga) per layer")
+  gr2.setTitle("CND time (Sigma) per layer")
+  gr2.setTitleY("CND time (Sigma) per layer")
   gr2.setTitleX("run number")
   return gr2
 }
@@ -36,7 +36,7 @@ for(arg in args.drop(1)) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     iL=it+1
-    def h1 = dir.getObject(String.format("/cnd/H_CND_time_neg%d",iL)
+    def h1 = dir.getObject(String.format("/cnd/H_CND_time_neg%d",iL))
     // h1.setName("negative, layer"+iL)
     // h1.setTitle("CND time - start time")
     // h1.setTitleX("CND time - start time")
