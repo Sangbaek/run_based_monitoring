@@ -24,9 +24,12 @@ for(arg in args.drop(1)) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/trig/H_trig_sector_elec_rat')
-    (1..6).each{
-      grtl.addPoint(run, h1.getBinContent(it), 0, 0)
-    }
+    grtl.addPoint(run, h1.getBinContent(1), 0, 0)
+    grtl.addPoint(run, h1.getBinContent(2), 0, 0)
+    grtl.addPoint(run, h1.getBinContent(3), 0, 0)
+    grtl.addPoint(run, h1.getBinContent(4), 0, 0)
+    grtl.addPoint(run, h1.getBinContent(5), 0, 0)
+    grtl.addPoint(run, h1.getBinContent(6), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
