@@ -2,10 +2,13 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('trig_sector_neutral_rat')
-grtl.setTitle("Neutrals per trigger per sector")
-grtl.setTitleY("Neutrals per trigger per sector")
-grtl.setTitleX("run number")
+def grtl = (1..6).collect{
+  def gr = new GraphErrors('sec'+it)
+  gr.setTitle("Neutrals per trigger per sector")
+  gr.setTitleY("Neutrals per per sector")
+  gr.setTitleX("run number")
+  return gr
+}
 
 
 TDirectory out = new TDirectory()
@@ -24,12 +27,9 @@ for(arg in args.drop(1)) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/trig/H_trig_sector_neutral_rat')
-    grtl.addPoint(run, h1.getBinContent(1), 0, 0)
-    grtl.addPoint(run, h1.getBinContent(2), 0, 0)
-    grtl.addPoint(run, h1.getBinContent(3), 0, 0)
-    grtl.addPoint(run, h1.getBinContent(4), 0, 0)
-    grtl.addPoint(run, h1.getBinContent(5), 0, 0)
-    grtl.addPoint(run, h1.getBinContent(6), 0, 0)
+    (0..<6).each{
+      grtl[it].addPoint(run, h1.getBinContent(it), 0, 0)
+    }
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)

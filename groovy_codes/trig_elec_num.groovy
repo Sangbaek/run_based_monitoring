@@ -27,7 +27,7 @@ for(arg in args.drop(1)) {
     def h1 = dir.getObject('/trig/H_trig_sector_elec_rat')
     // grtl1.addPoint(run, h1.getBinContent(1), 0, 0)
     (0..<6).each{
-      grtl[it].addPoint(run, h1.getBinContent(it+1), 0, 0)
+      grtl[it].addPoint(run, h1.getBinContent(it), 0, 0)
     }
     out.mkdir('/'+run)
     out.cd('/'+run)
