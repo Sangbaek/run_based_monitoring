@@ -40,7 +40,7 @@ for(arg in args.drop(1)) {
     // h1.setTitle("CND time - start time")
     // h1.setTitleX("CND time - start time")
 
-    def f1 = ROOTFitter.fit(h1)
+    // def f1 = ROOTFitter.fit(h1)
 
     // def f1 = ROOTFitter.fit(h1)
 
