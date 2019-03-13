@@ -8,7 +8,7 @@ def grtl = (1..6).collect{
   gr.setTitleY("Positives per per sector")
   gr.setTitleX("run number")
   return gr
-
+}
 
 TDirectory out = new TDirectory()
 
