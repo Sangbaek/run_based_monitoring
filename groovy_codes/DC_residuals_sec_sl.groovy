@@ -36,7 +36,7 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<36).each{
+  (6..<8).each{
     sec_num = it.intdiv(6)+1
     sl_num = (it+1)%6
     def h2 = dir.getObject(String.format('/dc/DC_residuals_trkDoca_%d_%d',sec_num,sl_num))
