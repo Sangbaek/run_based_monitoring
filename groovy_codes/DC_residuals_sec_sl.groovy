@@ -5,6 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..36).collect{
   sec_num = (it-1).intdiv(6)+1
   sl_num = it%6
+  if (sl_num==0) sl_num=6
   def gr = new GraphErrors('sec'+sec_num +'sl'+sl_num)
   gr.setTitle("DC residuals (peak value) per sector per superlayer")
   gr.setTitleY("DC residuals (peak value) per sector per superlayer")
@@ -15,6 +16,7 @@ def grtl = (1..36).collect{
 def grtl2 = (1..36).collect{
   sec_num = (it-1).intdiv(6)
   sl_num = it%6
+  if (sl_num==0) sl_num=6
   def gr2 = new GraphErrors('sec'+sec_num +'sl'+sl_num+'sigma')
   gr2.setTitle("DC residuals (peak value) per sector per superlayer")
   gr2.setTitleY("DC residuals (peak value) per sector per superlayer")
@@ -36,9 +38,10 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (6..<12).each{
+  (6..<8).each{
     sec_num = it.intdiv(6)+1
     sl_num = (it+1)%6
+    if (sl_num==0) sl_num=6
     def h2 = dir.getObject(String.format('/dc/DC_residuals_trkDoca_%d_%d',sec_num,sl_num))
     def h1 = h2.projectionY()
     h1.setName("sec"+sec_num+"sl"+sl_num)
