@@ -16,8 +16,8 @@ def grtl2 = (1..36).collect{
   sec_num = it.intdiv(6)
   sl_num = it%6
   def gr2 = new GraphErrors('sec'+sec_num +'sl'+sl_num+'sigma')
-  gr2.setTitle("DC residuals (peak value) per sector")
-  gr2.setTitleY("DC residuals (peak value) per sector")
+  gr2.setTitle("DC residuals (peak value) per sector per superlayer")
+  gr2.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr2.setTitleX("run number")
   return gr2
 }
