@@ -37,9 +37,9 @@ for(arg in args.drop(1)) {
     // def h1 = h2.projectionY()
     iL=it+1
     def h1 = dir.getObject(String.format("/cnd/H_CND_time_neg%d",iL)
-    h1.setName("negative, layer"+iL)
-    h1.setTitle("CND time - start time")
-    h1.setTitleX("CND time - start time")
+    // h1.setName("negative, layer"+iL)
+    // h1.setTitle("CND time - start time")
+    // h1.setTitleX("CND time - start time")
 
     // def f1 = ROOTFitter.fit(h1)
 
