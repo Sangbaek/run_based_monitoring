@@ -26,10 +26,10 @@ for(arg in args.drop(1)) {
   (0..<6).each{
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/dc/H_dcp_vz_s'+(it+1))
+    def h1 = dir.getObject('/dc/H_dcm_vz_s'+(it+1))
     h1.setName("sec"+(it+1))
-    h1.setTitle("VZ for positive")
-    h1.setTitleX("VZ for positive")
+    h1.setTitle("VZ for negative")
+    h1.setTitleX("VZ for negative")
 
     // def f1 = ROOTFitter.fit(h1)
 
@@ -45,4 +45,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('out_positive_VZ.hipo')
+out.writeFile('out_negative_VZ.hipo')
