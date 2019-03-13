@@ -63,5 +63,11 @@ for(arg in args.drop(1)) {
 
 out.mkdir('/timelines')
 out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+grtl1.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
+grtl3.each{ out.addDataSet(it) }
+grtl4.each{ out.addDataSet(it) }
+grtl5.each{ out.addDataSet(it) }
+grtl6.each{ out.addDataSet(it) }
+
 out.writeFile('out_elec_num.hipo')
