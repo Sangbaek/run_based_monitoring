@@ -41,9 +41,9 @@ for(arg in args.drop(1)) {
     sec_num = (it+1).intdiv(6)
     sl_num = (it+1)%6
     def h1 = dir.getObject(String.format('/dc/DC_residuals_trkDoca_%d_%d',sec_num,sl_num))
-    h1.setName("sec"+sec_num+"sl"+sl_num)
-    h1.setTitle("DC residuals per sector per superlayer")
-    h1.setTitleX("DC residuals per sector per superlayer")
+    // h1.setName("sec"+sec_num+"sl"+sl_num)
+    // h1.setTitle("DC residuals per sector per superlayer")
+    // h1.setTitleX("DC residuals per sector per superlayer")
 
     // def f1 = ROOTFitter.fit(h1)
 
