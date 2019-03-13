@@ -22,9 +22,6 @@ def grtl2 = (1..36).collect{
   return gr2
 }
 
-int sec_num=0;
-int sl_num=0;
-
 
 TDirectory out = new TDirectory()
 
