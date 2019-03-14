@@ -140,7 +140,7 @@ public class monitor2p2GeV {
 	public H2F H_elast_e_p_th, H_elast_W_sect, H_CVT_corr_e_mom;
 	public H1F H_CVT_e_vz_diff, H_CVT_e_phi_diff, H_elast_W;
 
-	public H1F H_e_RFtime1 , H_pi_RFtime1 ;
+	public H1F H_e_RFtime1 , H_pi_RFtime1, H_RFtimediff ;
 
 	public monitor2p2GeV(int reqrunNum, float reqEB, boolean reqTimeBased, boolean reqwrite_volatile ) {
 		runNum = reqrunNum;EB=reqEB;userTimeBased=reqTimeBased;
@@ -931,6 +931,9 @@ public class monitor2p2GeV {
 		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",100,-1,1);
 		H_pi_RFtime1.setTitle("pion vertex time");
 		H_pi_RFtime1.setTitleX("t (ns)");
+		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",200,-2,2);
+		H_RFtimediff.setTitle("RF time difference (1-2)");
+		H_RFtimediff.setTitleX("t (ns)");
 
 		//H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,100,250,500,100,250);
 		//if(runNum>0 && runNum<3210)H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,550,600,500,550,600);
@@ -1886,6 +1889,7 @@ public class monitor2p2GeV {
 				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
 				H_pi_RFtime1.fill(RFtime1);
 			}
+			H_RFtimediff(RFtime1-RFtime2);
 		}
 	}
 	public void fillOtherTOF(DataBank bank){
@@ -2792,11 +2796,13 @@ public class monitor2p2GeV {
 		trig_track_ind = -1;e_track_ind = -1;pip_part_ind = -1;pim_part_ind = -1;
 		if(event.hasBank("RUN::rf")){
 			RFtime1=0;
+			RFtime2=0;
 			for(int r=0;r<event.getBank("RUN::rf").rows();r++){
 				if(event.getBank("RUN::rf").getInt("id",r)==1)RFtime1=event.getBank("RUN::rf").getFloat("time",r);
+				else RFtime2=event.getBank("RUN::rf").getFloat("time",r);
 				//try else for RFtime2
 			}
-			RFtime2 = 0f;//bank.getFloat("time",1);
+			// RFtime2 = 0f;//bank.getFloat("time",1);
 		}
 		for(int i=1;i<7;i++)trigger_bits[i]=false;
 		if(event.hasBank("RUN::config")){
@@ -3831,12 +3837,13 @@ public class monitor2p2GeV {
 
 		EmbeddedCanvas can_RF = new EmbeddedCanvas(); //test plot for RF variables for run-based monitoring
 		can_RF.setSize(600,1200);
-		can_RF.divide(1,2);
+		can_RF.divide(2,2);
 		can_RF.setAxisTitleSize(24);
 		can_RF.setAxisFontSize(24);
 		can_RF.setTitleSize(24);
 		can_RF.cd(0);can_RF.draw(H_e_RFtime1);
 		can_RF.cd(1);can_RF.draw(H_pi_RFtime1);
+		can_RF.cd(2);can_RF.draw(H_RFtimediff);
 		if(runNum>0){
 			if(!write_volatile)can_RF.save(String.format("plots"+runNum+"/RF.png"));
 			if(write_volatile)can_RF.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/RF.png"));
