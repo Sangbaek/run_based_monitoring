@@ -931,7 +931,7 @@ public class cndCheckPlots {
 								TDirectory dirout = new TDirectory();
 								dirout.mkdir("/cnd/");
 								dirout.cd("/cnd/");
-								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_negative[iL],H_CND_time_z_neutral[iL],H_CND_time_pip[iL],H_CND_time_pim[iL],H_CND_time_proton[iL]);//H_CND_time_all[iL]);
+								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_z_negative[iL],H_CND_time_z_neutral[iL],H_CND_time_pip[iL],H_CND_time_pim[iL],H_CND_time_proton[iL]);//H_CND_time_all[iL]);
 								if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_CND_"+runNum+".hipo");
 
 								if(!write_volatile){
