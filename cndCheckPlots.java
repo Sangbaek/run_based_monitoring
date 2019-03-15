@@ -100,8 +100,9 @@ public class cndCheckPlots {
 				H_CND_z_pad  = new H2F[3];
 				H_CND_time_z_negative = new H2F[3];
 				H_CND_time_z_neutral = new H2F[3];
-				H_CND_time_positive = new H1F[3];
-				H_CND_time_negative = new H1F[3];
+				H_CND_time_pip = new H1F[3];
+				H_CND_time_proton = new H1F[3];
+				H_CND_time_pim = new H1F[3];
 				// H_CND_time_all = new H1F[3];
 				H_CVT_CND_z1 = new H2F[3];
 				DiffZCVT = new H2F[3];
