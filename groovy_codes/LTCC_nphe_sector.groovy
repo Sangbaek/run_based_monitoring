@@ -2,8 +2,9 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
+def grtl = (0..1).collect{
+  sec_num=2*it+3
+  def gr = new GraphErrors('sec'+sec_num)
   gr.setTitle("LTCC Number of Photoelectrons")
   gr.setTitleY("LTCC Number of Photoelectrons per sector")
   gr.setTitleX("run number")
@@ -23,10 +24,11 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<6).each{
-    def h2 = dir.getObject('/elec/H_trig_LTCCn_theta_S'+(it+1))
+  (0..1).each{
+    sec_num=2*it+3
+    def h2 = dir.getObject('/elec/H_trig_LTCCn_theta_S'+(sec_num))
     def h1 = h2.projectionY()
-    h1.setName("sec"+(it+1))
+    h1.setName("sec"+(sec_num))
     h1.setTitle("LTCC Number of Photoelectrons")
     h1.setTitleX("LTCC Number of Photoelectrons")
 
