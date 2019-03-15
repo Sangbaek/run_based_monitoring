@@ -1889,7 +1889,7 @@ public class monitor2p2GeV {
 				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
 				H_pi_RFtime1.fill(RFtime1);
 			}
-			H_RFtimediff(RFtime1-RFtime2);
+			H_RFtimediff.fill(RFtime1-RFtime2);
 		}
 	}
 	public void fillOtherTOF(DataBank bank){
@@ -4330,7 +4330,7 @@ public class monitor2p2GeV {
 		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
 		dirout.mkdir("/RF/"); // saving pi_RFtime1's
 		dirout.cd("/RF/");
-		dirout.addDataSet(H_e_RFtime1, H_pi_RFtime1);
+		dirout.addDataSet(H_e_RFtime1, H_pi_RFtime1, H_RFtimediff);
 		//dirout.mkdir("");
 		//dirout.cd("");
 

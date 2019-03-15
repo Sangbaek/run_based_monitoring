@@ -32,8 +32,8 @@ public class cndCheckPlots {
 		public H2F[] H_CVT_CND_z,H_CVT_CND_z1, H_CVT_CND_phi;
 		public H2F[] pathlength,momentum,stt,pathlengthpl,momentumpl,sttpl,pathlengthm,momentumm,sttm;
 		public F1D BetaPProt, BetaPPion,IntRes,IntRes1,IntRes2,IntRes3,funcZ,funcT,funcE;
-		public H2F[] H_CND_time_z_charged, H_CND_time_z_neutral;
-		public H1F[] H_CND_time_negative, H_CND_time_positive, H_CND_time_all;
+		public H2F[] H_CND_time_z_negative, H_CND_time_z_neutral;
+		public H1F[] H_CND_time_proton, H_CND_time_pip, H_CND_time_pim;
 		public H2F H_CND_t_t;
 		public H1F RFTIME;
 		public H1F[] H_CND_res;
@@ -98,11 +98,11 @@ public class cndCheckPlots {
 				H_CVT_CND_phi = new H2F[3];
 				H_CND_vt_pad  = new H2F[3];
 				H_CND_z_pad  = new H2F[3];
-				H_CND_time_z_charged = new H2F[3];
+				H_CND_time_z_negative = new H2F[3];
 				H_CND_time_z_neutral = new H2F[3];
 				H_CND_time_positive = new H1F[3];
 				H_CND_time_negative = new H1F[3];
-				H_CND_time_all = new H1F[3];
+				// H_CND_time_all = new H1F[3];
 				H_CVT_CND_z1 = new H2F[3];
 				DiffZCVT = new H2F[3];
 				DiffZCND = new H2F[3];
@@ -148,22 +148,26 @@ public class cndCheckPlots {
 						H_CND_time_z_neutral[iL].setTitle("CND time vs z for neutral (layer "+(iL+1)+")");
 						H_CND_time_z_neutral[iL].setTitleX("CND z");
 						H_CND_time_z_neutral[iL].setTitleY("CND time");
-						H_CND_time_z_charged[iL] = new H2F("H_CND_time_z_charged","H_CND_time_z_charged",50,0,40,100,-3,3);
-						H_CND_time_z_charged[iL].setTitle("CND vt vs z (negative tracks) (layer "+(iL+1)+")");
-						H_CND_time_z_charged[iL].setTitleX("CND z");
-						H_CND_time_z_charged[iL].setTitleY("CND vt");
-						title=String.format("H_CND_time_negative%d",iL+1);
-						H_CND_time_negative[iL] = new H1F(title,title,100,-5,5);
-						H_CND_time_negative[iL].setTitle("CND time (negative tracks) (layer "+(iL+1)+")");
-						H_CND_time_negative[iL].setTitleX("CND time");
-						title=String.format("H_CND_time_positive%d",iL+1);
-						H_CND_time_positive[iL] = new H1F(title,title,100,-5,5);
-						H_CND_time_positive[iL].setTitle("CND time (positive tracks) (layer "+(iL+1)+")");
-						H_CND_time_positive[iL].setTitleX("CND time");
-						title=String.format("H_CND_time_all%d",iL+1);
-						H_CND_time_all[iL] = new H1F(title,title,100,-5,5);
-						H_CND_time_all[iL].setTitle("CND time (all tracks) (layer "+(iL+1)+")");
-						H_CND_time_all[iL].setTitleX("CND time");
+						H_CND_time_z_negative[iL] = new H2F("H_CND_time_z_negative","H_CND_time_z_negative",50,0,40,100,-3,3);
+						H_CND_time_z_negative[iL].setTitle("CND vt vs z (negative tracks) (layer "+(iL+1)+")");
+						H_CND_time_z_negative[iL].setTitleX("CND z");
+						H_CND_time_z_negative[iL].setTitleY("CND vt");
+						title=String.format("H_CND_time_pim%d",iL+1);
+						H_CND_time_pim[iL] = new H1F(title,title,100,-5,5);
+						H_CND_time_pim[iL].setTitle("CND time (#pi^-) (layer "+(iL+1)+")");
+						H_CND_time_pim[iL].setTitleX("vertex time");
+						title=String.format("H_CND_time_proton%d",iL+1);
+						H_CND_time_proton[iL] = new H1F(title,title,100,-5,5);
+						H_CND_time_proton[iL].setTitle("CND time (proton tracks) (layer "+(iL+1)+")");
+						H_CND_time_proton[iL].setTitleX("vertex time");
+						title=String.format("H_CND_time_pip%d",iL+1);
+						H_CND_time_pip[iL] = new H1F(title,title,100,-5,5);
+						H_CND_time_pip[iL].setTitle("CND time (#pi^+ tracks) (layer "+(iL+1)+")");
+						H_CND_time_pip[iL].setTitleX("vertex time");
+						// title=String.format("H_CND_time_all%d",iL+1);
+						// H_CND_time_all[iL] = new H1F(title,title,100,-5,5);
+						// H_CND_time_all[iL].setTitle("CND time (charged tracks) (layer "+(iL+1)+")");
+						// H_CND_time_all[iL].setTitleX("vertex time");
 
 
 						H_CND_z_pad[iL] = new H2F("H_CND_z_pad","H_CND_z_pad",47,0,48,80,0,40);
@@ -437,7 +441,7 @@ public class cndCheckPlots {
 
 										H_CND_beta_e_neutral.fill(e,betaN);
 										H_CND_time_z_neutral[layer-1].fill(z,time-STT);
-										H_CND_time_all[layer-1].fill(time-STT);
+										// H_CND_time_all[layer-1].fill(time-STT);
 								}
 						}
 
@@ -514,9 +518,7 @@ public class cndCheckPlots {
 										//H_CND_edep_phi[layer-1].fill((sector-1)*2+(comp-0.5),e);
 								}
 								H_CVT_CND_phi[layer-1].fill(cndPhi,cvtPhi);
-								if(charge==-1)H_CND_time_z_charged[layer-1].fill(z,vtP);
-								if(charge== 1)H_CND_time_positive[layer-1].fill(time-STT); //pion or proton?
-								H_CND_time_all[layer-1].fill(time-STT);
+								if(charge==-1)H_CND_time_z_negative[layer-1].fill(z,vtP);
 								if(charge==-1 && z<(25.+2.5*(layer-1)))H_CND_t_t.fill(timeC,timeCVT);
 								//only include one hit from cluster
 								//if(Tracks[trkID]==0){
@@ -533,7 +535,8 @@ public class cndCheckPlots {
 										pathlength[layer-1].fill((sector-1)*2+(comp-0.5),path);
 										momentum[layer-1].fill((sector-1)*2+(comp-0.5),mom);
 										stt[layer-1].fill((sector-1)*2+(comp-0.5),STT);
-
+										// H_CND_time_charged[layer-1].fill(vt);
+										H_CND_time_proton[layer-1].fill(vt);
 								}
 								//pi-
 								if (charge==-1 && Math.sqrt(Math.abs(mass2))<0.38 && mass2>-0.35*0.35 && z<(25.+2.5*(layer-1)) && Math.abs(vtP)<1.5)
@@ -549,8 +552,8 @@ public class cndCheckPlots {
 										float dE = e/pathTH;
 
 										H_CND_alignE[((comp-1)*3)+(layer-1)+((sector-1)*6)].fill(dE);
-
-
+										// H_CND_time_charged[layer-1].fill(vtP);
+										H_CND_time_pim[layer-1].fill(vtP);
 								}
 								//pi+
 								if (charge==1 && Math.sqrt(Math.abs(mass2))<0.4 && mass2>-0.2*0.2 && z<(25.+2.5*(layer-1)) && Math.abs(vtP)<1.5)
@@ -558,7 +561,8 @@ public class cndCheckPlots {
 										pathlengthpl[layer-1].fill((sector-1)*2+(comp-0.5),path);
 										momentumpl[layer-1].fill((sector-1)*2+(comp-0.5),mom);
 										sttpl[layer-1].fill((sector-1)*2+(comp-0.5),STT);
-
+										// H_CND_time_charged[layer-1].fill(vtP);
+										H_CND_time_pip[layer-1].fill(vtP);
 								}
 						}
 
@@ -769,11 +773,11 @@ public class cndCheckPlots {
 								can_cnd.cd(34+9);can_cnd.draw(H_CND_beta_p);can_cnd.draw(BetaPProt,"same");can_cnd.draw(BetaPPion,"same");can_cnd.getPad().getAxisZ().setLog(true);
 								can_cnd.cd(19);can_cnd.draw(H_CND_beta_e_neutral);
 								for(int iL=0;iL<3;iL++){
-										can_cnd.cd(21+iL);can_cnd.draw(H_CND_time_z_charged[iL]);
+										can_cnd.cd(21+iL);can_cnd.draw(H_CND_time_z_negative[iL]);
 										can_cnd.cd(24+iL);can_cnd.draw(H_CND_time_z_neutral[iL]);
-										can_cnd.cd(27+iL);can_cnd.draw(H_CND_time_negative[iL]);//Test plot for cnd time, negative
-										can_cnd.cd(30+iL);can_cnd.draw(H_CND_time_positive[iL]);//Test plot for cnd time, positive
-										can_cnd.cd(33+iL);can_cnd.draw(H_CND_time_all[iL]);//Test plot for cnd time, all
+										can_cnd.cd(27+iL);can_cnd.draw(H_CND_time_proton[iL]);//Test plot for cnd time, proton
+										can_cnd.cd(30+iL);can_cnd.draw(H_CND_time_pip[iL]);//Test plot for cnd time, pip
+										can_cnd.cd(33+iL);can_cnd.draw(H_CND_time_pim[iL]);//Test plot for cnd time, pim
 								}
 								//can_cnd.cd(26);can_cnd.draw(RFTIME);
 								//can_cnd.cd(27);can_cnd.getPad().getAxisZ().setLog(true);can_cnd.draw(H_CND_t_t);
@@ -926,7 +930,7 @@ public class cndCheckPlots {
 								TDirectory dirout = new TDirectory();
 								dirout.mkdir("/cnd/");
 								dirout.cd("/cnd/");
-								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_z_neutral[iL],H_CND_time_negative[iL],H_CND_time_positive[iL],H_CND_time_all[iL]);
+								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_negative[iL],H_CND_time_z_neutral[iL],H_CND_time_pip[iL],H_CND_time_pim[iL],H_CND_time_proton[iL]);//H_CND_time_all[iL]);
 								if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_CND_"+runNum+".hipo");
 
 								if(!write_volatile){
