@@ -933,7 +933,7 @@ public class monitor2p2GeV {
 		H_e_RFtime1.setTitle("electron RF1 time");
 		H_e_RFtime1.setTitleX("t (ns)");
 		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",500,-50,200);
-		H_pi_RFtime1.setTitle("pion RF1 time");
+		H_pi_RFtime1.setTitle("charged pion RF1 time");
 		H_pi_RFtime1.setTitleX("t (ns)");
 		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",100,-5,5);
 		H_RFtimediff.setTitle("RF time difference (1-2)");
