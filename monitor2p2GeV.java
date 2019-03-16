@@ -925,13 +925,13 @@ public class monitor2p2GeV {
 		H_e_vt2 = new H1F("H_e_vt2","H_e_vt2",100,-1,1);
 		H_e_vt2.setTitle("electron vertex time");
 		H_e_vt2.setTitleX("t (ns)");
-		H_e_RFtime1 = new H1F("H_e_RFtime1","H_e_RFtime1",100,-1,1);
-		H_e_RFtime1.setTitle("electron RF time");
+		H_e_RFtime1 = new H1F("H_e_RFtime1","H_e_RFtime1",500,-50,200);
+		H_e_RFtime1.setTitle("electron RF1 time");
 		H_e_RFtime1.setTitleX("t (ns)");
-		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",100,-1,1);
-		H_pi_RFtime1.setTitle("pion vertex time");
+		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",500,-50,200);
+		H_pi_RFtime1.setTitle("pion RF1 time");
 		H_pi_RFtime1.setTitleX("t (ns)");
-		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",200,-2,2);
+		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",100,-5,5);
 		H_RFtimediff.setTitle("RF time difference (1-2)");
 		H_RFtimediff.setTitleX("t (ns)");
 
@@ -1890,6 +1890,7 @@ public class monitor2p2GeV {
 				H_pi_RFtime1.fill(RFtime1);
 			}
 			H_RFtimediff.fill(RFtime1-RFtime2);
+			// System.out.println(String.format(RFtime1+"	"+RFtime2));
 		}
 	}
 	public void fillOtherTOF(DataBank bank){
@@ -2798,6 +2799,7 @@ public class monitor2p2GeV {
 			RFtime1=0;
 			RFtime2=0;
 			for(int r=0;r<event.getBank("RUN::rf").rows();r++){
+				// System.out.println(String.format(event.getBank("RUN::rf").getInt("id",r)+"	"+ r+"	"+ event.getBank("RUN::rf").rows()));
 				if(event.getBank("RUN::rf").getInt("id",r)==1)RFtime1=event.getBank("RUN::rf").getFloat("time",r);
 				else RFtime2=event.getBank("RUN::rf").getFloat("time",r);
 				//try else for RFtime2
