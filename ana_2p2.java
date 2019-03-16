@@ -29,7 +29,7 @@ public class ana_2p2 {
 		int runNum = 0;
 		String filelist = "list_of_files.txt";
 		int maxevents = 500000;
-		float EB = 10;
+		float EB = 10.2f;
 		boolean useTB=true;
 		boolean useVolatile = false;
 		if(args.length>0)runNum=Integer.parseInt(args[0]);
