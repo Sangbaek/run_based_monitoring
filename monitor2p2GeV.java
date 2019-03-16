@@ -151,11 +151,13 @@ public class monitor2p2GeV {
 		found_eTraj = 0;
 		found_eHTCC = 0;
 		trigger_bits = new boolean[32];
-		Ebeam = 2.22f;
-                if(reqEB>0 && reqEB<4)Ebeam=2.22f;
-                if(reqEB>4 && reqEB<7.1)Ebeam=6.42f;
-                if(reqEB>7.1 && reqEB<9)Ebeam=7.55f;
-                if(reqEB>9)Ebeam=10.6f;
+                //Ebeam = 2.22f;
+                //if(reqEB>0 && reqEB<4)Ebeam=2.22f;
+                //if(reqEB>4 && reqEB<7.1)Ebeam=6.42f;
+                //if(reqEB>7.1 && reqEB<9)Ebeam=7.55f;
+                //if(reqEB>9)Ebeam=10.6f;
+                Ebeam = EB;
+System.out.println("Beam energy = "+Ebeam);
 		String choiceTracking = " warning! Unspecified tracking";
 		if(userTimeBased)choiceTracking=" using TIME BASED tracking";
 		if(!userTimeBased)choiceTracking=" using HIT BASED tracking";
@@ -4415,7 +4417,7 @@ public class monitor2p2GeV {
 		if(args.length>1)filelist = args[1];
                 long maxevents = 50000000L;
                 if(args.length>2)maxevents=Integer.parseInt(args[2]);
-                float Eb = 10.6f;
+                float Eb = 10.2f;
                 if(args.length>3)Eb=Float.parseFloat(args[3]);
 		if(args.length>4)if(Integer.parseInt(args[4])==0)useTB=false;
 		monitor2p2GeV ana = new monitor2p2GeV(runNum,Eb,useTB,useVolatile);
