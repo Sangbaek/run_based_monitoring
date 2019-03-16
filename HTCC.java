@@ -36,11 +36,12 @@ public class HTCC{
 	public HTCC(int reqR, float reqEb, boolean reqTimeBased, boolean reqwrite_volatile){
         	runNum = reqR;userTimeBased=reqTimeBased;
 		write_volatile = reqwrite_volatile;
-		// EBeam = 2.2f;
-    //if(reqEb>0 && reqEb<4)EBeam=2.22f;
-    //if(reqEb>4 && reqEb<7.1)EBeam=6.42f;
-    //if(reqEb>7.1 && reqEb<9)EBeam=7.55f;
-    EBeam=reqEb;
+		//EBeam = 2.2f;
+		//if(reqEb>0 && reqEb<4)EBeam=2.22f;
+		//if(reqEb>4 && reqEb<7.1)EBeam=6.42f;
+		//if(reqEb>7.1 && reqEb<9)EBeam=7.55f;
+		//if(reqEb>9)EBeam=10.6f;
+		EBeam = reqEb;
 		trigger_bits = new boolean[32];
 		H_e_theta_mom = new H2F[7];
 		H_e_phi_mom = new H2F[7];
