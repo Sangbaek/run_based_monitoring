@@ -105,19 +105,19 @@ public class ana_2p2 {
 		ana_mon.write();
 		// ana_cen.plot();
 		ana_cen.write();
-		ana_tof.analyze();
+		// ana_tof.analyze();
 		// ana_tof.plot();
-		ana_tof.write();
+		// ana_tof.write();
 		// ana_occ.plot();
 		// ana_htc.plot();
 		ana_htc.write();
 		ana_cnd.fit();
 		// ana_cnd.plot();
 		ana_cnd.write();
-		ana_ft.analyze();
+		// ana_ft.analyze();
 		// ana_ft.plot();
-		ana_ft.write();
+		// ana_ft.write();
 		// ana_dst_mon.plot();
-		ana_dst_mon.write();
+		// ana_dst_mon.write();
         }
 }
