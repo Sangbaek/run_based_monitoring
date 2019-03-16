@@ -94,6 +94,7 @@ public class monitor2p2GeV {
 
 	public H1F[] H_MM_epip_Spip, H_MM_epip_Se;
 	public H1F H_MM_epip, H_MM_epip_zoom, H_pip_vtd, H_pip_vz_ve_diff, H_pip_Dphi;
+	public H1F H_pim_vtd;
 	public H2F H_pip_theta_phi, H_pip_theta_mom, H_pip_phi_mom, H_pip_vz_phi, H_pip_vz_theta, H_pip_vz_mom, H_pip_e_vt, H_pip_vz_ve;
 	public H2F H_pip_vz_ve_diff_mom, H_pip_vz_ve_diff_theta, H_pip_vz_ve_diff_phi, H_pip_vz_ve_diff_Dphi;
 	public H2F H_MM_epip_phi, H_pip_beta_p, H_pip_beta2_p, H_pip_vtd_mom, H_pip_vtd_theta, H_pip_vtd_phi;
@@ -678,7 +679,10 @@ public class monitor2p2GeV {
 		}
 		H_pip_vtd = new H1F("H_pip_vtd","H_pip_vtd",100,-5,5);
 		H_pip_vtd.setTitle("Vertex time difference e #pi^+");
-		H_pip_vtd.setTitle("#Delta t_{v} (ns)");
+		H_pip_vtd.setTitleX("#Delta t_{v} (ns)");
+		H_pim_vtd = new H1F("H_pim_vtd","H_pim_vtd",100,-5,5);
+		H_pim_vtd.setTitle("Vertex time difference e #pi^-");
+		H_pim_vtd.setTitleX("#Delta t_{v} (ns)");
 		H_MM_epip_phi = new H2F("H_MM_epip_phi","H_MM_epip_phi",100,-180,180,100,-1,5);
 		H_MM_epip_phi.setTitle("Missing mass #pi^+ vs #phi");
 		H_MM_epip_phi.setTitleX("#phi (^o)");
@@ -1592,72 +1596,113 @@ public class monitor2p2GeV {
 		}
 		return -1;
 	}
-	public int makePiPlusPimPID(DataBank bank){
-		boolean foundelec = false;
-		int npositives = 0;
-		int nnegatives = 0;
-		float mybetap = 0;
-		float mybetan = 0;
-		for(int k = 0; k < bank.rows(); k++){
-			int pid = bank.getInt("pid", k);
-			byte q = bank.getByte("charge", k);
-			float thisbeta = bank.getFloat("beta", k);
-			int status = bank.getShort("status", k);
-			boolean inDC = (status>=2000 && status<4000);
-			if(inDC && pid==11)foundelec=true;
-			if(inDC && q<0&&thisbeta>0)nnegatives++;
-			if(inDC && npositives==0&&q>0&&thisbeta>0)mybetap=thisbeta;
-			if(inDC && pid!=11&&nnegatives<2&&q<0&&thisbeta>0)mybetan=thisbeta;
-			if(inDC && q>0&&thisbeta>0)npositives++;
-		}
 
-		//if(foundelec && nnegatives==2 && npositives==1)System.out.println(foundelec+" , "+nnegatives+" , "+npositives+" , "+mybetap+" , "+mybetan);
+	public int makePiMinusPID(DataBank bank){
+					boolean foundelec = false;
+					int npositives = 0;
+					int nnegatives = 0;
+					float mybeta = 0;
+					for(int k = 0; k < bank.rows(); k++){
+									int pid = bank.getInt("pid", k);
+									int status = bank.getShort("status", k);
+									byte q = bank.getByte("charge", k);
+									float thisbeta = bank.getFloat("beta", k);
+									boolean inDC = (status>=2000 && status<4000);
+									if(inDC && pid==11)foundelec=true;
+									if(inDC && q<0&&thisbeta>0)nnegatives++;
+									if(inDC && npositives==0&&q>0&&thisbeta>0)mybeta=thisbeta;
+									if(inDC && q>0&&thisbeta>0)npositives++;
+					}
+					if(foundelec && nnegatives==2 && mybeta>0){
+									for(int k = 0; k < bank.rows(); k++){
+													int pid = bank.getInt("pid", k);
+													byte q = bank.getByte("charge", k);
+													float px = bank.getFloat("px", k);
+													float py = bank.getFloat("py", k);
+													float pz = bank.getFloat("pz", k);
+													pim_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
+													pim_theta = (float)Math.toDegrees(Math.acos(pz/pim_mom));
+													pim_phi = (float)Math.toDegrees(Math.atan2(py,px));
+													pim_vx = bank.getFloat("vx", k);
+													pim_vy = bank.getFloat("vy", k);
+													pim_vz = bank.getFloat("vz", k);
+													pim_beta = bank.getFloat("beta", k);
 
-		if(foundelec && nnegatives==2 && npositives==1 && mybetap>0 && mybetan>0){}
-		if(foundelec && nnegatives==2 && npositives>0 && npositives<3 && mybetap>0 ){
-			for(int k = 0; k < bank.rows(); k++){
-				int pid = bank.getInt("pid", k);
-				byte q = bank.getByte("charge", k);
-				int status = bank.getShort("status", k);
-				boolean inDC = (status>=2000 && status<4000);
-				if(inDC && q>0){
-					float px = bank.getFloat("px", k);
-					float py = bank.getFloat("py", k);
-					float pz = bank.getFloat("pz", k);
-					pip_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
-					pip_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
-					pip_phi = (float)Math.toDegrees(Math.atan2(py,px));
-					pip_vx = bank.getFloat("vx", k);
-					pip_vy = bank.getFloat("vy", k);
-					pip_vz = bank.getFloat("vz", k);
-					pip_beta = bank.getFloat("beta", k);
-					if(pip_mom>0.5 && pip_theta<40 && pip_theta>8 && pip_beta>0){
-						VPIP = new LorentzVector(px,py,pz,Math.sqrt(pip_mom*pip_mom+0.139*0.139));
-						pip_part_ind = k;
+													if( q<0 && pim_mom>0.5 && pim_theta<40 && pim_theta>5 && pim_beta>0 && pid!=11){
+																	VPIM = new LorentzVector(px,py,pz,Math.sqrt(pim_mom*pim_mom+0.139*0.139));
+																	return k;
+													}
+									}
 					}
-				}
-				if(inDC && q<0&&pid!=11){
-					float px = bank.getFloat("px", k);
-					float py = bank.getFloat("py", k);
-					float pz = bank.getFloat("pz", k);
-					pim_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
-					pim_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
-					pim_phi = (float)Math.toDegrees(Math.atan2(py,px));
-					pim_vx = bank.getFloat("vx", k);
-					pim_vy = bank.getFloat("vy", k);
-					pim_vz = bank.getFloat("vz", k);
-					pim_beta = bank.getFloat("beta", k);
-					//System.out.println(pim_mom+" , "+pim_theta+" , "+pim_beta);
-					if(pim_mom>0.5 && pim_theta<40 && pim_theta>8 && pim_beta>0){
-						VPIM = new LorentzVector(px,py,pz,Math.sqrt(pim_mom*pim_mom+0.139*0.139));
-						pim_part_ind = k;
-					}
-				}
-			}
-		}
-		//if(pim_part_ind>-1)System.out.println("DEBUG PIMPIP part_ind : "+pim_part_ind+" , "+pip_part_ind);
-		return -1;
+					return -1;
 	}
+
+	// public int makePiPlusPimPID(DataBank bank){
+	// 	boolean foundelec = false;
+	// 	int npositives = 0;
+	// 	int nnegatives = 0;
+	// 	float mybetap = 0;
+	// 	float mybetan = 0;
+	// 	for(int k = 0; k < bank.rows(); k++){
+	// 		int pid = bank.getInt("pid", k);
+	// 		byte q = bank.getByte("charge", k);
+	// 		float thisbeta = bank.getFloat("beta", k);
+	// 		int status = bank.getShort("status", k);
+	// 		boolean inDC = (status>=2000 && status<4000);
+	// 		if(inDC && pid==11)foundelec=true;
+	// 		if(inDC && q<0&&thisbeta>0)nnegatives++;
+	// 		if(inDC && npositives==0&&q>0&&thisbeta>0)mybetap=thisbeta;
+	// 		if(inDC && pid!=11&&nnegatives<2&&q<0&&thisbeta>0)mybetan=thisbeta;
+	// 		if(inDC && q>0&&thisbeta>0)npositives++;
+	// 	}
+	//
+	// 	//if(foundelec && nnegatives==2 && npositives==1)System.out.println(foundelec+" , "+nnegatives+" , "+npositives+" , "+mybetap+" , "+mybetan);
+	//
+	// 	if(foundelec && nnegatives==2 && npositives==1 && mybetap>0 && mybetan>0){}
+	// 	if(foundelec && nnegatives==2 && npositives>0 && npositives<3 && mybetap>0 ){
+	// 		for(int k = 0; k < bank.rows(); k++){
+	// 			int pid = bank.getInt("pid", k);
+	// 			byte q = bank.getByte("charge", k);
+	// 			int status = bank.getShort("status", k);
+	// 			boolean inDC = (status>=2000 && status<4000);
+	// 			if(inDC && q>0){
+	// 				float px = bank.getFloat("px", k);
+	// 				float py = bank.getFloat("py", k);
+	// 				float pz = bank.getFloat("pz", k);
+	// 				pip_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
+	// 				pip_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
+	// 				pip_phi = (float)Math.toDegrees(Math.atan2(py,px));
+	// 				pip_vx = bank.getFloat("vx", k);
+	// 				pip_vy = bank.getFloat("vy", k);
+	// 				pip_vz = bank.getFloat("vz", k);
+	// 				pip_beta = bank.getFloat("beta", k);
+	// 				if(pip_mom>0.5 && pip_theta<40 && pip_theta>8 && pip_beta>0){
+	// 					VPIP = new LorentzVector(px,py,pz,Math.sqrt(pip_mom*pip_mom+0.139*0.139));
+	// 					pip_part_ind = k;
+	// 				}
+	// 			}
+	// 			if(inDC && q<0&&pid!=11){
+	// 				float px = bank.getFloat("px", k);
+	// 				float py = bank.getFloat("py", k);
+	// 				float pz = bank.getFloat("pz", k);
+	// 				pim_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
+	// 				pim_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
+	// 				pim_phi = (float)Math.toDegrees(Math.atan2(py,px));
+	// 				pim_vx = bank.getFloat("vx", k);
+	// 				pim_vy = bank.getFloat("vy", k);
+	// 				pim_vz = bank.getFloat("vz", k);
+	// 				pim_beta = bank.getFloat("beta", k);
+	// 				//System.out.println(pim_mom+" , "+pim_theta+" , "+pim_beta);
+	// 				if(pim_mom>0.5 && pim_theta<40 && pim_theta>8 && pim_beta>0){
+	// 					VPIM = new LorentzVector(px,py,pz,Math.sqrt(pim_mom*pim_mom+0.139*0.139));
+	// 					pim_part_ind = k;
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	// if(pim_part_ind>-1)System.out.println("DEBUG PIMPIP part_ind : "+pim_part_ind+" , "+pip_part_ind);
+	// 	return -1;
+	// }
 	public int makeElectron(DataBank bank){
 		for(int k = 0; k < bank.rows(); k++){
 			int pid = bank.getInt("pid", k);
@@ -1883,10 +1928,10 @@ public class monitor2p2GeV {
 				H_pi_RFtime1.fill(RFtime1);
 			}
 			if(pind==pim_part_ind){
-				float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.139f*0.139f );
+				float epim = (float)Math.sqrt( pim_mom*pim_mom + 0.139f*0.139f );
 				//float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.938f*0.938f );
-				float pipDCbeta = pip_mom/epip;
-				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
+				float pimDCbeta = pim_mom/epim;
+				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pimDCbeta) ;
 				H_pi_RFtime1.fill(RFtime1);
 			}
 			H_RFtimediff.fill(RFtime1-RFtime2);
@@ -2899,7 +2944,9 @@ public class monitor2p2GeV {
 			makePhotons(partBank,event);
 			e_part_ind = makeElectron(partBank);
 			pip_part_ind = makePiPlusPID(partBank);
-			makePiPlusPimPID(partBank);
+			pim_part_ind = makePiMinusPID(partBank);
+			// makePiPlusPimPID(partBank);
+			// if(pim_part_ind>-1)System.out.println("in main : "+pim_part_ind+" , "+pip_part_ind);
 		}
 		if(e_part_ind==-1)return;
 		//makePhotons(partBank,event);
@@ -3103,6 +3150,10 @@ public class monitor2p2GeV {
 				float epip_t = (float) -VNeutr.mass2();
 				H_epip_e_t_phi.fill(epip_phi,epip_t);
 			}
+			//pi minus
+			if( pip_part_ind==-1 && pim_part_ind>-1 && Math.abs(pim_vert_time-e_vert_time)<5 && Math.abs(pim_beta-1) <(0.01 + 0.025/pim_mom)
+					&& pim_track_chi2<2000 && e_track_chi2<2000 && pim_mom>1) 	H_pim_vtd.fill(pim_vert_time-e_vert_time);
+			//pion
 			if(pim_part_ind>-1 && pip_part_ind>-1 && pim_track_chi2<750 && pip_track_chi2<750 && e_track_chi2<750){
 				LorentzVector VRHO = new LorentzVector(0,0,0,0);
 				VRHO.add(VPIP);
@@ -3677,9 +3728,11 @@ public class monitor2p2GeV {
 		for(int i=0;i<6;i++){
 			can_e_pip.cd(28+i);can_e_pip.draw(H_MM_epip_Spip[i]);
 		}
+		can_e_pip.cd(34); can_e_pip.draw(H_pip_vtd);
 		for(int i=0;i<6;i++){
 			can_e_pip.cd(35+i);can_e_pip.draw(H_MM_epip_Se[i]);
 		}
+		can_e_pip.cd(41); can_e_pip.draw(H_pim_vtd);
 
 		if(runNum>0){
 			if(!write_volatile)can_e_pip.save(String.format("plots"+runNum+"/e_pip.png"));
@@ -4298,6 +4351,7 @@ public class monitor2p2GeV {
 		dirout.cd("/tof/");
 		dirout.addDataSet(H_TOF_vt_S1m,H_TOF_vt_S2m,H_TOF_vt_S3m,H_TOF_vt_S4m,H_TOF_vt_S5m,H_TOF_vt_S6m);
 		dirout.addDataSet(H_TOF_vt_S1p,H_TOF_vt_S2p,H_TOF_vt_S3p,H_TOF_vt_S4p,H_TOF_vt_S5p,H_TOF_vt_S6p);
+		dirout.addDataSet(H_pip_vtd, H_pim_vtd);
 		dirout.mkdir("/dc/");
 		dirout.cd("/dc/");
 		dirout.addDataSet(H_dcm_theta_phi,H_dcm_theta_mom,H_dcm_phi_mom,H_dcm_vz_phi,H_dcm_vz_p,H_dcm_vz_theta);

@@ -52,7 +52,7 @@ public class deuterontarget {
 	public H2F H_pip_theta_phi, H_pip_theta_mom, H_pip_phi_mom, H_pip_vz_phi, H_pip_vz_theta, H_pip_vz_mom, H_pip_e_vt, H_pip_vz_ve;
 	public H2F H_pip_vz_ve_diff_mom, H_pip_vz_ve_diff_theta, H_pip_vz_ve_diff_phi, H_pip_vz_ve_diff_Dphi;
 	public H2F H_MM_epip_phi, H_pip_beta_p, H_pip_beta2_p, H_pip_vtd_mom, H_pip_vtd_theta, H_pip_vtd_phi;
-	public H2F H_epip_e_theta_phi, H_epip_e_theta_mom, H_epip_e_phi_mom, H_epip_xB_Q2, H_epip_e_W_Q2, H_epip_e_t_phi; 
+	public H2F H_epip_e_theta_phi, H_epip_e_theta_mom, H_epip_e_phi_mom, H_epip_xB_Q2, H_epip_e_W_Q2, H_epip_e_t_phi;
 
 	public H1F[] H_MM_epin_Spin, H_MM_epin_Se;
         public H1F H_MM_epin, H_MM_epin_zoom, H_pin_vtd, H_pin_vz_ve_diff, H_pin_Dphi;
@@ -404,7 +404,7 @@ public class deuterontarget {
 		if( l1 * l2 !=0 && Math.abs(prod)<l1*l2 )res = Math.toDegrees( Math.acos(prod/(l1*l2) ) );
 		return res;
 	}
-	public int makePiPlus(DataBank bank){ 
+	public int makePiPlus(DataBank bank){
 		for(int k = 0; k < bank.rows(); k++){
 			float px = bank.getFloat("p0_x" , k);
 			float py = bank.getFloat("p0_y" , k);
@@ -518,8 +518,8 @@ public class deuterontarget {
 			if(inDC && pid!=11&&nnegatives<2&&q<0&&thisbeta>0)mybetan=thisbeta;
 			if(inDC && q>0&&thisbeta>0)npositives++;
 		}
-		
-		
+
+
 		if(foundelec && nnegatives==2 && npositives>0 && npositives<3 && mybetap>0 ){
 			for(int k = 0; k < bank.rows(); k++){
 				int pid = bank.getInt("pid", k);
@@ -756,7 +756,7 @@ public class deuterontarget {
 
 		if(partBank!=null)trig_part_ind = makeTrigElectron(partBank,event);
 		if(trackBank!=null&&trackDetBank!=null)getTrigTBTrack(trackDetBank,trackBank);
-		
+
 		if(partBank!=null){
 			e_part_ind = makeElectron(partBank);
 			pip_part_ind = makePiPlusPID(partBank);
@@ -764,7 +764,7 @@ public class deuterontarget {
 			makePiPlusPimPID(partBank);
 		}
 		if(e_part_ind==-1)return;
-	
+
 		Nelecs++;
                 LorentzVector VGS = new LorentzVector(0,0,0,0);
                 VGS.add(VB);
@@ -776,7 +776,7 @@ public class deuterontarget {
 		if(scintillBank!=null){
                         getElecEBTOF(scintillBank);
                 }
-		
+
 		if(trackDetBank!=null){
                         getTBTrack(trackDetBank);
                 }
@@ -795,13 +795,13 @@ public class deuterontarget {
                         H_e_Q2.fill(e_Q2);
 			H_e_xB.fill(e_xB);
 			H_e_W.fill(e_W);
-			
+			//pip_part_ind==-1 suggested as condition
 			if(pin_part_ind>-1 && Math.abs(pin_vert_time-e_vert_time)<5 && Math.abs(pin_beta-1) <0.1 && pin_track_chi2<500 && e_track_chi2<500){
                                 H_pin_beta_p.fill(pin_mom,pin_beta);
                         }
-			
-			
-			if( pin_part_ind>-1 && Math.abs(pin_vert_time-e_vert_time)<5 && Math.abs(pin_beta-1) <(0.01 + 0.025/pin_mom) 
+
+
+			if( pin_part_ind>-1 && Math.abs(pin_vert_time-e_vert_time)<5 && Math.abs(pin_beta-1) <(0.01 + 0.025/pin_mom)
 					&& pin_track_chi2<2000 && e_track_chi2<2000 && pin_mom>1
 			  ){
 				LorentzVector VNeutr = new LorentzVector(0,0,0,0);
@@ -877,11 +877,11 @@ public class deuterontarget {
 			}
 		}
 	}
-	
-	
+
+
         public void plot() {
-		
-		
+
+
 		EmbeddedCanvas can_2pis = new EmbeddedCanvas();
 		can_2pis.setSize(2800,1400);
 		can_2pis.divide(4,3);
@@ -929,7 +929,7 @@ public class deuterontarget {
 		can_e_pin.cd(11);can_e_pin.draw(H_pin_vz_theta);
 		can_e_pin.cd(12);can_e_pin.draw(H_pin_vz_mom);
 		can_e_pin.cd(13);can_e_pin.draw(H_pin_vz_ve_diff_theta);
-		
+
 		can_e_pin.cd(14);can_e_pin.draw(H_pin_vtd_mom);
 		can_e_pin.cd(15);can_e_pin.draw(H_pin_vtd_theta);
 		can_e_pin.cd(16);can_e_pin.draw(H_pin_vtd_phi);
@@ -937,15 +937,15 @@ public class deuterontarget {
 		can_e_pin.cd(18);can_e_pin.draw(H_pin_vz_ve_diff);
 		can_e_pin.cd(19);can_e_pin.draw(H_pin_vz_ve_diff_mom);
 		can_e_pin.cd(20);can_e_pin.draw(H_pin_vz_ve_diff_phi);
-		
+
 		can_e_pin.cd(21);can_e_pin.draw(H_pin_beta_p);
 		can_e_pin.cd(22);can_e_pin.draw(H_pin_beta2_p);
 		can_e_pin.cd(23);can_e_pin.draw(H_MM_epin);
 		can_e_pin.cd(24);can_e_pin.draw(H_MM_epin_zoom);
-		can_e_pin.cd(25);can_e_pin.draw(H_MM_epin_phi);	
+		can_e_pin.cd(25);can_e_pin.draw(H_MM_epin_phi);
 		can_e_pin.cd(26);can_e_pin.draw(H_pin_e_vt);
 		can_e_pin.cd(27);can_e_pin.draw(H_pin_vz_ve_diff_Dphi);
-		
+
 		for(int i=0;i<6;i++){
 			can_e_pin.cd(28+i);can_e_pin.draw(H_MM_epin_Spin[i]);
 		}
@@ -963,7 +963,7 @@ public class deuterontarget {
 			System.out.println(String.format("save plots/e_pin.png"));
 		}
 	}
-		
+
         public void write() {
                 TDirectory dirout = new TDirectory();
 		dirout.mkdir("/elec/");
@@ -975,12 +975,12 @@ public class deuterontarget {
 		}
 
 		if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_deuterontarget_"+runNum+".hipo");
-		
+
 		if(!write_volatile){
 			if(runNum>0)dirout.writeFile("plots"+runNum+"/out_deuterontarget_"+runNum+".hipo");
 			else dirout.writeFile("plots/out_deuterontarget.hipo");
 		}
-		
+
         }
 ////////////////////////////////////////////////
         public static void main(String[] args) {
@@ -1038,4 +1038,3 @@ public class deuterontarget {
 		ana.plot();
         }
 }
-
