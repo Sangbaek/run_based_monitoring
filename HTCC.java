@@ -40,7 +40,7 @@ public class HTCC{
                 if(reqEb>0 && reqEb<4)EBeam=2.22f;
                 if(reqEb>4 && reqEb<7.1)EBeam=6.42f;
                 if(reqEb>7.1 && reqEb<9)EBeam=7.55f;
-                if(reqEb>9)EBeam=10.6f;
+                if(reqEb>9)EBeam=reqEb;
 		trigger_bits = new boolean[32];
 		H_e_theta_mom = new H2F[7];
 		H_e_phi_mom = new H2F[7];
@@ -127,7 +127,8 @@ public class HTCC{
                                 return k;
                         }
                 }
-                return -1;
+                return -1
+								
         }
         public void getElecEBECal(DataBank bank){
                 e_ecal_E=0;
