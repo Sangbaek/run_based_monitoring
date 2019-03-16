@@ -440,10 +440,10 @@ public class cndCheckPlots {
 								if(/*newHit==0 && !sidehit && sector!=3 && sector!=11 &&sector!=19*/true){
 										float betaN = (float)Math.sqrt(x*x+y*y+(z-z0)*(z-z0))/(time-STT)/29.92f;
 										//System.out.println("time "+time+"STT "+STT+" betaN "+betaN+"layer "+layer);
-
-										H_CND_beta_e_neutral.fill(e,betaN);
-										H_CND_time_z_neutral[layer-1].fill(z,time-STT);
-										// H_CND_time_all[layer-1].fill(time-STT);
+										if (betaN>0.2){
+											H_CND_beta_e_neutral.fill(e,betaN);
+											H_CND_time_z_neutral[layer-1].fill(z,time-STT);
+										}
 								}
 						}
 
@@ -534,7 +534,10 @@ public class cndCheckPlots {
 								if(charge==-1 && z<(25.+2.5*(layer-1)))H_CND_t_t.fill(timeC,timeCVT);
 								//only include one hit from cluster
 								//if(Tracks[trkID]==0){
-								H_CND_beta_energy.fill(e,betaCND);
+								if (betaCND>0.2)
+								{
+									H_CND_beta_energy.fill(e,betaCND);
+								}
 								if(/*sector==18 &&*/   /*&& mass2>-0.2*0.2*/  charge==1  && z<(25.+2.5*(layer-1)) && Math.abs(vtP)<1.5 /*&& Math.abs(z-tz)<5.*/)H_CND_beta_p.fill(mom,betaCND);
 								if(charge==-1 /*&& Math.sqrt(Math.abs(mass2))<0.3  && mass2>-0.3*0.3*/ && z<(25.+2.5*(layer-1)) && Math.abs(vtP)<1.5/* && Math.abs(z-tz)<5.*/)H_CND_beta_pn.fill(mom,betaCND);
 								//	Tracks[trkID]=1;
