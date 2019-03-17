@@ -1,6 +1,7 @@
 plots*
 *.hipo
 *.txt
+!list_run.txt
 .DS_Store
 *.class
 groovy_output
