@@ -61,7 +61,7 @@ while IFS="	" read run_num Eb;do
 	else
 		echo "hipo file exists.. skipping monitoring for run $run_num"
 	fi
-	export groovy_input="$groovy_input $ana_output/plots$run_num/out_hiponame_$run_num.hipo"
+	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
 #done < $filename
 # done < $listpath/list_run2.txt
 done < $listpath/list_run.txt
