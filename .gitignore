@@ -2,7 +2,9 @@ plots*
 *.hipo
 *.txt
 !list_run.txt
+!list_groovy.txt
 .DS_Store
 *.class
 groovy_output
 list_run2.txt
+.DS_Store
