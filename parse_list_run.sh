@@ -33,7 +33,7 @@ do
 	fi
 done
 
-echo "run ana_2p2?  y or n"
+echo "\n run ana_2p2?  y or n"
 export a=true
 while $a
 do
@@ -71,9 +71,10 @@ cd $pdir
 mkdir -p groovy_output
 cd groovy_output
 
-echo "from hipo to timeline..\n"
+echo "\n from hipo to timeline..\n"
 
 while IFS="|" read groovy_name	hipo;do
-	# export run_groovy="~/.groovy/coatjava/bin/run-groovy groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
-	$groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}
+	export run_groovy="~/.groovy/coatjava/bin/run-groovy groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
+	# $groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}
+	echo $run_groovy
 done < $listpath/list_groovy.txt
