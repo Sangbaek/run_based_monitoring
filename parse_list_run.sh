@@ -44,20 +44,6 @@ do
 	if [ "$run_ana" = "y" ]
 	then
 	        echo "executing ana_2p2.."
-
-	while IFS="	" read run_num Eb;do
-	    #echo $run_num $Eb #for debugging
-		mkdir -p plots$run_num
-		if [ ! -f plots$run_num/out_CND_$run_num.hipo ] || [ ! -f plots$run_num/out_CTOF_$run_num.hipo ] || [ ! -f plots$run_num/out_HTCC_$run_num.hipo ] || [ ! -f plots$run_num/out_monitor_$run_num.hipo ];then
-			java -DCLAS12DIR="$COATJAVA" -cp "$COATJAVA/lib/clas/*:$COATJAVA/lib/utils/*:.":"$javapath" ana_2p2 $run_num $listpath/list$run_num.txt 100000000 $Eb
-		else
-			echo "hipo file exists.. skipping monitoring for run $run_num"
-		fi
-		export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
-	#done < $filename
-	# done < $listpath/list_run2.txt
-	done < $listpath/list_run.txt
-
 	        export a=false
 	elif [ "$run_ana" = "n" ]
 	then
@@ -69,6 +55,21 @@ do
 done
 
 
+while IFS="	" read run_num Eb;do
+    #echo $run_num $Eb #for debugging
+	mkdir -p plots$run_num
+	if [ "$run_ana" = "y" ]
+	then
+		if [ ! -f plots$run_num/out_CND_$run_num.hipo ] || [ ! -f plots$run_num/out_CTOF_$run_num.hipo ] || [ ! -f plots$run_num/out_HTCC_$run_num.hipo ] || [ ! -f plots$run_num/out_monitor_$run_num.hipo ];then
+			java -DCLAS12DIR="$COATJAVA" -cp "$COATJAVA/lib/clas/*:$COATJAVA/lib/utils/*:.":"$javapath" ana_2p2 $run_num $listpath/list$run_num.txt 100000000 $Eb
+		else
+			echo "hipo file exists.. skipping monitoring for run $run_num"
+		fi
+	fi
+	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
+#done < $filename
+# done < $listpath/list_run2.txt
+done < $listpath/list_run.txt
 
 cd $pdir
 
@@ -80,6 +81,6 @@ echo "\n from hipo to timeline..\n"
 while IFS="|" read groovy_name	hipo;do
 	export run_groovy="~/.groovy/coatjava/bin/run-groovy groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
 	# $groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}
-	echo $run_groovy
-	# $run_groovy
+	# echo $run_groovy
+	$run_groovy
 done < $listpath/list_groovy.txt
