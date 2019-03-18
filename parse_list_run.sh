@@ -58,8 +58,8 @@ while IFS="	" read run_num Eb;do
 	fi
 	export groovy_input="$groovy_input ../plots$run_num/out_hiponame_$run_num.hipo"
 #done < $filename
-# done < list_run2.txt
-done < $listpath/list_run.txt
+done < list_run2.txt
+# done < $listpath/list_run.txt
 
 mkdir -p groovy_output
 cd groovy_output
@@ -68,6 +68,5 @@ echo "from hipo to timeline..\n"
 
 while IFS="|" read groovy_name	hipo;do
 	# export run_groovy="~/.groovy/coatjava/bin/run-groovy groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
-	export run_groovy="$groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
-	$run_groovy
+	$groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}
 done < $listpath/list_groovy.txt
