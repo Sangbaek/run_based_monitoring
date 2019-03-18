@@ -62,7 +62,7 @@ while IFS="	" read run_num Eb;do
 	fi
 	export groovy_input="$groovy_input ../plots$run_num/out_hiponame_$run_num.hipo"
 #done < $filename
-done < list_run2.txt
+done < $listpath/list_run2.txt
 # done < $listpath/list_run.txt
 
 mkdir -p groovy_output
