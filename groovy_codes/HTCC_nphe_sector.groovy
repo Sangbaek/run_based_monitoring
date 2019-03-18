@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("VZ (peak value) per sector")
-  gr.setTitleY("VZ (peak value) per sector")
+  gr.setTitle("Average HTCC nphe per sector")
+  gr.setTitleY("Average HTCC nphe per sector")
   gr.setTitleX("run number")
   return gr
 }
@@ -24,16 +24,13 @@ for(arg in args.drop(1)) {
   out.cd('/'+run)
 
   (0..<6).each{
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/dc/H_dcp_vz_s'+(it+1))
-    // h1.setName("sec"+(it+1))
-    // h1.setTitle("VZ for positive")
-    // h1.setTitleX("VZ for positive")
+    def h1 = dir.getObject('/trig/H_trig_S'+(it+1)+'_HTCC_n')
+    h1.setName("sec"+(it+1))
 
     // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
@@ -44,4 +41,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('Forward_positive_VZ.hipo')
+out.writeFile('HTCC_nphe_sec.hipo')

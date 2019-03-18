@@ -2,12 +2,16 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('cvt_z_pos')
-grtl.setTitle("VZ (Average), positives")
-grtl.setTitleY("VZ (Average), positives")
-// grtl.setTitle("VZ (peak value), positives")
-// grtl.setTitleY("VZ (peak value), positives")
+
+def grtl = new GraphErrors('Mean')
+grtl.setTitle("#pi^+ time - start time")
+grtl.setTitleY("#pi^+ time - start time")
 grtl.setTitleX("run number")
+
+def grtl2 = new GraphErrors('Sigma')
+grtl2.setTitle("#pi^+ time - start time")
+grtl2.setTitleY("#pi^+ time - start time")
+grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
 
@@ -19,15 +23,12 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/cvt/H_CVT_z_pos')
-
+  def h1 = dir.getObject('/tof/H_pip_vtd')
   // def f1 = ROOTFitter.fit(h1)
 
-  //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  // grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  // grtl.addPoint(run, f1.getParameter(2), 0, 0)
   grtl.addPoint(run, h1.getMean(), 0, 0)
-  // out.addDataSet(h1)
-  // out.addDataSet(f1)
+  grtl2.addPoint(run, h1.getRMS(), 0, 0)
 
   out.mkdir('/'+run)
   out.cd('/'+run)
@@ -38,4 +39,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('CVT_Vz_pos.hipo')
+out.writeFile('EC_pip_time.hipo')

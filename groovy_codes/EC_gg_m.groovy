@@ -3,9 +3,9 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 
-def grtl = new GraphErrors('gg_m_sigma')
-grtl.setTitle("#gamma #gamma invariant mass ECAL")
-grtl.setTitleY("#gamma #gamma invariant mass (sigma)")
+def grtl = new GraphErrors('Sigma')
+grtl.setTitle("#gamma #gamma invariant mass ECAL (sigma)")
+grtl.setTitleY("#gamma #gamma invariant mass ECAL (sigma)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -33,4 +33,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('out_gg_m.hipo')
+out.writeFile('EC_gg_m.hipo')

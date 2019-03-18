@@ -3,21 +3,20 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..3).collect{
-  def gr = new GraphErrors('layer'+it + ' Mean')
-  gr.setTitle("CND time per layer")
-  gr.setTitleY("CND time per layer")
+  def gr = new GraphErrors('layer'+it)
+  gr.setTitle("CND time (Average) per layer")
+  gr.setTitleY("CND time (Average) per layer")
   gr.setTitleX("run number")
   return gr
 }
 
 def grtl2 = (1..3).collect{
-  def gr2 = new GraphErrors('layer'+it+' Sigma')
-  gr2.setTitle("CND time per layer")
-  gr2.setTitleY("CND time per layer")
+  def gr2 = new GraphErrors('layer'+it+'sigma')
+  gr2.setTitle("CND time (Sigma) per layer")
+  gr2.setTitleY("CND time (Sigma) per layer")
   gr2.setTitleX("run number")
   return gr2
 }
-
 
 TDirectory out = new TDirectory()
 
@@ -44,6 +43,8 @@ for(arg in args.drop(1)) {
 
     // def f1 = ROOTFitter.fit(h1)
 
+    // def f1 = ROOTFitter.fit(h1)
+
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     // grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
@@ -59,4 +60,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('CND_time_neu.hipo')
+out.writeFile('out_CND_time_neutral.hipo')

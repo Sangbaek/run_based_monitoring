@@ -4,7 +4,7 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl1 = (1..6).collect{
   sec_num = it
-  def gr1 = new GraphErrors('sec'+sec_num+'sl'+1)
+  def gr1 = new GraphErrors('sec'+sec_num+' sl'+1)
   gr1.setTitle("DC residuals (peak value) per sector per superlayer")
   gr1.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr1.setTitleX("run number")
@@ -12,7 +12,7 @@ def grtl1 = (1..6).collect{
 }
 def grtl2 = (1..6).collect{
   sec_num = it
-  def gr2 = new GraphErrors('sec'+sec_num+'sl'+2)
+  def gr2 = new GraphErrors('sec'+sec_num+' sl'+2)
   gr2.setTitle("DC residuals (peak value) per sector per superlayer")
   gr2.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr2.setTitleX("run number")
@@ -20,7 +20,7 @@ def grtl2 = (1..6).collect{
 }
 def grtl3 = (1..6).collect{
   sec_num = it
-  def gr3 = new GraphErrors('sec'+sec_num+'sl'+3)
+  def gr3 = new GraphErrors('sec'+sec_num+' sl'+3)
   gr3.setTitle("DC residuals (peak value) per sector per superlayer")
   gr3.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr3.setTitleX("run number")
@@ -28,7 +28,7 @@ def grtl3 = (1..6).collect{
 }
 def grtl4 = (1..6).collect{
   sec_num = it
-  def gr4 = new GraphErrors('sec'+sec_num+'sl'+4)
+  def gr4 = new GraphErrors('sec'+sec_num+' sl'+4)
   gr4.setTitle("DC residuals (peak value) per sector per superlayer")
   gr4.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr4.setTitleX("run number")
@@ -36,7 +36,7 @@ def grtl4 = (1..6).collect{
 }
 def grtl5 = (1..6).collect{
   sec_num = it
-  def gr5 = new GraphErrors('sec'+sec_num+'sl'+5)
+  def gr5 = new GraphErrors('sec'+sec_num+' sl'+5)
   gr5.setTitle("DC residuals (peak value) per sector per superlayer")
   gr5.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr5.setTitleX("run number")
@@ -44,7 +44,7 @@ def grtl5 = (1..6).collect{
 }
 def grtl6 = (1..6).collect{
   sec_num = it
-  def gr6 = new GraphErrors('sec'+sec_num+'sl'+6)
+  def gr6 = new GraphErrors('sec'+sec_num+' sl'+6)
   gr6.setTitle("DC residuals (peak value) per sector per superlayer")
   gr6.setTitleY("DC residuals (peak value) per sector per superlayer")
   gr6.setTitleX("run number")
@@ -128,4 +128,4 @@ grtl3.each{ out.addDataSet(it) }
 grtl4.each{ out.addDataSet(it) }
 grtl5.each{ out.addDataSet(it) }
 grtl6.each{ out.addDataSet(it) }
-out.writeFile('out_DC_residuals_sec_sl.hipo')
+out.writeFile('DC_residuals_sec_sl.hipo')

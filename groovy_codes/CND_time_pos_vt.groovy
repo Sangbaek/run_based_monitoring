@@ -3,7 +3,7 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..3).collect{
-  def gr = new GraphErrors('layer'+it + ' Mean')
+  def gr = new GraphErrors('layer'+it+' Mean')
   gr.setTitle("CND time per layer")
   gr.setTitleY("CND time per layer")
   gr.setTitleX("run number")
@@ -36,11 +36,10 @@ for(arg in args.drop(1)) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     iL=it+1
-    def h2 = dir.getObject(String.format("/cnd/H_CND_time_z_neutral%d",iL))
-    def h1 = h2.projectionY()
-    h1.setName("neutral, layer"+iL)
-    h1.setTitle("CND time - start time")
-    h1.setTitleX("CND time - start time")
+    def h1 = dir.getObject(String.format("/cnd/H_CND_time_positive_vt%d",iL))
+    // h1.setName("negative, layer"+iL)
+    // h1.setTitle("CND time - start time")
+    // h1.setTitleX("CND time - start time")
 
     // def f1 = ROOTFitter.fit(h1)
 
@@ -59,4 +58,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('CND_time_neu.hipo')
+out.writeFile('CND_time_pos_vt.hipo')

@@ -2,15 +2,37 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-  def grtl = new GraphErrors('FTH MIPS time')
-  grtl.setTitle("FTH MIPS time - start time (peak value)")
-  grtl.setTitleY("FTH MIPS time - start time (peak value)")
-  grtl.setTitleX("run number")
+def grtl1 = (1..2).collect{
+  def gr = new GraphErrors('Mean, sec1 layer'+it)
+  gr.setTitle("FTH MIPS time - StartTime per layer")
+  gr.setTitleY("FTH MIPS time - StartTime per layer")
+  gr.setTitleX("run number")
+  return gr
+}
 
-  def grtl2 = new GraphErrors('FTH MIPS time, sigma')
-  grtl2.setTitle("FTH MIPS time - start time (sigma)")
-  grtl2.setTitleY("FTH MIPS time - start time (sigma)")
-  grtl2.setTitleX("run number")
+def grtl2 = (1..2).collect{
+  def gr = new GraphErrors('Sigma, sec1 layer'+it)
+  gr.setTitle("FTH MIPS time - StartTime per layer")
+  gr.setTitleY("FTH MIPS time - StartTime per layer")
+  gr.setTitleX("run number")
+  return gr
+}
+
+def grtl3 = (1..2).collect{
+  def gr = new GraphErrors('Mean, sec1 layer'+it)
+  gr.setTitle("FTH MIPS time - StartTime per layer")
+  gr.setTitleY("FTH MIPS time - StartTime per layer")
+  gr.setTitleX("run number")
+  return gr
+}
+
+def grtl4 = (1..2).collect{
+  def gr = new GraphErrors('Sigma, sec1 layer'+it)
+  gr.setTitle("FTH MIPS time - StartTime per layer")
+  gr.setTitleY("FTH MIPS time - StartTime per layer")
+  gr.setTitleX("run number")
+  return gr
+}
 
 
 TDirectory out = new TDirectory()
@@ -27,15 +49,18 @@ for(arg in args.drop(1)) {
 
   def h1 = dir.getObject('/ft/hi_hodo_tmatch_l1')
   def h2 = dir.getObject('/ft/hi_hodo_tmatch_l2')
-  h1.add(h2)
+  // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   // grtl.addPoint(run, f1.getParameter(1), 0, 0)
   // grtl2.addPoint(run, f1.getParameter(2), 0, 0)
-  grtl.addPoint(run, h1.getMean(), 0, 0)
+  grtl1.addPoint(run, h1.getMean(), 0, 0)
   grtl2.addPoint(run, h1.getRMS(), 0, 0)
+  grtl3.addPoint(run, h2.getMean(), 0, 0)
+  grtl4.addPoint(run, h2.getRMS(), 0, 0)
   out.addDataSet(h1)
+  out.addDataSet(h2)
   // out.addDataSet(f1)
 
 }

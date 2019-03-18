@@ -2,14 +2,14 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('ctof_time')
-grtl.setTitle("Average CTOF time, positive")
-grtl.setTitleY("Average CTOF time, positive")
+def grtl = new GraphErrors('Mean')
+grtl.setTitle("CTOF time, positive")
+grtl.setTitleY("CTOF time, positive")
 grtl.setTitleX("run number")
 
-def grtl2 = new GraphErrors('ctof_time_sigma')
-grtl2.setTitle("Sigma CTOF time, positive")
-grtl2.setTitleY("Sigma CTOF time, positive")
+def grtl2 = new GraphErrors('Sigma')
+grtl2.setTitle("CTOF time, positive")
+grtl2.setTitleY("CTOF time, positive")
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -42,4 +42,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('out_CTOF_time_pos.hipo')
+out.writeFile('CTOF_time_pos.hipo')

@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("VZ (peak value) per sector")
-  gr.setTitleY("VZ (peak value) per sector")
+  gr.setTitle("Mean FTOF time per sector")
+  gr.setTitleY("Mean FTOF time per sector")
   gr.setTitleX("run number")
   return gr
 }
@@ -24,16 +24,22 @@ for(arg in args.drop(1)) {
   out.cd('/'+run)
 
   (0..<6).each{
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/dc/H_dcp_vz_s'+(it+1))
-    // h1.setName("sec"+(it+1))
-    // h1.setTitle("VZ for positive")
-    // h1.setTitleX("VZ for positive")
+    def h2 = dir.getObject('/tof/p1a_pad_vt_S'+(it+1))
+    def h1 = h2.projectionY()
+    def h4 = dir.getObject('/tof/p1b_pad_vt_S'+(it+1))
+    def h3 = h4.projectionY()
+    def h6 = dir.getObject('/tof/p2_pad_vt_S'+(it+1))
+    def h5 = h6.projectionY()
+    h1.add(h3)
+    h1.add(h5)
+    h1.setName("sec"+(it+1))
+    h1.setTitle("FTOF StartTime - RFtime")
+    h1.setTitleX("FTOF StartTime - RFtime")
 
     // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
@@ -44,4 +50,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('Forward_positive_VZ.hipo')
+out.writeFile('FTOF_time.hipo')

@@ -3,13 +3,13 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
   def grtl = new GraphErrors('Mean')
-  grtl.setTitle("FTC time - start time")
-  grtl.setTitleY("FTC time - start time")
+  grtl.setTitle("FTC time - start time, neutral")
+  grtl.setTitleY("FTC time - start time, neutral")
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
-  grtl.setTitle("FTC time - start time")
-  grtl.setTitleY("FTC time - start time")
+  grtl.setTitle("FTC time - start time, neutral")
+  grtl.setTitleY("FTC time - start time, neutral")
   grtl.setTitleX("run number")
 
 
@@ -25,8 +25,7 @@ for(arg in args.drop(1)) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  def h1 = dir.getObject('/ft/hpi0sum')
-  // h1.add(h2)
+  def h1 = dir.getObject('/ft/hi_cal_time_neu')
   // def f1 = ROOTFitter.fit(h1)
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
@@ -44,4 +43,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('FTC_pi0_mass.hipo')
+out.writeFile('FTC_time_neutral.hipo')

@@ -40,4 +40,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 
-out.writeFile('out_elec_num.hipo')
+out.writeFile('trig_electron.hipo')

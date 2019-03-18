@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..2).collect{
   def gr = new GraphErrors('layer'+it)
-  gr.setTitle("FTH MIPS (peak value) energy per layer")
-  gr.setTitleY("FTH MIPS (peak value) energy per layer")
+  gr.setTitle("FTH MIPS energy per layer (Mean)")
+  gr.setTitleY("FTH MIPS energy per layer (Mean)")
   gr.setTitleX("run number")
   return gr
 }
@@ -26,9 +26,9 @@ for(arg in args.drop(1)) {
   (0..<2).each{
     def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
     // def h1 = h2.projectionY()
-    h1.setName("layer"+(it+1))
-    h1.setTitle("FTH_MIPS_energy")
-    h1.setTitleX("E (MeV)")
+    // h1.setName("layer"+(it+1))
+    // h1.setTitle("FTH_MIPS_energy")
+    // h1.setTitleX("E (MeV)")
 
     // def f1 = ROOTFitter.fit(h1)
 
@@ -44,4 +44,4 @@ for(arg in args.drop(1)) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('out_FTH_MIPS_energy.hipo')
+out.writeFile('FTH_MIPS_energy.hipo')
