@@ -10,6 +10,7 @@ export groovy_output=`pwd`"/groovy_output"
 export groovypath="~/.groovy/coatjava/bin/run-groovy"
 export listpath=`pwd`"/filelists"
 export javapath=`pwd`
+export ana_out=`pwd`"/ana_output"
 
 export a=true
 echo "compiling java? y or n"
@@ -48,6 +49,8 @@ do
 	        echo "please type y or n."
 	fi
 done
+
+cd $ana_out
 
 while IFS="	" read run_num Eb;do
     #echo $run_num $Eb #for debugging
