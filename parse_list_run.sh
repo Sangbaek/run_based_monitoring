@@ -4,13 +4,14 @@
 #set environment
 # export groovy_name="trig_elec_num"
 # export hipo="out_monitor"
+export pdir=`pwd`
 export groovy_input=""
-export groovy_output=`pwd`"/groovy_output"
+export groovy_output=$pdir"/groovy_output"
 # export groovypath="../../clas12-offline-software/coatjava/bin/run-groovy" //for my local
 export groovypath="~/.groovy/coatjava/bin/run-groovy"
-export listpath=`pwd`"/filelists"
-export javapath=`pwd`
-export ana_out=`pwd`"/ana_output"
+export listpath=$pdir"/filelists"
+export javapath=$pdir
+export ana_out=$pdir"/ana_output"
 
 export a=true
 echo "compiling java? y or n"
@@ -64,6 +65,8 @@ while IFS="	" read run_num Eb;do
 #done < $filename
 done < $listpath/list_run2.txt
 # done < $listpath/list_run.txt
+
+cd $pdir
 
 mkdir -p groovy_output
 cd groovy_output
