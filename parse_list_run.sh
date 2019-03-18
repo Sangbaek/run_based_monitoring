@@ -55,7 +55,7 @@ do
 done
 
 
-while IFS="	" read run_num Eb;do
+while IFS="|" read run_num Eb;do
     #echo $run_num $Eb #for debugging
 	mkdir -p plots$run_num
 	if [ "$run_ana" = "y" ]
@@ -68,8 +68,8 @@ while IFS="	" read run_num Eb;do
 	fi
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
 #done < $filename
-# done < $listpath/list_run2.txt
-done < $listpath/list_run.txt
+done < $listpath/list_run2.txt
+# done < $listpath/list_run.txt
 
 cd $pdir
 
