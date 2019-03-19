@@ -1,13 +1,5 @@
 #!/bin/bash
 
-function run() {
-    number=$1
-    shift
-    for n in $(seq $number); do
-      $@
-    done
-}
-
 #set environment
 # export groovy_name="trig_elec_num"
 # export hipo="out_monitor"
@@ -95,11 +87,15 @@ cd groovy_output
 echo -e "\nfrom hipo to timeline..\n"
 
 while IFS="|" read groovy_name	hipo;do
-	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
-	if [ "$run_count" -gt "1" ]
-	then
-		run $((run_count-1)) export run_groovy="${run_groovy/hiponame/$hipo}"
-	fi
-	echo $run_groovy
+	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
+	export loop_count="0"
+	while [ "$loop_count" -lt "$run_count" ]
+	do
+		export run_groovy="${run_groovy/hiponame/$hipo}"
+		loop_count=$((loop_count+1))
+	done
+	#echo $run_groovy
 	$run_groovy
 done < $listpath/list_groovy.txt
+
+echo -e "\ncheck $groovy_output"
