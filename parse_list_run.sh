@@ -78,6 +78,8 @@ fi
 echo -e "\nnumber of runs: $run_count"
 cd $pdir
 
+echo "make timeline?"
+
 export a=true
 while $a
 do
@@ -119,6 +121,7 @@ then
 			echo $run_groovy2
 		else
 			# $run_groovy
+			echo "test"
 		fi
 	done < $listpath/list_groovy.txt
 
