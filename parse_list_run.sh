@@ -45,7 +45,7 @@ do
 	        export a=false
 	elif [ "$run_ana" = "n" ]
 	then
-	        echo "skipping compiling java.."
+	        echo "skipping analysis.."
 					export a=false
 	else
 	        echo "please type y or n."
@@ -57,6 +57,10 @@ while IFS="|" read run_num Eb;do
 	mkdir -p plots$run_num
 	if [ "$run_ana" = "y" ]
 	then
+		if [ ! -f filelists/list$run_num.txt ]
+		then
+			ls /work/clas12/rg-b/production/recon/pass0/v1/mon/00$run_num/* > list$run_num.txt
+		fi
 		if [ ! -f plots$run_num/out_CND_$run_num.hipo ] || [ ! -f plots$run_num/out_CTOF_$run_num.hipo ] || [ ! -f plots$run_num/out_HTCC_$run_num.hipo ] || [ ! -f plots$run_num/out_monitor_$run_num.hipo ];then
 			java -DCLAS12DIR="$COATJAVA" -cp "$COATJAVA/lib/clas/*:$COATJAVA/lib/utils/*:.":"$javapath" ana_2p2 $run_num $listpath/list$run_num.txt 100000000 $Eb
 		else
@@ -78,7 +82,7 @@ fi
 echo -e "\nnumber of runs: $run_count"
 cd $pdir
 
-echo "make timeline?"
+echo "make timeline? y or n\n"
 
 export a=true
 while $a
