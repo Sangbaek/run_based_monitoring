@@ -2,13 +2,13 @@
 
 #set environment
 export pdir=`pwd`
-export groovy_input=""
 export groovy_output=$pdir"/groovy_output"
 # export groovypath=$pdir"/../clas12-offline-software/coatjava/bin/run-groovy" #for my local
 export groovypath=$pdir"/../.groovy/coatjava/bin/run-groovy"
 export listpath=$pdir"/filelists"
 export javapath=$pdir
 export ana_out=$pdir"/ana_output"
+export offline_monitoring="/work/clas12/rg-b/offline-monitoring"
 export run_count=0
 
 export a=true
@@ -64,6 +64,7 @@ while IFS="|" read run_num Eb;do
 		fi
 	fi
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
+	export groovy_input2="$groovy_input $offline_monitoring/plots$run_num/out_hiponame_$run_num.hipo"
 	run_count=$((run_count+1))
 #done < $listpath/list_run2.txt
 done < $listpath/list_run.txt
@@ -77,21 +78,49 @@ fi
 echo -e "\nnumber of runs: $run_count"
 cd $pdir
 
-mkdir -p groovy_output
-cd groovy_output
+export a=true
+while $a
+do
+	read -r run_groovy
+	if [ "$run_groovy" = "y" ]
+	then
+	        echo "executing ana_2p2.."
+	        export a=false
+	elif [ "$run_groovy" = "n" ]
+	then
+	        echo "skipping compiling java.."
+					export a=false
+	else
+	        echo "please type y or n."
+	fi
+done
 
-echo -e "\nfrom hipo to timeline..\n"
+if [ "$run_timeline" == "y"]
+then
+	mkdir -p groovy_output
+	cd groovy_output
 
-while IFS="|" read groovy_name	hipo;do
-	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
-	export loop_count="0"
-	while [ "$loop_count" -lt "$run_count" ]
-	do
-		export run_groovy="${run_groovy/hiponame/$hipo}"
-		loop_count=$((loop_count+1))
-	done
-	#echo $run_groovy
-	$run_groovy
-done < $listpath/list_groovy.txt
+	echo -e "\nfrom hipo to timeline..\n"
 
-echo -e "\ncheck $groovy_output"
+	while IFS="|" read groovy_name	hipo;do
+		export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
+		export run_groovy2="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input2"
+		export loop_count="0"
+		while [ "$loop_count" -lt "$run_count" ]
+		do
+			export run_groovy="${run_groovy/hiponame/$hipo}"
+			export run_groovy2="${run_groovy2/hiponame/$hipo}"
+			loop_count=$((loop_count+1))
+		done
+		#echo $run_groovy
+		if [ "$hipo" == "FT" ] || [  "$hipo" == "TOF" ]
+		then
+			# $run_groovy2
+			echo $run_groovy2
+		else
+			# $run_groovy
+		fi
+	done < $listpath/list_groovy.txt
+
+	echo -e "\ncheck $groovy_output"
+fi
