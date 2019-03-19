@@ -1,8 +1,6 @@
 #!/bin/bash
 
 #set environment
-# export groovy_name="trig_elec_num"
-# export hipo="out_monitor"
 export pdir=`pwd`
 export groovy_input=""
 export groovy_output=$pdir"/groovy_output"
@@ -67,34 +65,33 @@ while IFS="|" read run_num Eb;do
 	fi
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
 	run_count=$((run_count+1))
-#done < $filename
 #done < $listpath/list_run2.txt
 done < $listpath/list_run.txt
-#
-# if [ "$run_count" == "0" ]
-# then
-# 	echo "list of run numbers is empty"
-# 	exit 1
-# fi
-#
-# echo -e "\nnumber of runs: $run_count"
-# cd $pdir
-#
-# mkdir -p groovy_output
-# cd groovy_output
-#
-# echo -e "\nfrom hipo to timeline..\n"
-#
-# while IFS="|" read groovy_name	hipo;do
-# 	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
-# 	export loop_count="0"
-# 	while [ "$loop_count" -lt "$run_count" ]
-# 	do
-# 		export run_groovy="${run_groovy/hiponame/$hipo}"
-# 		loop_count=$((loop_count+1))
-# 	done
-# 	#echo $run_groovy
-# 	$run_groovy
-# done < $listpath/list_groovy.txt
-#
-# echo -e "\ncheck $groovy_output"
+
+if [ "$run_count" == "0" ]
+then
+	echo "list of run numbers is empty"
+	exit 1
+fi
+
+echo -e "\nnumber of runs: $run_count"
+cd $pdir
+
+mkdir -p groovy_output
+cd groovy_output
+
+echo -e "\nfrom hipo to timeline..\n"
+
+while IFS="|" read groovy_name	hipo;do
+	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
+	export loop_count="0"
+	while [ "$loop_count" -lt "$run_count" ]
+	do
+		export run_groovy="${run_groovy/hiponame/$hipo}"
+		loop_count=$((loop_count+1))
+	done
+	#echo $run_groovy
+	$run_groovy
+done < $listpath/list_groovy.txt
+
+echo -e "\ncheck $groovy_output"
