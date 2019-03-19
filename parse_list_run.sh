@@ -97,7 +97,7 @@ do
 	fi
 done
 
-if [ "$run_timeline" == "y"]
+if [ "$run_timeline" == "y" ]
 then
 	mkdir -p groovy_output
 	cd groovy_output
