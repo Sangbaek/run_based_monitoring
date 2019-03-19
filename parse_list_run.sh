@@ -1,5 +1,12 @@
 #!/bin/bash
 
+function run() {
+    number=$1
+    shift
+    for n in $(seq $number); do
+      $@
+    done
+}
 
 #set environment
 # export groovy_name="trig_elec_num"
@@ -7,11 +14,12 @@
 export pdir=`pwd`
 export groovy_input=""
 export groovy_output=$pdir"/groovy_output"
-# export groovypath="../../clas12-offline-software/coatjava/bin/run-groovy" //for my local
+# export groovypath=$pdir"/../clas12-offline-software/coatjava/bin/run-groovy" #for my local
 export groovypath="~/.groovy/coatjava/bin/run-groovy"
 export listpath=$pdir"/filelists"
 export javapath=$pdir
 export ana_out=$pdir"/ana_output"
+export run_count=0
 
 export a=true
 echo "compiling java? y or n"
@@ -36,7 +44,7 @@ done
 
 cd $ana_out
 
-echo "\n run ana_2p2?  y or n"
+echo -e "\nrun ana_2p2?  y or n"
 export a=true
 while $a
 do
@@ -67,20 +75,31 @@ while IFS="|" read run_num Eb;do
 		fi
 	fi
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
+	run_count=$((run_count+1))
 #done < $filename
-# done < $listpath/list_run2.txt
-done < $listpath/list_run.txt
+done < $listpath/list_run2.txt
+# done < $listpath/list_run.txt
 
+if [ "$run_count" == "0" ]
+then
+	echo "list of run numbers is empty"
+	exit 1
+fi
+
+echo -e "\nnumber of runs: $run_count"
 cd $pdir
 
 mkdir -p groovy_output
 cd groovy_output
 
-echo "\n from hipo to timeline..\n"
+echo -e "\nfrom hipo to timeline..\n"
 
 while IFS="|" read groovy_name	hipo;do
-	export run_groovy="~/.groovy/coatjava/bin/run-groovy groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
-	# $groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}
-	# echo $run_groovy
+	export run_groovy="$groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
+	if [ "$run_count" -gt "1" ]
+	then
+		run $((run_count-1)) export run_groovy="${run_groovy/hiponame/$hipo}"
+	fi
+	echo $run_groovy
 	$run_groovy
 done < $listpath/list_groovy.txt
