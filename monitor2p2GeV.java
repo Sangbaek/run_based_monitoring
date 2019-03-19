@@ -3589,18 +3589,6 @@ System.out.println("Beam energy = "+Ebeam);
 		can_trig_sect.setTitleSize(24);
   		can_trig_sect.cd(0);can_trig_sect.draw(H_trig_sector_count);
 		can_trig_sect.cd(1);can_trig_sect.draw(H_trig_sector_elec);
-		H_trig_sector_elec_rat.divide(H_trig_sector_count);
-		H_trig_sector_prot_rat.divide(H_trig_sector_count);
-		H_trig_sector_piplus_rat.divide(H_trig_sector_count);
-		H_trig_sector_piminus_rat.divide(H_trig_sector_count);
-                H_trig_sector_kplus_rat.divide(H_trig_sector_count);
-		H_trig_sector_kminus_rat.divide(H_trig_sector_count);
-		H_trig_sector_photon_rat.divide(H_trig_sector_count);
-		H_trig_sector_neutron_rat.divide(H_trig_sector_count);
-		H_trig_sector_deut_rat.divide(H_trig_sector_count);
-		H_trig_sector_positive_rat.divide(H_trig_sector_count);
-		H_trig_sector_negative_rat.divide(H_trig_sector_count);
-		H_trig_sector_neutral_rat.divide(H_trig_sector_count);
 		H_trig_sector_muon_rat.divide(H_muon_trig_sector_count);
 		can_trig_sect.cd(2);can_trig_sect.draw(H_trig_sector_elec_rat);
 		can_trig_sect.cd(3);can_trig_sect.draw(H_Nclust_ev);
@@ -4463,6 +4451,20 @@ System.out.println("Beam energy = "+Ebeam);
 			reader.close();
 		}
 		System.out.println("Total : " + count + " events");
+
+		H_trig_sector_elec_rat.divide(H_trig_sector_count);
+		H_trig_sector_prot_rat.divide(H_trig_sector_count);
+		H_trig_sector_piplus_rat.divide(H_trig_sector_count);
+		H_trig_sector_piminus_rat.divide(H_trig_sector_count);
+		H_trig_sector_kplus_rat.divide(H_trig_sector_count);
+		H_trig_sector_kminus_rat.divide(H_trig_sector_count);
+		H_trig_sector_photon_rat.divide(H_trig_sector_count);
+		H_trig_sector_neutron_rat.divide(H_trig_sector_count);
+		H_trig_sector_deut_rat.divide(H_trig_sector_count);
+		H_trig_sector_positive_rat.divide(H_trig_sector_count);
+		H_trig_sector_negative_rat.divide(H_trig_sector_count);
+		H_trig_sector_neutral_rat.divide(H_trig_sector_count);
+
 		ana.write();
 		ana.plot();
         }
