@@ -86,11 +86,11 @@ do
 	read -r run_groovy
 	if [ "$run_groovy" = "y" ]
 	then
-	        echo "executing ana_2p2.."
+	        echo "executing groovy.."
 	        export a=false
 	elif [ "$run_groovy" = "n" ]
 	then
-	        echo "skipping compiling java.."
+	        echo "skipping timeline.."
 					export a=false
 	else
 	        echo "please type y or n."
