@@ -59,7 +59,7 @@ while IFS="|" read run_num Eb;do
 		mkdir -p plots$run_num
 		if [ ! -f filelists/list$run_num.txt ]
 		then
-			ls /work/clas12/rg-b/production/recon/pass0/v1/mon/00$run_num/* > list$run_num.txt
+			ls /work/clas12/rg-b/production/recon/pass0/v1/mon/00$run_num/* > $listpath/list_run.txt
 		fi
 		if [ ! -f plots$run_num/out_CND_$run_num.hipo ] || [ ! -f plots$run_num/out_CTOF_$run_num.hipo ] || [ ! -f plots$run_num/out_HTCC_$run_num.hipo ] || [ ! -f plots$run_num/out_monitor_$run_num.hipo ];then
 			java -DCLAS12DIR="$COATJAVA" -cp "$COATJAVA/lib/clas/*:$COATJAVA/lib/utils/*:.":"$javapath" ana_2p2 $run_num $listpath/list$run_num.txt 100000000 $Eb
