@@ -14,7 +14,7 @@ import org.jlab.groot.data.GraphErrors
 
 
 TDirectory out = new TDirectory()
-for(arg in args.drop(1)) {
+for(arg in args) {
   TDirectory dir = new TDirectory()
   dir.readFile(arg)
 
