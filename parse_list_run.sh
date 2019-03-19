@@ -8,7 +8,7 @@ export groovypath=$pdir"/../.groovy/coatjava/bin/run-groovy"
 export listpath=$pdir"/filelists"
 export javapath=$pdir
 export ana_out=$pdir"/ana_output"
-export offline_monitoring="/work/clas12/rg-b/offline-monitoring"
+export offline_monitoring="/work/clas12/rg-b/offline_monitoring"
 export run_count=0
 
 export a=true
@@ -118,8 +118,8 @@ then
 		then
 			$run_groovy2
 			#echo $run_groovy2
-		else
-			$run_groovy
+		#else
+		#	$run_groovy
 		fi
 	done < $listpath/list_groovy.txt
 
