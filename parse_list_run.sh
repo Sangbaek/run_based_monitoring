@@ -64,7 +64,7 @@ while IFS="|" read run_num Eb;do
 		fi
 	fi
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
-	export groovy_input2="$groovy_input $offline_monitoring/plots$run_num/out_hiponame_$run_num.hipo"
+	export groovy_input2="$groovy_input2 $offline_monitoring/plots$run_num/out_hiponame_$run_num.hipo"
 	run_count=$((run_count+1))
 #done < $listpath/list_run2.txt
 done < $listpath/list_run.txt
@@ -83,12 +83,12 @@ echo "make timeline?"
 export a=true
 while $a
 do
-	read -r run_groovy
-	if [ "$run_groovy" = "y" ]
+	read -r run_timeline
+	if [ "$run_timeline" = "y" ]
 	then
-	        echo "executing groovy.."
+	        echo "executing timeline codes.."
 	        export a=false
-	elif [ "$run_groovy" = "n" ]
+	elif [ "$run_timeline" = "n" ]
 	then
 	        echo "skipping timeline.."
 					export a=false
@@ -103,7 +103,6 @@ then
 	cd groovy_output
 
 	echo -e "\nfrom hipo to timeline..\n"
-
 	while IFS="|" read groovy_name	hipo;do
 		export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input"
 		export run_groovy2="$groovypath $pdir/groovy_codes/$groovy_name.groovy $groovy_input2"
@@ -117,11 +116,10 @@ then
 		#echo $run_groovy
 		if [ "$hipo" == "FT" ] || [  "$hipo" == "TOF" ]
 		then
-			# $run_groovy2
-			echo $run_groovy2
+			$run_groovy2
+			#echo $run_groovy2
 		else
-			# $run_groovy
-			echo $run_groovy2
+			$run_groovy
 		fi
 	done < $listpath/list_groovy.txt
 
