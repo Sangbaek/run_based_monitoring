@@ -15,7 +15,7 @@ export pdir=`pwd`
 export groovy_input=""
 export groovy_output=$pdir"/groovy_output"
 # export groovypath=$pdir"/../clas12-offline-software/coatjava/bin/run-groovy" #for my local
-export groovypath=$pdir"/.groovy/coatjava/bin/run-groovy"
+export groovypath=$pdir"/../.groovy/coatjava/bin/run-groovy"
 export listpath=$pdir"/filelists"
 export javapath=$pdir
 export ana_out=$pdir"/ana_output"
@@ -77,8 +77,8 @@ while IFS="|" read run_num Eb;do
 	export groovy_input="$groovy_input $ana_out/plots$run_num/out_hiponame_$run_num.hipo"
 	run_count=$((run_count+1))
 #done < $filename
-done < $listpath/list_run2.txt
-# done < $listpath/list_run.txt
+#done < $listpath/list_run2.txt
+done < $listpath/list_run.txt
 
 if [ "$run_count" == "0" ]
 then
