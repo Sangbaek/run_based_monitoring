@@ -121,7 +121,7 @@ then
 			echo $run_groovy2
 		else
 			# $run_groovy
-			echo "test"
+			echo $run_groovy2
 		fi
 	done < $listpath/list_groovy.txt
 
