@@ -95,7 +95,7 @@ cd groovy_output
 echo -e "\nfrom hipo to timeline..\n"
 
 while IFS="|" read groovy_name	hipo;do
-	export run_groovy="$groovypath ../groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
+	export run_groovy="$groovypath $pdir/groovy_codes/$groovy_name.groovy ${groovy_input/hiponame/$hipo}"
 	if [ "$run_count" -gt "1" ]
 	then
 		run $((run_count-1)) export run_groovy="${run_groovy/hiponame/$hipo}"
