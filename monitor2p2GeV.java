@@ -4393,6 +4393,21 @@ System.out.println("Beam energy = "+Ebeam);
 		//dirout.addDataSet(g_m_ESampl_ECal,g_s_ESampl_ECal);
         }
 ////////////////////////////////////////////////
+
+		public void ratio_to_trigger(){
+			H_trig_sector_elec_rat.divide(H_trig_sector_count);
+			H_trig_sector_prot_rat.divide(H_trig_sector_count);
+			H_trig_sector_piplus_rat.divide(H_trig_sector_count);
+			H_trig_sector_piminus_rat.divide(H_trig_sector_count);
+			H_trig_sector_kplus_rat.divide(H_trig_sector_count);
+			H_trig_sector_kminus_rat.divide(H_trig_sector_count);
+			H_trig_sector_photon_rat.divide(H_trig_sector_count);
+			H_trig_sector_neutron_rat.divide(H_trig_sector_count);
+			H_trig_sector_deut_rat.divide(H_trig_sector_count);
+			H_trig_sector_positive_rat.divide(H_trig_sector_count);
+			H_trig_sector_negative_rat.divide(H_trig_sector_count);
+			H_trig_sector_neutral_rat.divide(H_trig_sector_count);
+		}
         public static void main(String[] args) {
                 System.setProperty("java.awt.headless", "true");
 		GStyle.setPalette("kRainBow");
@@ -4451,20 +4466,7 @@ System.out.println("Beam energy = "+Ebeam);
 			reader.close();
 		}
 		System.out.println("Total : " + count + " events");
-
-		H_trig_sector_elec_rat.divide(H_trig_sector_count);
-		H_trig_sector_prot_rat.divide(H_trig_sector_count);
-		H_trig_sector_piplus_rat.divide(H_trig_sector_count);
-		H_trig_sector_piminus_rat.divide(H_trig_sector_count);
-		H_trig_sector_kplus_rat.divide(H_trig_sector_count);
-		H_trig_sector_kminus_rat.divide(H_trig_sector_count);
-		H_trig_sector_photon_rat.divide(H_trig_sector_count);
-		H_trig_sector_neutron_rat.divide(H_trig_sector_count);
-		H_trig_sector_deut_rat.divide(H_trig_sector_count);
-		H_trig_sector_positive_rat.divide(H_trig_sector_count);
-		H_trig_sector_negative_rat.divide(H_trig_sector_count);
-		H_trig_sector_neutral_rat.divide(H_trig_sector_count);
-
+		ana.ratio_to_trigger();
 		ana.write();
 		ana.plot();
         }

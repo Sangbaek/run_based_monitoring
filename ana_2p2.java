@@ -101,6 +101,8 @@ public class ana_2p2 {
 			reader.close();
 		}
 		System.out.println("Total : " + count + " events");
+
+		ana_mon.ratio_to_trigger();
 		// ana_mon.plot();
 		ana_mon.write();
 		// ana_cen.plot();
