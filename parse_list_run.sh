@@ -54,9 +54,9 @@ done
 
 while IFS="|" read run_num Eb;do
     #echo $run_num $Eb #for debugging
-	mkdir -p plots$run_num
 	if [ "$run_ana" = "y" ]
 	then
+		mkdir -p plots$run_num
 		if [ ! -f filelists/list$run_num.txt ]
 		then
 			ls /work/clas12/rg-b/production/recon/pass0/v1/mon/00$run_num/* > list$run_num.txt
