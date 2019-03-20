@@ -141,7 +141,8 @@ public class monitor2p2GeV {
 	public H2F H_elast_e_p_th, H_elast_W_sect, H_CVT_corr_e_mom;
 	public H1F H_CVT_e_vz_diff, H_CVT_e_phi_diff, H_elast_W;
 
-	public H1F H_e_RFtime1 , H_pi_RFtime1, H_RFtimediff ;
+	public H1F[] H_e_RFtime1_S , H_pip_RFtime1_S, H_pim_RFtime1_S;
+	public H1F  H_RFtimediff ;
 
 	public monitor2p2GeV(int reqrunNum, float reqEB, boolean reqTimeBased, boolean reqwrite_volatile ) {
 		runNum = reqrunNum;EB=reqEB;userTimeBased=reqTimeBased;
@@ -182,6 +183,25 @@ System.out.println("Beam energy = "+Ebeam);
 
 		tofvt1 = 0;
 		tofvt2 = 300;
+		//Initializing rf histograms.
+		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",100,-5,5);
+		H_RFtimediff.setTitle("RF time difference (1-2)");
+		H_RFtimediff.setTitleX("t (ns)");
+		H_e_RFtime1_S = new H1F[6];
+		H_pip_RFtime1_S = new H1F[6];
+		H_pim_RFtime1_S = new H1F[6];
+		for(int i=0;i<6;i++){
+			H_e_RFtime1_S[i] = new H1F(String.format("H_e_RFtime1_S%d",i+1),String.format("H_e_RFtime1_S%d",i+1),500,-50,200);
+			H_e_RFtime1_S[i].setTitle("electron RF1 time");
+			H_e_RFtime1_S[i].setTitleX("t (ns)");
+			H_pip_RFtime1_S[i] = new H1F(String.format("H_pip_RFtime1_S%d",i+1),String.format("H_pip_RFtime1_S%d",i+1),500,-50,200);
+			H_pip_RFtime1_S[i].setTitle("#pi^+ RF1 time");
+			H_pip_RFtime1_S[i].setTitleX("t (ns)");
+			H_pim_RFtime1_S[i] = new H1F(String.format("H_pim_RFtime1_S%d",i+1),String.format("H_pim_RFtime1_S%d",i+1),500,-50,200);
+			H_pim_RFtime1_S[i].setTitle("#pi^- RF1 time");
+			H_pim_RFtime1_S[i].setTitleX("t (ns)");
+		}
+
 		H_TOF_vt_S1m = new H1F("H_TOF_vt_S1n","H_TOF_vt_S1n",100,tofvt1,tofvt2);
 		H_TOF_vt_S1m.setTitle("S1 neg TOF vert t");
 		H_TOF_vt_S1m.setTitleX("vert t (ns)");
@@ -931,16 +951,6 @@ System.out.println("Beam energy = "+Ebeam);
 		H_e_vt2 = new H1F("H_e_vt2","H_e_vt2",100,-1,1);
 		H_e_vt2.setTitle("electron vertex time");
 		H_e_vt2.setTitleX("t (ns)");
-		H_e_RFtime1 = new H1F("H_e_RFtime1","H_e_RFtime1",500,-50,200);
-		H_e_RFtime1.setTitle("electron RF1 time");
-		H_e_RFtime1.setTitleX("t (ns)");
-		H_pi_RFtime1 = new H1F("H_pi_RFtime1","H_pi_RFtime1",500,-50,200);
-		H_pi_RFtime1.setTitle("charged pion RF1 time");
-		H_pi_RFtime1.setTitleX("t (ns)");
-		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",100,-5,5);
-		H_RFtimediff.setTitle("RF time difference (1-2)");
-		H_RFtimediff.setTitleX("t (ns)");
-
 		//H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,100,250,500,100,250);
 		//if(runNum>0 && runNum<3210)H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,550,600,500,550,600);
 		H_o_TOF = new H2F("H_o_TOF","H_o_TOF",500,tofvt1,tofvt2,500,tofvt1,tofvt2);
@@ -978,6 +988,7 @@ System.out.println("Beam energy = "+Ebeam);
 		H_trig_S_HTCC_theta = new H1F[6];
 		H_e_W_S = new H1F[6];
 		H_e_W_phi_S = new H2F[6];
+
 		for(int s=0;s<7;s++){
 			for(int it=0;it<10;it++){
 				float thetaMin = 5+2.0f*it;
@@ -1917,7 +1928,6 @@ System.out.println("Beam energy = "+Ebeam);
 				e_vert_time_RF = time1;
 				H_e_vt1.fill(e_vert_time_RF);
 				H_e_vt2.fill(time2);
-				H_e_RFtime1.fill(RFtime1);
                                 e_TOF_X = bank.getFloat("x",k);
                                 e_TOF_Y = bank.getFloat("y",k);
                                 e_TOF_Z = bank.getFloat("z",k);
@@ -1927,16 +1937,13 @@ System.out.println("Beam energy = "+Ebeam);
 				//float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.938f*0.938f );
 				float pipDCbeta = pip_mom/epip;
 				pip_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pipDCbeta) ;
-				H_pi_RFtime1.fill(RFtime1);
 			}
 			if(pind==pim_part_ind){
 				float epim = (float)Math.sqrt( pim_mom*pim_mom + 0.139f*0.139f );
 				//float epip = (float)Math.sqrt( pip_mom*pip_mom + 0.938f*0.938f );
 				float pimDCbeta = pim_mom/epim;
 				pim_vert_time = bank.getFloat("time",k)-bank.getFloat("path",k)/ (29.98f * pimDCbeta) ;
-				H_pi_RFtime1.fill(RFtime1);
 			}
-			H_RFtimediff.fill(RFtime1-RFtime2);
 			// System.out.println(String.format(RFtime1+"	"+RFtime2));
 		}
 	}
@@ -2045,6 +2052,8 @@ System.out.println("Beam energy = "+Ebeam);
                          //if(e_track_chi2<7500){
                                  H_trig_sector_elec.fill(e_sect);
                                  H_trig_sector_elec_rat.fill(e_sect);
+																 H_e_RFtime1_S[e_sect-1].fill(RFtime1);
+
                          //}
                  }
         }
@@ -2851,6 +2860,7 @@ System.out.println("Beam energy = "+Ebeam);
 				else RFtime2=event.getBank("RUN::rf").getFloat("time",r);
 				//try else for RFtime2
 			}
+			H_RFtimediff.fill(RFtime1-RFtime2);
 			// RFtime2 = 0f;//bank.getFloat("time",1);
 		}
 		for(int i=1;i<7;i++)trigger_bits[i]=false;
@@ -3151,10 +3161,17 @@ System.out.println("Beam energy = "+Ebeam);
 				VNeutr.sub(VT);
 				float epip_t = (float) -VNeutr.mass2();
 				H_epip_e_t_phi.fill(epip_phi,epip_t);
+				H_pip_RFtime1_S[pip_sect-1].fill(RFtime1);
+
 			}
 			//pi minus
 			if( pip_part_ind==-1 && pim_part_ind>-1 && Math.abs(pim_vert_time-e_vert_time)<5 && Math.abs(pim_beta-1) <(0.01 + 0.025/pim_mom)
-					&& pim_track_chi2<2000 && e_track_chi2<2000 && pim_mom>1) 	H_pim_vtd.fill(pim_vert_time-e_vert_time);
+					&& pim_track_chi2<2000 && e_track_chi2<2000 && pim_mom>1)
+			{
+				H_pim_vtd.fill(pim_vert_time-e_vert_time);
+				H_pim_RFtime1_S[pim_sect-1].fill(RFtime1);
+			}
+
 			//pion
 			if(pim_part_ind>-1 && pip_part_ind>-1 && pim_track_chi2<750 && pip_track_chi2<750 && e_track_chi2<750){
 				LorentzVector VRHO = new LorentzVector(0,0,0,0);
@@ -3881,14 +3898,17 @@ System.out.println("Beam energy = "+Ebeam);
 		}
 
 		EmbeddedCanvas can_RF = new EmbeddedCanvas(); //test plot for RF variables for run-based monitoring
-		can_RF.setSize(600,1200);
-		can_RF.divide(2,2);
+		can_RF.setSize(3600,2400);
+		can_RF.divide(6,4);
 		can_RF.setAxisTitleSize(24);
 		can_RF.setAxisFontSize(24);
 		can_RF.setTitleSize(24);
-		can_RF.cd(0);can_RF.draw(H_e_RFtime1);
-		can_RF.cd(1);can_RF.draw(H_pi_RFtime1);
-		can_RF.cd(2);can_RF.draw(H_RFtimediff);
+		for(int s=0;s<6;s++){
+			can_RF.cd(s);can_RF.draw(H_e_RFtime1_S[s]);
+			can_RF.cd(6+s);can_RF.draw(H_pip_RFtime1_S[s]);
+			can_RF.cd(12+s);can_RF.draw(H_pim_RFtime1_S[s]);
+		}
+		can_RF.cd(18);can_RF.draw(H_RFtimediff);
 		if(runNum>0){
 			if(!write_volatile)can_RF.save(String.format("plots"+runNum+"/RF.png"));
 			if(write_volatile)can_RF.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/RF.png"));
@@ -4376,8 +4396,13 @@ System.out.println("Beam energy = "+Ebeam);
 		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
 		dirout.mkdir("/RF/"); // saving pi_RFtime1's
 		dirout.cd("/RF/");
-		dirout.addDataSet(H_e_RFtime1, H_pi_RFtime1, H_RFtimediff);
-		//dirout.mkdir("");
+		for(int s=0;s<6;s++){
+			dirout.addDataSet(H_e_RFtime1_S[s]);
+			dirout.addDataSet(H_pip_RFtime1_S[s]);
+			dirout.addDataSet(H_pim_RFtime1_S[s]);
+		}
+		dirout.addDataSet(H_RFtimediff);
+				//dirout.mkdir("");
 		//dirout.cd("");
 
 		if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_monitor_"+runNum+".hipo");

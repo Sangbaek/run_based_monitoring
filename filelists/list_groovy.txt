@@ -29,6 +29,10 @@ Forward_Tracking_PosVz|monitor
 HTCC_nphe_sector|HTCC
 HTCC_nphe_ring_sector|HTCC
 LTCC_nphe_sector|monitor
+RFtime_diff|monitor
+RFtime_elec|monitor
+RFtime_pim|monitor
+RFtime_pip|monitor
 trig_Km_num|monitor
 trig_Kp_num|monitor
 trig_elec_num|monitor
