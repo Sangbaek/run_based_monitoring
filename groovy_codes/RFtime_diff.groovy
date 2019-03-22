@@ -30,4 +30,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('RFtime_diff.hipo')
+out.writeFile('RFtime_12_diff.hipo')

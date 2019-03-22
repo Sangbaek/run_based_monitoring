@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("Electron RFtime1 per sector")
-  gr.setTitleY("Electron RFtime1 per sector (ns)")
+  gr.setTitle("#pi^+ RFtime1 per sector")
+  gr.setTitleY("#pi^+ RFtime1 per sector (ns)")
   gr.setTitleX("run number")
   return gr
 }
@@ -44,4 +44,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('RFtime_pip.hipo')
+out.writeFile('RFtime_piplus.hipo')
