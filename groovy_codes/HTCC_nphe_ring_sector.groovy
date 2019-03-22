@@ -3,7 +3,7 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..24).collect{
-  sec_num=it.intdiv(4)+1
+  sec_num=(it-1).intdiv(4)+1
   ring_num=(it-1)%4 +1
   def gr = new GraphErrors('sec'+sec_num+' ring'+ring_num)
   gr.setTitle("HTCC Number of Photoelectrons")
