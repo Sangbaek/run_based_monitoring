@@ -3,8 +3,8 @@ import org.jlab.groot.data.GraphErrors
 
 
 def grtl = new GraphErrors('RFtime_diff')
-grtl.setTitle("Average RFtime_diff")
-grtl.setTitleY("Average RFtime_diff")
+grtl.setTitle("Average RFtime difference")
+grtl.setTitleY("Average RFtime difference (ns)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()

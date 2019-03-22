@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
   gr.setTitle("Electron RFtime1 per sector")
-  gr.setTitleY("Electron RFtime1 per sector")
+  gr.setTitleY("Electron RFtime1 per sector (ns)")
   gr.setTitleX("run number")
   return gr
 }
