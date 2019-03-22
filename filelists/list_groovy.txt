@@ -6,7 +6,6 @@ CTOF_time_negative|CTOF
 CTOF_time_positive|CTOF
 CVT_Vz_negative|monitor
 CVT_Vz_positive|monitor
-CVT_chi2|monitor
 CVT_chi2_negative|monitor
 CVT_chi2_positive|monitor
 DC_residuals_sec|TOF
