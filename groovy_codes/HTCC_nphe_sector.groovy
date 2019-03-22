@@ -25,7 +25,7 @@ for(arg in args) {
 
   (0..<6).each{
     def h1 = dir.getObject('/trig/H_trig_S'+(it+1)+'_HTCC_n')
-    h1.setName("sec"+(it+1))
+    // h1.setName("sec"+(it+1))
 
     // def f1 = ROOTFitter.fit(h1)
 

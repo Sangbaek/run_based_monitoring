@@ -25,7 +25,7 @@ for(arg in args) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-for (s = 0; i <6; s++) {
+for (s = 0; s <6; s++) {
   for (r = 0; r <4; r++) {
 
     int counter = r + 4*s
