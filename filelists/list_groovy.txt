@@ -25,7 +25,7 @@ Forward_Tracking_Negchi2|monitor
 Forward_Tracking_NegVz|monitor
 Forward_Tracking_Poschi2|monitor
 Forward_Tracking_PosVz|monitor
-HTCC_nphe_sector|HTCC
+HTCC_nphe_sector|monitor
 HTCC_nphe_ring_sector|HTCC
 LTCC_nphe_sector|monitor
 RFtime_diff|monitor
