@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..2).collect{
   def gr = new GraphErrors('layer'+it)
   gr.setTitle("FTH MIPS energy per layer (Mean)")
-  gr.setTitleY("FTH MIPS energy per layer (Mean)")
+  gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
   gr.setTitleX("run number")
   return gr
 }

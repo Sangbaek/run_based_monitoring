@@ -29,7 +29,7 @@ for(arg in args) {
     def h1 = dir.getObject('/dc/H_dcp_vz_s'+(it+1))
     // h1.setName("sec"+(it+1))
     // h1.setTitle("VZ for positive")
-    // h1.setTitleX("VZ for positive")
+    h1.setTitleX("VZ for positive (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
 

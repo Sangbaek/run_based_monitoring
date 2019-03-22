@@ -5,12 +5,12 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = new GraphErrors('Mean')
 grtl.setTitle("#pi^- time - start time")
-grtl.setTitleY("#pi^- time - start time")
+grtl.setTitleY("#pi^- time - start time (ns)")
 grtl.setTitleX("run number")
 
 def grtl2 = new GraphErrors('Sigma')
 grtl2.setTitle("#pi^- time - start time")
-grtl2.setTitleY("#pi^- time - start time")
+grtl2.setTitleY("#pi^- time - start time (ns)")
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()

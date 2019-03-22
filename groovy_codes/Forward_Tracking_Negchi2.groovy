@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("VZ (peak value) per sector")
-  gr.setTitleY("VZ (peak value) per sector")
+  gr.setTitle("Average Forward Reconstruction chi2, negatives")
+  gr.setTitleY("Average Forward Reconstruction chi2, negatives")
   gr.setTitleX("run number")
   return gr
 }

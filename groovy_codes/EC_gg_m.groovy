@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = new GraphErrors('Sigma')
 grtl.setTitle("#gamma #gamma invariant mass ECAL (sigma)")
-grtl.setTitleY("#gamma #gamma invariant mass ECAL (sigma)")
+grtl.setTitleY("#gamma #gamma invariant mass ECAL (sigma) (GeV)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()

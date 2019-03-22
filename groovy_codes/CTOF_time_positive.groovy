@@ -4,12 +4,12 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = new GraphErrors('Mean')
 grtl.setTitle("CTOF time, positive")
-grtl.setTitleY("CTOF time, positive")
+grtl.setTitleY("CTOF time, positive (ns)")
 grtl.setTitleX("run number")
 
 def grtl2 = new GraphErrors('Sigma')
 grtl2.setTitle("CTOF time, positive")
-grtl2.setTitleY("CTOF time, positive")
+grtl2.setTitleY("CTOF time, positive (ns)")
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()

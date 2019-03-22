@@ -2,38 +2,25 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl1 = (1..2).collect{
-  def gr = new GraphErrors('Mean, sec1 layer'+it)
-  gr.setTitle("FTH MIPS time - StartTime per layer")
-  gr.setTitleY("FTH MIPS time - StartTime per layer")
-  gr.setTitleX("run number")
-  return gr
-}
+def grtl1 = new GraphErrors('layer 1, Mean')
+grtl1.setTitle("FTH MIPS time, neutral")
+grtl1.setTitleY("FTH MIPS time, neutral (ns)")
+grtl1.setTitleX("run number")
 
-def grtl2 = (1..2).collect{
-  def gr = new GraphErrors('Sigma, sec1 layer'+it)
-  gr.setTitle("FTH MIPS time - StartTime per layer")
-  gr.setTitleY("FTH MIPS time - StartTime per layer")
-  gr.setTitleX("run number")
-  return gr
-}
+def grtl2 = new GraphErrors('layer 1, Sigma')
+grtl2.setTitle("FTH MIPS time, neutral")
+grtl2.setTitleY("FTH MIPS time, neutral (ns)")
+grtl2.setTitleX("run number")
 
-def grtl3 = (1..2).collect{
-  def gr = new GraphErrors('Mean, sec1 layer'+it)
-  gr.setTitle("FTH MIPS time - StartTime per layer")
-  gr.setTitleY("FTH MIPS time - StartTime per layer")
-  gr.setTitleX("run number")
-  return gr
-}
+def grtl3 = new GraphErrors('layer 2, Mean')
+grtl3.setTitle("FTH MIPS time, neutral")
+grtl3.setTitleY("FTH MIPS time, neutral (ns)")
+grtl3.setTitleX("run number")
 
-def grtl4 = (1..2).collect{
-  def gr = new GraphErrors('Sigma, sec1 layer'+it)
-  gr.setTitle("FTH MIPS time - StartTime per layer")
-  gr.setTitleY("FTH MIPS time - StartTime per layer")
-  gr.setTitleX("run number")
-  return gr
-}
-
+def grtl4 = new GraphErrors('layer 2, Sigma')
+grtl4.setTitle("FTH MIPS time, neutral")
+grtl4.setTitleY("FTH MIPS time, neutral (ns)")
+grtl4.setTitleX("run number")
 
 TDirectory out = new TDirectory()
 for(arg in args) {
@@ -70,4 +57,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('out_FTH_MIPS_time.hipo')
+out.writeFile('FTH_MIPS_time.hipo')

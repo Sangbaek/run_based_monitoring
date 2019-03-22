@@ -6,7 +6,7 @@ def grtl1 = (1..6).collect{
   sec_num = it
   def gr1 = new GraphErrors('sec'+sec_num+' sl'+1)
   gr1.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr1.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr1.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr1.setTitleX("run number")
   return gr1
 }
@@ -14,7 +14,7 @@ def grtl2 = (1..6).collect{
   sec_num = it
   def gr2 = new GraphErrors('sec'+sec_num+' sl'+2)
   gr2.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr2.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr2.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr2.setTitleX("run number")
   return gr2
 }
@@ -22,7 +22,7 @@ def grtl3 = (1..6).collect{
   sec_num = it
   def gr3 = new GraphErrors('sec'+sec_num+' sl'+3)
   gr3.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr3.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr3.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr3.setTitleX("run number")
   return gr3
 }
@@ -30,7 +30,7 @@ def grtl4 = (1..6).collect{
   sec_num = it
   def gr4 = new GraphErrors('sec'+sec_num+' sl'+4)
   gr4.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr4.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr4.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr4.setTitleX("run number")
   return gr4
 }
@@ -38,7 +38,7 @@ def grtl5 = (1..6).collect{
   sec_num = it
   def gr5 = new GraphErrors('sec'+sec_num+' sl'+5)
   gr5.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr5.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr5.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr5.setTitleX("run number")
   return gr5
 }
@@ -46,7 +46,7 @@ def grtl6 = (1..6).collect{
   sec_num = it
   def gr6 = new GraphErrors('sec'+sec_num+' sl'+6)
   gr6.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr6.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr6.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr6.setTitleX("run number")
   return gr6
 }
@@ -82,22 +82,22 @@ for(arg in args) {
     def h16 = h26.projectionY()
     h11.setName("sec"+sec_num+"sl"+1)
     h11.setTitle("DC residuals per sector per superlayer")
-    h11.setTitleX("DC residuals per sector per superlayer")
+    h11.setTitleX("DC residuals per sector per superlayer (cm)")
     h12.setName("sec"+sec_num+"sl"+2)
     h12.setTitle("DC residuals per sector per superlayer")
-    h12.setTitleX("DC residuals per sector per superlayer")
+    h12.setTitleX("DC residuals per sector per superlayer (cm)")
     h13.setName("sec"+sec_num+"sl"+3)
     h13.setTitle("DC residuals per sector per superlayer")
-    h13.setTitleX("DC residuals per sector per superlayer")
+    h13.setTitleX("DC residuals per sector per superlayer (cm)")
     h14.setName("sec"+sec_num+"sl"+4)
     h14.setTitle("DC residuals per sector per superlayer")
-    h14.setTitleX("DC residuals per sector per superlayer")
+    h14.setTitleX("DC residuals per sector per superlayer (cm)")
     h15.setName("sec"+sec_num+"sl"+5)
     h15.setTitle("DC residuals per sector per superlayer")
-    h15.setTitleX("DC residuals per sector per superlayer")
+    h15.setTitleX("DC residuals per sector per superlayer (cm)")
     h16.setName("sec"+sec_num+"sl"+6)
     h16.setTitle("DC residuals per sector per superlayer")
-    h16.setTitleX("DC residuals per sector per superlayer")
+    h16.setTitleX("DC residuals per sector per superlayer (cm)")
 
 
     // def f1 = ROOTFitter.fit(h1)

@@ -4,7 +4,7 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = new GraphErrors('cvt_z_neg')
 grtl.setTitle("VZ (Average), negatives")
-grtl.setTitleY("VZ (Average), negatives")
+grtl.setTitleY("VZ (Average), negatives (cm)")
 // grtl.setTitle("VZ (peak value), negatives")
 // grtl.setTitleY("VZ (peak value), negatives")
 grtl.setTitleX("run number")

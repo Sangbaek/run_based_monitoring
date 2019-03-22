@@ -186,20 +186,20 @@ System.out.println("Beam energy = "+Ebeam);
 		//Initializing rf histograms.
 		H_RFtimediff = new H1F("H_RFtimediff","H_RFtimediff",100,-5,5);
 		H_RFtimediff.setTitle("RF time difference (1-2)");
-		H_RFtimediff.setTitleX("t (ns)");
+		H_RFtimediff.setTitleX("RF1-RF2 (ns)");
 		H_e_RFtime1_S = new H1F[6];
 		H_pip_RFtime1_S = new H1F[6];
 		H_pim_RFtime1_S = new H1F[6];
 		for(int i=0;i<6;i++){
 			H_e_RFtime1_S[i] = new H1F(String.format("H_e_RFtime1_S%d",i+1),String.format("H_e_RFtime1_S%d",i+1),500,-50,200);
 			H_e_RFtime1_S[i].setTitle("electron RF1 time");
-			H_e_RFtime1_S[i].setTitleX("t (ns)");
+			H_e_RFtime1_S[i].setTitleX("RF1 time for electron (ns)");
 			H_pip_RFtime1_S[i] = new H1F(String.format("H_pip_RFtime1_S%d",i+1),String.format("H_pip_RFtime1_S%d",i+1),500,-50,200);
 			H_pip_RFtime1_S[i].setTitle("#pi^+ RF1 time");
-			H_pip_RFtime1_S[i].setTitleX("t (ns)");
+			H_pip_RFtime1_S[i].setTitleX("RF1 time for #pi^+ (ns)");
 			H_pim_RFtime1_S[i] = new H1F(String.format("H_pim_RFtime1_S%d",i+1),String.format("H_pim_RFtime1_S%d",i+1),500,-50,200);
 			H_pim_RFtime1_S[i].setTitle("#pi^- RF1 time");
-			H_pim_RFtime1_S[i].setTitleX("t (ns)");
+			H_pim_RFtime1_S[i].setTitleX("RF1 time for #pi^- (ns)");
 		}
 
 		H_TOF_vt_S1m = new H1F("H_TOF_vt_S1n","H_TOF_vt_S1n",100,tofvt1,tofvt2);

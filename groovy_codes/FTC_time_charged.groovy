@@ -3,13 +3,13 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
   def grtl = new GraphErrors('Mean')
-  grtl.setTitle("FTC time - start time, charged")
-  grtl.setTitleY("FTC time - start time, charged")
+  grtl.setTitle("FTC time - RF time, charged")
+  grtl.setTitleY("FTC time - RF time, charged (ns)")
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
-  grtl.setTitle("FTC time - start time, charged")
-  grtl.setTitleY("FTC time - start time, charged")
+  grtl.setTitle("FTC time - RF time, charged")
+  grtl.setTitleY("FTC time - RF time, charged (ns)")
   grtl.setTitleX("run number")
 
 

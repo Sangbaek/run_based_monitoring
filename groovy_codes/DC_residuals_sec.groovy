@@ -6,7 +6,7 @@ def grtl = (1..6).collect{
   sec_num = it
   def gr = new GraphErrors('sec'+sec_num)
   gr.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr.setTitleY("DC residuals (peak value) per sector per superlayer")
+  gr.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
   gr.setTitleX("run number")
   return gr
 }
@@ -45,7 +45,7 @@ for(arg in args) {
     h11.add(h16)
     h11.setName("sec"+sec_num)
     h11.setTitle("DC residuals per sector")
-    h11.setTitleX("DC residuals per sector")
+    h11.setTitleX("DC residuals per sector (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
 

@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
   gr.setTitle("VZ (peak value) per sector")
-  gr.setTitleY("VZ (peak value) per sector")
+  gr.setTitleY("VZ (peak value) per sector (cm)")
   gr.setTitleX("run number")
   return gr
 }
@@ -28,7 +28,7 @@ for(arg in args) {
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle("VZ for electrons")
-    h1.setTitleX("VZ for electrons")
+    h1.setTitleX("VZ for electrons (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
 

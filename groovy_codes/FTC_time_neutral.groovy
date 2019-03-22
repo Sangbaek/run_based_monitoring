@@ -4,12 +4,12 @@ import org.jlab.groot.data.GraphErrors
 
   def grtl = new GraphErrors('Mean')
   grtl.setTitle("FTC time - start time, neutral")
-  grtl.setTitleY("FTC time - start time, neutral")
+  grtl.setTitleY("FTC time - start time, neutral (ns)")
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
   grtl.setTitle("FTC time - start time, neutral")
-  grtl.setTitleY("FTC time - start time, neutral")
+  grtl.setTitleY("FTC time - start time, neutral (ns)")
   grtl.setTitleX("run number")
 
 

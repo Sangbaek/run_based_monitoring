@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
   gr.setTitle("Mean FTOF time per sector")
-  gr.setTitleY("Mean FTOF time per sector")
+  gr.setTitleY("Mean FTOF time per sector (ns)")
   gr.setTitleX("run number")
   return gr
 }
@@ -33,7 +33,7 @@ for(arg in args) {
     h1.add(h3)
     h1.add(h5)
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF StartTime - RFtime")
+    h1.setTitle("FTOF StartTime - RFtime (ns)")
     h1.setTitleX("FTOF StartTime - RFtime")
 
     // def f1 = ROOTFitter.fit(h1)

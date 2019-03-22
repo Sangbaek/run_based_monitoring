@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+it + ' Mean')
   gr.setTitle("CND time per layer")
-  gr.setTitleY("CND time per layer")
+  gr.setTitleY("CND time per layer (ns)")
   gr.setTitleX("run number")
   return gr
 }
@@ -13,7 +13,7 @@ def grtl = (1..3).collect{
 def grtl2 = (1..3).collect{
   def gr2 = new GraphErrors('layer'+it+' Sigma')
   gr2.setTitle("CND time per layer")
-  gr2.setTitleY("CND time per layer")
+  gr2.setTitleY("CND time per layer (ns)")
   gr2.setTitleX("run number")
   return gr2
 }
