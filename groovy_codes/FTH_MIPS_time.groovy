@@ -55,6 +55,8 @@ for(arg in args) {
 
 out.mkdir('/timelines')
 out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+grtl1.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
+grtl3.each{ out.addDataSet(it) }
+grtl4.each{ out.addDataSet(it) }
 out.writeFile('FTH_MIPS_time.hipo')
