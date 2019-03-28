@@ -42,4 +42,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('CTOF_time_pos.hipo')
+out.writeFile('CTOF_time.hipo')
