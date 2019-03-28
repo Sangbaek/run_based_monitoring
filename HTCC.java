@@ -502,19 +502,19 @@ public class HTCC{
 								ana.write(); //for H_HTCC_nphe
         }
 				//new module for HTCC to write H_HTCC_nphe
-				public void write() {
-								TDirectory dirout = new TDirectory();
-								dirout.mkdir("/HTCC/");
-								dirout.cd("/HTCC/");
-								for(int s=0;s<48;s++){
-												dirout.addDataSet(H_HTCC_nphe[s]);
-								}
+	public void write() {
+		TDirectory dirout = new TDirectory();
+		dirout.mkdir("/HTCC/");
+		dirout.cd("/HTCC/");
+		for(int s=0;s<48;s++){
+						dirout.addDataSet(H_HTCC_nphe[s]);
+		}
 
-								if(!write_volatile){
-										if(runNum>0)dirout.writeFile("plots"+runNum+"/out_HTCC_"+runNum+".hipo");
-										else dirout.writeFile("plots/out_HTCC.hipo");
-								}
-				}
+		if(!write_volatile){
+				if(runNum>0)dirout.writeFile("plots"+runNum+"/out_HTCC_"+runNum+".hipo");
+				else dirout.writeFile("plots/out_HTCC.hipo");
+		}
+	}
 
 
 }

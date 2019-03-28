@@ -74,7 +74,7 @@ public class monitor2p2GeV {
 	public H1F H_negHBTrk_sect, H_posHBTrk_sect, H_negRECHB_sect, H_posRECHB_sect;
 	public H1F H_negTBTrk_sect, H_posTBTrk_sect, H_negREC_sect, H_posREC_sect;
 
-	public H1F[] H_dcm_vz, H_dcm_chi2, H_dce_chi2;
+	public H1F[] H_dcm_vz, H_dcm_chi2;
 	public H2F[] H_R1_dcm_XY, H_R2_dcm_XY, H_R3_dcm_XY, H_R1_dcm_uXY, H_R2_dcm_uXY, H_R3_dcm_uXY;
 	public H2F[] H_R1phiDm_mom;
 
@@ -82,6 +82,7 @@ public class monitor2p2GeV {
 	public H2F[] H_R1_dcp_XY, H_R2_dcp_XY, H_R3_dcp_XY, H_R1_dcp_uXY, H_R2_dcp_uXY, H_R3_dcp_uXY;
 	public H2F[] H_R1phiDp_mom;
 
+	public H1F[] H_dce_chi2;
 	F1D fit_vz_S1, fit_vz_S2, fit_vz_S3, fit_vz_S4, fit_vz_S5, fit_vz_S6;
 	public GraphErrors g_m_ESampl_ECal, g_s_ESampl_ECal;
 

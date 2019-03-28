@@ -243,7 +243,6 @@ public class central {
 	public void plot() {
 		EmbeddedCanvas can_central  = new EmbeddedCanvas();
                 can_central.setSize(2000,3000);
-                // can_central.divide(4,6);
 								can_central.divide(4,7);
                 can_central.setAxisTitleSize(18);
                 can_central.setAxisFontSize(18);
@@ -292,8 +291,7 @@ public class central {
                 dirout.cd("/ctof/");
                 dirout.addDataSet(H_CVT_t_pad,H_CTOF_edep_phi);
                 for(int p=0;p<50;p++)dirout.addDataSet(H_CVT_t[p]);
-								dirout.addDataSet(H_CVT_t_pos);
-								dirout.addDataSet(H_CVT_t_neg);
+								dirout.addDataSet(H_CVT_t_pos, H_CVT_t_neg);
 		if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rga/spring18/plots"+runNum+"/out_CTOF_"+runNum+".hipo");
 
 		if(!write_volatile){
