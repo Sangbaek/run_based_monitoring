@@ -91,7 +91,7 @@ public class monitor2p2GeV {
 
 	public H2F H_CVT_ft, H_CVT_pt, H_CVT_pf, H_CVT_zf, H_CVT_zp, H_CVT_zt;
 	public H1F H_CVT_p, H_CVT_t, H_CVT_f, H_CVT_z, H_CVT_chi2, H_CVT_ndf, H_CVT_pathlength;
-	public H1F H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg, H_CVT_chi2_elec;
+	public H1F H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg;
 
 	public H1F[] H_MM_epip_Spip, H_MM_epip_Se;
 	public H1F H_MM_epip, H_MM_epip_zoom, H_pip_vtd, H_pip_vz_ve_diff, H_pip_Dphi;
@@ -909,9 +909,6 @@ System.out.println("Beam energy = "+Ebeam);
 		H_CVT_chi2_neg = new H1F("H_CVT_chi2_neg","H_CVT_chi2_neg",100,0,200);
 		H_CVT_chi2_neg.setTitle("CVT #chi^2 for negatives");
 		H_CVT_chi2_neg.setTitleX("#chi^2");
-		H_CVT_chi2_elec = new H1F("H_CVT_chi2_elec","H_CVT_chi2_elec",100,0,200);
-		H_CVT_chi2_elec.setTitle("CVT #chi^2 for electrons");
-		H_CVT_chi2_elec.setTitleX("#chi^2");
 
 	  H_CVT_ndf = new H1F("H_CVT_ndf","H_CVT_ndf",10,0.5,10.5);
 		H_CVT_ndf.setTitle("CVT NDF");
@@ -1481,6 +1478,8 @@ System.out.println("Beam energy = "+Ebeam);
 		htrks = new H1F("htrks", 10,0,10);
 		hpostrks = new H1F("hpostrks", 10,0,10);
 		hnegtrks = new H1F("hnegtrks", 10,0,10);
+		hpostrks_rat = new H1F("hpostrks_rat", 10,0,10);
+		hnegtrks_rat = new H1F("hnegtrks_rat", 10,0,10);
 		hndf = new H1F("hndf", 10,0,10);
 		hchi2norm = new H1F("hchi2norm", 100,0,100);
 		hp = new H1F("hp", 100,0,10);
@@ -1851,6 +1850,10 @@ System.out.println("Beam energy = "+Ebeam);
 		for(int k = 0; k < bank.rows(); k++){
 			int pid = bank.getInt("pid", k);
 			byte q = bank.getByte("charge", k);
+			int status = bank.getShort("status", k);
+			boolean Forward = (status<4000);
+			boolean Central = (status>=4000);
+
 			int sector = 0;
 			if(q!=0 && Trackbank!=null){
 				for(int l=0;l<Trackbank.rows() && sector==0 ;l++)if(Trackbank.getInt("pindex",l)==k)sector=Trackbank.getInt("sector",l);
@@ -1858,7 +1861,7 @@ System.out.println("Beam energy = "+Ebeam);
 			if(q==0 && ECALbank!=null){
 				for(int l=0;l<ECALbank.rows() && sector==0 ;l++)if(ECALbank.getInt("pindex",l)==k)sector=ECALbank.getInt("sector",l);
 			}
-			if(sector>0){
+			if(Forward&&sector>0){
 				if(pid==2212){
 					H_trig_sector_prot.fill(sector);
 					H_trig_sector_prot_rat.fill(sector);
@@ -1900,8 +1903,13 @@ System.out.println("Beam energy = "+Ebeam);
 				if (q<0){
 					H_trig_sector_negative_rat.fill(sector);
 				}
-
-
+			}
+			if (Central){
+				if (q>0 && pid==2212) H_trig_central_prot_rat.fill(1);//checkpoint_central
+				if (q>0 && pid==211) H_trig_central_piplus_rat.fill(1);//checkpoint_central
+				if (q<0 && pid==-211) H_trig_central_piminus_rat.fill(1);//checkpoint_central
+				if (q>0 && pid==321) H_trig_central_kplus_rat.fill(1);//checkpoint_central
+				if (q<0 && pid==-321) H_trig_central_kminus_rat.fill(1);//checkpoint_central
 			}
 		}
 	}
@@ -2494,8 +2502,7 @@ System.out.println("Beam energy = "+Ebeam);
 		htrks.fill(tracks);
 		int tracksPos = 0;
 		int tracksNeg = 0;
-
-		for(int k = 0; k < bank.rows() && foundCVT==0; k++){
+		for(int k = 0; k < bank.rows(); k++){
 			float mom = bank.getFloat("p", k);
 			float momt = bank.getFloat("pt", k);
 			float tandip = bank.getFloat("tandip", k);
@@ -2514,9 +2521,16 @@ System.out.println("Beam energy = "+Ebeam);
 
 			//checkpoint_central
 			int q = bank.getInt("q", k);
-			if (q > 0) tracksPos++;
-			else if (q < 0) tracksNeg++;
-
+			if (q > 0){
+				tracksPos++;
+				H_CVT_chi2_pos.fill(chi2);
+				H_CVT_z_pos.fill(z0);
+			}
+			else if (q < 0){
+				tracksNeg++;
+				H_CVT_chi2_neg.fill(chi2);
+				H_CVT_z_neg.fill(z0);
+			}
 			hndf.fill(ndf);
 			hp.fill(mom);
 			hpt.fill(momt);
@@ -2534,13 +2548,11 @@ System.out.println("Beam energy = "+Ebeam);
 				else if (crossId >= 1000) bmtOntrackLayers++;
 			}
 			int bstOntrackLayers = 2 * bstOntrackCrosses;
-
 			hbstOnTrkLayers.fill(bstOntrackLayers);
 			hbmtOnTrkLayers.fill(bmtOntrackLayers);
-
-
 			if(mom>0.15 && chi2<20000 && theta>0 && theta <180 && Math.abs(z0)<25 && ndf>2){}
 			if(mom>0.15 && chi2<20000 && theta>0 && theta <180 && Math.abs(z0)<25){
+				//electron
 				if(foundCVT==0){
 					foundCVT = 1;
 					CVT_mom = mom;
@@ -2556,6 +2568,9 @@ System.out.println("Beam energy = "+Ebeam);
 		}
 		hpostrks.fill(tracksPos);//checkpoint_central
 		hnegtrks.fill(tracksNeg);
+		hpostrks_rat.fill(tracksPos);//checkpoint_central
+		hnegtrks_rat.fill(tracksNeg);
+
 	}
 	public void fillTrigECAL(DataBank bank){
 		int[] NhitsSect = new int[6];
@@ -3313,20 +3328,12 @@ System.out.println("Beam energy = "+Ebeam);
                                 if( vzCutIs && PhiCutIs             && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_ndf.fill(CVT_ndf);
                                 if( vzCutIs && PhiCutIs && NDFcutIs              && pathCutIs && ThetaCut && CVT_elast){
                                 H_CVT_chi2.fill(CVT_chi2);
-                                for(int k = 0; k < partBank.rows(); k++){
-                                 int pid = partBank.getInt("pid", k);
-                                 if (CVTcharge<0 && pid==11) H_CVT_chi2_elec.fill(CVT_chi2);//checkpoint_central
-                                }
-                                if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
-                                if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
 																}
                                 if( vzCutIs && PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast){
                                         H_CVT_p.fill(CVT_mom);
                                         H_CVT_t.fill(CVT_theta);
                                         H_CVT_f.fill(CVT_phi);
                                         H_CVT_z.fill(CVT_vz);
-                                        if (CVTcharge>0) H_CVT_z_pos.fill(CVT_vz);
-                                        if (CVTcharge<0) H_CVT_z_neg.fill(CVT_vz);
                                         H_CVT_ft.fill(CVT_phi,CVT_theta);
                                         H_CVT_pt.fill(CVT_theta,CVT_mom);
                                         H_CVT_pf.fill(CVT_phi,CVT_mom);
@@ -3342,14 +3349,6 @@ System.out.println("Beam energy = "+Ebeam);
                                         H_elast_W.fill(e_W);
                                         float CVT_emom = Ebeam/(1 + 2*Ebeam/0.93827f *(float)Math.pow( Math.sin(CVT_eth/(2*57.296)),2 ) );
                                         H_CVT_corr_e_mom.fill(CVT_emom,e_mom);
-                                        for(int k = 0; k < partBank.rows(); k++){
-                                         int pid = partBank.getInt("pid", k);
-                                         if (CVTcharge>0 && pid==2212) H_trig_central_prot_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge>0 && pid==211) H_trig_central_piplus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==-211) H_trig_central_piminus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge>0 && pid==321) H_trig_central_kplus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==-321) H_trig_central_kminus_rat.fill(1);//checkpoint_central
-																				}
                                         //if(Math.abs(phiDiff+10)<10)System.out.println("CVTcharge = "+CVTcharge);
 //                                        System.out.println("After CVT : "+NDFcut+" , "+CVT_elast+ "\n");
                                 }
@@ -3902,21 +3901,20 @@ System.out.println("Beam energy = "+Ebeam);
 		can_CVT.cd(23);can_CVT.draw(H_CVT_z_neg);//Test drawing for vz_neg cvt
 		can_CVT.cd(24);can_CVT.draw(H_CVT_chi2_pos);//Test drawing for chi2_pos cvt
 		can_CVT.cd(25);can_CVT.draw(H_CVT_chi2_neg);//Test drawing for chi2_neg cvt
-		can_CVT.cd(26);can_CVT.draw(H_CVT_chi2_elec);//Test drawing for chi2_elec cvt
-		can_CVT.cd(27);can_CVT.draw(hbstOccupancy);//checkpoint_central
-		can_CVT.cd(28);can_CVT.draw(hbmtOccupancy);
-		can_CVT.cd(29);can_CVT.draw(htrks);
-		can_CVT.cd(30);can_CVT.draw(hpostrks);
-		can_CVT.cd(31);can_CVT.draw(hnegtrks);
-		can_CVT.cd(32);can_CVT.draw(hndf);
-		can_CVT.cd(33);can_CVT.draw(hchi2norm);
-		can_CVT.cd(34);can_CVT.draw(hp);
-		can_CVT.cd(35);can_CVT.draw(hpt);
-		can_CVT.cd(36);can_CVT.draw(hpathlen);
-		can_CVT.cd(37);can_CVT.draw(hbstOnTrkLayers);
-		can_CVT.cd(38);can_CVT.draw(hbmtOnTrkLayers);
-		can_CVT.cd(39);can_CVT.draw(hpostrks_rat);
-		can_CVT.cd(40);can_CVT.draw(hnegtrks_rat);
+		can_CVT.cd(26);can_CVT.draw(hbstOccupancy);//checkpoint_central
+		can_CVT.cd(27);can_CVT.draw(hbmtOccupancy);
+		can_CVT.cd(28);can_CVT.draw(htrks);
+		can_CVT.cd(29);can_CVT.draw(hpostrks);
+		can_CVT.cd(30);can_CVT.draw(hnegtrks);
+		can_CVT.cd(31);can_CVT.draw(hndf);
+		can_CVT.cd(32);can_CVT.draw(hchi2norm);
+		can_CVT.cd(33);can_CVT.draw(hp);
+		can_CVT.cd(34);can_CVT.draw(hpt);
+		can_CVT.cd(35);can_CVT.draw(hpathlen);
+		can_CVT.cd(36);can_CVT.draw(hbstOnTrkLayers);
+		can_CVT.cd(37);can_CVT.draw(hbmtOnTrkLayers);
+		can_CVT.cd(38);can_CVT.draw(hpostrks_rat);
+		can_CVT.cd(39);can_CVT.draw(hnegtrks_rat);
 
 		if(runNum>0){
 			if(!write_volatile)can_CVT.save(String.format("plots"+runNum+"/cvt.png"));
@@ -4518,7 +4516,7 @@ System.out.println("Beam energy = "+Ebeam);
 		dirout.mkdir("/cvt/");
 		dirout.cd("/cvt/");
 		dirout.addDataSet(H_CVT_chi2,H_CVT_ndf,H_CVT_ft,H_CVT_pt,H_CVT_pf,H_CVT_zf,H_CVT_zp,H_CVT_zt,H_CVT_e_corr_vz);
-		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
+		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);
 		dirout.addDataSet(hbstOccupancy,hbmtOccupancy,htrks,hpostrks,hnegtrks,hndf,hchi2norm,hp,hpt,hpathlen,hbstOnTrkLayers,hbmtOnTrkLayers,hpostrks_rat, hnegtrks_rat); //checkpoint_central
 		dirout.mkdir("/RF/"); // saving pi_RFtime1's
 		dirout.cd("/RF/");
