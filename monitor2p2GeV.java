@@ -3344,11 +3344,11 @@ System.out.println("Beam energy = "+Ebeam);
                                         H_CVT_corr_e_mom.fill(CVT_emom,e_mom);
                                         for(int k = 0; k < partBank.rows(); k++){
                                          int pid = partBank.getInt("pid", k);
-                                         if (CVTcharge<0 && pid==2212) H_trig_central_prot_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==-211) H_trig_central_piplus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==211) H_trig_central_piminus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==-321) H_trig_central_kplus_rat.fill(1);//checkpoint_central
-                                         if (CVTcharge<0 && pid==321) H_trig_central_kminus_rat.fill(1);//checkpoint_central
+                                         if (CVTcharge>0 && pid==2212) H_trig_central_prot_rat.fill(1);//checkpoint_central
+                                         if (CVTcharge>0 && pid==211) H_trig_central_piplus_rat.fill(1);//checkpoint_central
+                                         if (CVTcharge<0 && pid==-211) H_trig_central_piminus_rat.fill(1);//checkpoint_central
+                                         if (CVTcharge>0 && pid==321) H_trig_central_kplus_rat.fill(1);//checkpoint_central
+                                         if (CVTcharge<0 && pid==-321) H_trig_central_kminus_rat.fill(1);//checkpoint_central
 																				}
                                         //if(Math.abs(phiDiff+10)<10)System.out.println("CVTcharge = "+CVTcharge);
 //                                        System.out.println("After CVT : "+NDFcut+" , "+CVT_elast+ "\n");
@@ -4504,7 +4504,7 @@ System.out.println("Beam energy = "+Ebeam);
 		dirout.addDataSet(H_trig_sector_prot_rat,H_trig_sector_piplus_rat,H_trig_sector_piminus_rat,H_trig_sector_kplus_rat,H_trig_sector_kminus_rat,H_trig_sector_photon_rat,H_trig_sector_neutron_rat, H_trig_sector_positive_rat, H_trig_sector_negative_rat, H_trig_sector_neutral_rat);
                 if (H_trig_sector_deut_rat != null) dirout.addDataSet(H_trig_sector_deut_rat);
 		dirout.addDataSet(H_trig_central_prot_rat,H_trig_central_piplus_rat,H_trig_central_piminus_rat,H_trig_central_kplus_rat,H_trig_central_kminus_rat);
-		
+
 		dirout.addDataSet(H_trig_S1_ETOT_E,H_trig_S2_ETOT_E,H_trig_S3_ETOT_E,H_trig_S4_ETOT_E,H_trig_S5_ETOT_E,H_trig_S6_ETOT_E);
 		dirout.addDataSet(H_trig_S1_ECAL_E,H_trig_S2_ECAL_E,H_trig_S3_ECAL_E,H_trig_S4_ECAL_E,H_trig_S5_ECAL_E,H_trig_S6_ECAL_E);
 		dirout.addDataSet(H_trig_S1_PCAL_E,H_trig_S2_PCAL_E,H_trig_S3_PCAL_E,H_trig_S4_PCAL_E,H_trig_S5_PCAL_E,H_trig_S6_PCAL_E);
