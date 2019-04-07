@@ -3342,13 +3342,13 @@ System.out.println("Beam energy = "+Ebeam);
                                         H_elast_W.fill(e_W);
                                         float CVT_emom = Ebeam/(1 + 2*Ebeam/0.93827f *(float)Math.pow( Math.sin(CVT_eth/(2*57.296)),2 ) );
                                         H_CVT_corr_e_mom.fill(CVT_emom,e_mom);
-																				for(int k = 0; k < partBank.rows(); k++){
-																					int pid = partBank.getInt("pid", k);
-																					if (CVTcharge<0 && pid==2212) H_trig_central_prot_rat.fill(1);
-																					if (CVTcharge<0 && pid==-211) H_trig_central_piplus_rat.fill(1);
-																					if (CVTcharge<0 && pid==211) H_trig_central_piminus_rat.fill(1);
-																					if (CVTcharge<0 && pid==-321) H_trig_central_kplus_rat.fill(1);
-																					if (CVTcharge<0 && pid==321) H_trig_central_kminus_rat.fill(1);
+                                        for(int k = 0; k < partBank.rows(); k++){
+                                         int pid = partBank.getInt("pid", k);
+                                         if (CVTcharge<0 && pid==2212) H_trig_central_prot_rat.fill(1);
+                                         if (CVTcharge<0 && pid==-211) H_trig_central_piplus_rat.fill(1);
+                                         if (CVTcharge<0 && pid==211) H_trig_central_piminus_rat.fill(1);
+                                         if (CVTcharge<0 && pid==-321) H_trig_central_kplus_rat.fill(1);
+                                         if (CVTcharge<0 && pid==321) H_trig_central_kminus_rat.fill(1);
 																				}
                                         //if(Math.abs(phiDiff+10)<10)System.out.println("CVTcharge = "+CVTcharge);
 //                                        System.out.println("After CVT : "+NDFcut+" , "+CVT_elast+ "\n");
