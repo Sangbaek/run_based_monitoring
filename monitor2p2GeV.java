@@ -2413,7 +2413,6 @@ System.out.println("Beam energy = "+Ebeam);
 					H_R3_dcp_uXY[6].fill(bXos.getFloat("ux",Xind3),bXos.getFloat("uy",Xind3));
 					H_R1phiDp_mom[6].fill(mom,phiR1D);
 				}
-				// if (pid == 11) H_dce_chi2[s].fill(bank.getFloat("chi2" , k));
 			}
 		}
 	}
