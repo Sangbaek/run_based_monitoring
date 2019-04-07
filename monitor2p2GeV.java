@@ -1476,18 +1476,18 @@ System.out.println("Beam energy = "+Ebeam);
 		}
 
 		//checkpoint_central
-		hbstOccupancy = new H1F("hbstOccupancy", 100,0,100)
-		hbmtOccupancy = new H1F("hbmtOccupancy", 100,0,100)
-		htrks = new H1F("htrks", 10,0,10)
-		hpostrks = new H1F("hpostrks", 10,0,10)
-		hnegtrks = new H1F("hnegtrks", 10,0,10)
-		hndf = new H1F("hndf", 10,0,10)
-		hchi2norm = new H1F("hchi2norm", 100,0,100)
-		hp = new H1F("hp", 100,0,10)
-		hpt = new H1F("hpt", 100,0,10)
-		hpathlen = new H1F("hpathlen", 100,0,70)
-		hbstOnTrkLayers = new H1F("hbstOnTrkLayers", 10,0,10)
-		hbmtOnTrkLayers = new H1F("hbmtOnTrkLayers", 10,0,10)
+		hbstOccupancy = new H1F("hbstOccupancy", 100,0,100);
+		hbmtOccupancy = new H1F("hbmtOccupancy", 100,0,100);
+		htrks = new H1F("htrks", 10,0,10);
+		hpostrks = new H1F("hpostrks", 10,0,10);
+		hnegtrks = new H1F("hnegtrks", 10,0,10);
+		hndf = new H1F("hndf", 10,0,10);
+		hchi2norm = new H1F("hchi2norm", 100,0,100);
+		hp = new H1F("hp", 100,0,10);
+		hpt = new H1F("hpt", 100,0,10);
+		hpathlen = new H1F("hpathlen", 100,0,70);
+		hbstOnTrkLayers = new H1F("hbstOnTrkLayers", 10,0,10);
+		hbmtOnTrkLayers = new H1F("hbmtOnTrkLayers", 10,0,10);
 
 		G_accCharge = new GraphErrors();
 		G_accCharge.setMarkerSize(1);
@@ -2513,21 +2513,21 @@ System.out.println("Beam energy = "+Ebeam);
 			//z0 = z0*0.1f;
 
 			//checkpoint_central
-			int q = bank.getInt("q", j);
+			int q = bank.getInt("q", k);
 			if (q > 0) tracksPos++;
 			else if (q < 0) tracksNeg++;
 
 			hndf.fill(ndf);
-			hp.fill(p);
-			hpt.fill(pt);
+			hp.fill(mom);
+			hpt.fill(momt);
 			hpathlen.fill(pathlength);
 			float chi2norm = chi2 / (float) ndf;
 			hchi2norm.fill(chi2norm);
 			int bstOntrackCrosses = 0;
 			int bmtOntrackLayers = 0;
 
-			for (int k = 1; k < 10; ++k) {
-				int crossId = bank.getShort("Cross" + k + "_ID", j);
+			for (int i = 1; i < 10; ++i) {
+				int crossId = bank.getShort("Cross" + i + "_ID", k);
 				if (crossId == 0) continue;
 
 				if (crossId < 1000) bstOntrackCrosses++;
@@ -3032,14 +3032,14 @@ System.out.println("Beam energy = "+Ebeam);
       DataBank bstHitBank = event.getBank("BSTRec::Hits");
       int bstHits = bstHitBank.rows();
       float bstOccupancy = 100 * bstHits/BSTCHANNELS;
-      hbstOccupancy.fill(bstOccupancy)
+      hbstOccupancy.fill(bstOccupancy);
     }
 
     if(event.hasBank("BMTRec::Hits")) {
       DataBank bmtHitBank = event.getBank("BMTRec::Hits");
       int bmtHits = bmtHitBank.rows();
       float bmtOccupancy = 100 * bmtHits/BMTCHANNELS;
-      hbmtOccupancy.fill(bmtOccupancy)
+      hbmtOccupancy.fill(bmtOccupancy);
     }
 
 
@@ -4438,15 +4438,15 @@ System.out.println("Beam energy = "+Ebeam);
 		// for(int s=0;s<7;s++){
 		// 	can_dce_chi2.cd(0+s);can_dce_chi2.draw(H_dce_chi2[s]);
 		// }
-		if(runNum>0){
-			if(!write_volatile)can_dce_chi2.save(String.format("plots"+runNum+"/dc_e_chi2.png"));
-			if(write_volatile)can_dce_chi2.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/dc_e_chi2.png"));
-			System.out.println(String.format("save plots"+runNum+"/dc_e_chi2.png"));
-		}
-		else{
-			can_dce_chi2.save(String.format("plots/dc_e_chi2.png"));
-			System.out.println(String.format("save plots/dc_e_chi2.png"));
-		}
+		// if(runNum>0){
+		// 	if(!write_volatile)can_dce_chi2.save(String.format("plots"+runNum+"/dc_e_chi2.png"));
+		// 	if(write_volatile)can_dce_chi2.save(String.format("/volatile/clas12/rgb/spring19/plots"+runNum+"/dc_e_chi2.png"));
+		// 	System.out.println(String.format("save plots"+runNum+"/dc_e_chi2.png"));
+		// }
+		// else{
+		// 	can_dce_chi2.save(String.format("plots/dc_e_chi2.png"));
+		// 	System.out.println(String.format("save plots/dc_e_chi2.png"));
+		// }
 
 
 	}
@@ -4520,7 +4520,6 @@ System.out.println("Beam energy = "+Ebeam);
 		dirout.addDataSet(H_CVT_chi2,H_CVT_ndf,H_CVT_ft,H_CVT_pt,H_CVT_pf,H_CVT_zf,H_CVT_zp,H_CVT_zt,H_CVT_e_corr_vz);
 		dirout.addDataSet(H_CVT_z, H_CVT_z_pos, H_CVT_z_neg, H_CVT_chi2_pos, H_CVT_chi2_neg);//,H_CVT_chi2_elec);
 		dirout.addDataSet(hbstOccupancy,hbmtOccupancy,htrks,hpostrks,hnegtrks,hndf,hchi2norm,hp,hpt,hpathlen,hbstOnTrkLayers,hbmtOnTrkLayers,hpostrks_rat, hnegtrks_rat); //checkpoint_central
-)
 		dirout.mkdir("/RF/"); // saving pi_RFtime1's
 		dirout.cd("/RF/");
 		for(int s=0;s<6;s++){
@@ -4568,8 +4567,8 @@ System.out.println("Beam energy = "+Ebeam);
 			H_trig_central_kplus_rat.divide(Ntrigs);
 			H_trig_central_kminus_rat.divide(Ntrigs);
 			//checkpoint_central
-			hpostrks_rat.divde(Ntrigs);
-			hnegtrks_rat.divde(Ntrigs);
+			hpostrks_rat.divide(Ntrigs);
+			hnegtrks_rat.divide(Ntrigs);
 		}
         public static void main(String[] args) {
                 System.setProperty("java.awt.headless", "true");
