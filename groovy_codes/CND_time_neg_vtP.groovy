@@ -1,5 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
+import org.root.func.*;
 // import ROOTFitter
 
 def grtl = (1..3).collect{

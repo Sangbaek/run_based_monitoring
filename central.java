@@ -225,6 +225,8 @@ public class central {
 	}
 	public void processEvent(DataEvent event) {
 		BackToBack = false;
+		// event.show();
+		event.getBank("CVTRec::Tracks").show();
 		DataBank eventBank = null, trackDetBank = null;
                 if(userTimeBased){
                         if(event.hasBank("REC::Event"))eventBank = event.getBank("REC::Event");
@@ -239,6 +241,7 @@ public class central {
 		else return;
 		if(trackDetBank != null && event.hasBank("CVTRec::Tracks"))FillTracks(trackDetBank,event.getBank("CVTRec::Tracks"));
 		if(BackToBack && event.hasBank("CVTRec::Tracks") && event.hasBank("CTOF::hits"))FillCVTCTOF(event.getBank("CVTRec::Tracks"),event.getBank("CTOF::hits"));
+		if(event.hasBank("CVTRec::Particle")) System.out.println(1);
 	}
 	public void plot() {
 		EmbeddedCanvas can_central  = new EmbeddedCanvas();
