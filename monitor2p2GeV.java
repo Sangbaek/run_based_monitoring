@@ -2513,7 +2513,7 @@ System.out.println("Beam energy = "+Ebeam);
 			//z0 = z0*0.1f;
 
 			//checkpoint_central
-			int q = trackBank.getInt("q", j);
+			int q = bank.getInt("q", j);
 			if (q > 0) tracksPos++;
 			else if (q < 0) tracksNeg++;
 
