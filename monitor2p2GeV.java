@@ -3312,13 +3312,13 @@ System.out.println("Beam energy = "+Ebeam);
                                 if( vzCutIs             && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_e_corr_phi.fill(e_phi,CVT_phi);
                                 if( vzCutIs && PhiCutIs             && chi2CutIs && pathCutIs && ThetaCut && CVT_elast)H_CVT_ndf.fill(CVT_ndf);
                                 if( vzCutIs && PhiCutIs && NDFcutIs              && pathCutIs && ThetaCut && CVT_elast){
-																				H_CVT_chi2.fill(CVT_chi2);
-																				for(int k = 0; k < partBank.rows(); k++){
-																					int pid = partBank.getInt("pid", k);
-																					if (CVTcharge<0 && pid==11) H_CVT_chi2_elec.fill(CVT_chi2);
-																				}
-																				if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
-																				if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
+                                H_CVT_chi2.fill(CVT_chi2);
+                                for(int k = 0; k < partBank.rows(); k++){
+                                 int pid = partBank.getInt("pid", k);
+                                 if (CVTcharge<0 && pid==11) H_CVT_chi2_elec.fill(CVT_chi2);
+                                }
+                                if (CVTcharge>0) H_CVT_chi2_pos.fill(CVT_chi2);
+                                if (CVTcharge<0) H_CVT_chi2_neg.fill(CVT_chi2);
 																}
                                 if( vzCutIs && PhiCutIs && NDFcutIs && chi2CutIs && pathCutIs && ThetaCut && CVT_elast){
                                         H_CVT_p.fill(CVT_mom);
