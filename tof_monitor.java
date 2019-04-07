@@ -146,7 +146,9 @@ public class tof_monitor {
 			float time = DCB.getFloat("time",r);
 			float field = DCB.getFloat("B",r);
 			if(s>-1&&s<6&&sl>-1&&sl<6){
-				if (field < 0.5) {
+				boolean otherregions = (sl<2 || sl>3);
+				boolean region2 = ((sl==2||sl==3) && field<0.5);
+				if (otherregions||region2) {
 					DC_residuals_trkDoca[s][sl].fill(trkDoca,timeResidual);
 					DC_residuals[s][sl].fill(timeResidual);
 					DC_time[s][sl].fill(time);
@@ -278,7 +280,7 @@ public class tof_monitor {
 	}
 
 	public void initInvertedSFitPar(int slayer, F1D function) {
-		double min = 100.; 
+		double min = 100.;
 		double max = 220.;
 		if (slayer == 1) {
 			min = 100.; max = 240.;
@@ -393,7 +395,7 @@ public class tof_monitor {
 			can_DC_resd_trkDoca.save(String.format("plots/DC_resd_trkDoca.png"));
 			System.out.println(String.format("saved plots/DC_resd_trkDoca.png"));
 		}
-	
+
 		EmbeddedCanvas can_DC_resd  = new EmbeddedCanvas();
 		can_DC_resd.setSize(3000,3000);
 		can_DC_resd.divide(6,6);
@@ -448,7 +450,7 @@ public class tof_monitor {
 			dirout.addDataSet(DC_residuals_trkDoca[s][sl],DC_time[s][sl]);
 		}
                 if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rga/spring18/plots"+runNum+"/out_TOF_"+runNum+".hipo");
-                
+
 		if(!write_volatile){
 			if(runNum>0)dirout.writeFile("plots"+runNum+"/out_TOF_"+runNum+".hipo");
 			else dirout.writeFile("plots/out_TOF.hipo");
@@ -472,13 +474,13 @@ public class tof_monitor {
                 Scanner read;
                 try {
                         read = new Scanner(file);
-                        do { 
+                        do {
                                 String filename = read.next();
                                 toProcessFileNames.add(filename);
 
                         }while (read.hasNext());
                         read.close();
-                }catch(IOException e){ 
+                }catch(IOException e){
                         e.printStackTrace();
                 }
 		int maxevents = 50000000;
@@ -507,4 +509,3 @@ public class tof_monitor {
 		ana.write();
         }
 }
-
