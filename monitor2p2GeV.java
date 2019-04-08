@@ -1686,72 +1686,72 @@ System.out.println("Beam energy = "+Ebeam);
 					return -1;
 	}
 
-	// public int makePiPlusPimPID(DataBank bank){
-	// 	boolean foundelec = false;
-	// 	int npositives = 0;
-	// 	int nnegatives = 0;
-	// 	float mybetap = 0;
-	// 	float mybetan = 0;
-	// 	for(int k = 0; k < bank.rows(); k++){
-	// 		int pid = bank.getInt("pid", k);
-	// 		byte q = bank.getByte("charge", k);
-	// 		float thisbeta = bank.getFloat("beta", k);
-	// 		int status = bank.getShort("status", k);
-	// 		boolean inDC = (status>=2000 && status<4000);
-	// 		if(inDC && pid==11)foundelec=true;
-	// 		if(inDC && q<0&&thisbeta>0)nnegatives++;
-	// 		if(inDC && npositives==0&&q>0&&thisbeta>0)mybetap=thisbeta;
-	// 		if(inDC && pid!=11&&nnegatives<2&&q<0&&thisbeta>0)mybetan=thisbeta;
-	// 		if(inDC && q>0&&thisbeta>0)npositives++;
-	// 	}
-	//
-	// 	//if(foundelec && nnegatives==2 && npositives==1)System.out.println(foundelec+" , "+nnegatives+" , "+npositives+" , "+mybetap+" , "+mybetan);
-	//
-	// 	if(foundelec && nnegatives==2 && npositives==1 && mybetap>0 && mybetan>0){}
-	// 	if(foundelec && nnegatives==2 && npositives>0 && npositives<3 && mybetap>0 ){
-	// 		for(int k = 0; k < bank.rows(); k++){
-	// 			int pid = bank.getInt("pid", k);
-	// 			byte q = bank.getByte("charge", k);
-	// 			int status = bank.getShort("status", k);
-	// 			boolean inDC = (status>=2000 && status<4000);
-	// 			if(inDC && q>0){
-	// 				float px = bank.getFloat("px", k);
-	// 				float py = bank.getFloat("py", k);
-	// 				float pz = bank.getFloat("pz", k);
-	// 				pip_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
-	// 				pip_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
-	// 				pip_phi = (float)Math.toDegrees(Math.atan2(py,px));
-	// 				pip_vx = bank.getFloat("vx", k);
-	// 				pip_vy = bank.getFloat("vy", k);
-	// 				pip_vz = bank.getFloat("vz", k);
-	// 				pip_beta = bank.getFloat("beta", k);
-	// 				if(pip_mom>0.5 && pip_theta<40 && pip_theta>8 && pip_beta>0){
-	// 					VPIP = new LorentzVector(px,py,pz,Math.sqrt(pip_mom*pip_mom+0.139*0.139));
-	// 					pip_part_ind = k;
-	// 				}
-	// 			}
-	// 			if(inDC && q<0&&pid!=11){
-	// 				float px = bank.getFloat("px", k);
-	// 				float py = bank.getFloat("py", k);
-	// 				float pz = bank.getFloat("pz", k);
-	// 				pim_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
-	// 				pim_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
-	// 				pim_phi = (float)Math.toDegrees(Math.atan2(py,px));
-	// 				pim_vx = bank.getFloat("vx", k);
-	// 				pim_vy = bank.getFloat("vy", k);
-	// 				pim_vz = bank.getFloat("vz", k);
-	// 				pim_beta = bank.getFloat("beta", k);
-	// 				//System.out.println(pim_mom+" , "+pim_theta+" , "+pim_beta);
-	// 				if(pim_mom>0.5 && pim_theta<40 && pim_theta>8 && pim_beta>0){
-	// 					VPIM = new LorentzVector(px,py,pz,Math.sqrt(pim_mom*pim_mom+0.139*0.139));
-	// 					pim_part_ind = k;
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	// if(pim_part_ind>-1)System.out.println("DEBUG PIMPIP part_ind : "+pim_part_ind+" , "+pip_part_ind);
-	// 	return -1;
-	// }
+	public int makePiPlusPimPID(DataBank bank){
+		boolean foundelec = false;
+		int npositives = 0;
+		int nnegatives = 0;
+		float mybetap = 0;
+		float mybetan = 0;
+		for(int k = 0; k < bank.rows(); k++){
+			int pid = bank.getInt("pid", k);
+			byte q = bank.getByte("charge", k);
+			float thisbeta = bank.getFloat("beta", k);
+			int status = bank.getShort("status", k);
+			boolean inDC = (status>=2000 && status<4000);
+			if(inDC && pid==11)foundelec=true;
+			if(inDC && q<0&&thisbeta>0)nnegatives++;
+			if(inDC && npositives==0&&q>0&&thisbeta>0)mybetap=thisbeta;
+			if(inDC && pid!=11&&nnegatives<2&&q<0&&thisbeta>0)mybetan=thisbeta;
+			if(inDC && q>0&&thisbeta>0)npositives++;
+		}
+
+		//if(foundelec && nnegatives==2 && npositives==1)System.out.println(foundelec+" , "+nnegatives+" , "+npositives+" , "+mybetap+" , "+mybetan);
+
+		if(foundelec && nnegatives==2 && npositives==1 && mybetap>0 && mybetan>0){}
+		if(foundelec && nnegatives==2 && npositives>0 && npositives<3 && mybetap>0 ){
+			for(int k = 0; k < bank.rows(); k++){
+				int pid = bank.getInt("pid", k);
+				byte q = bank.getByte("charge", k);
+				int status = bank.getShort("status", k);
+				boolean inDC = (status>=2000 && status<4000);
+				if(inDC && q>0){
+					float px = bank.getFloat("px", k);
+					float py = bank.getFloat("py", k);
+					float pz = bank.getFloat("pz", k);
+					pip_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
+					pip_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
+					pip_phi = (float)Math.toDegrees(Math.atan2(py,px));
+					pip_vx = bank.getFloat("vx", k);
+					pip_vy = bank.getFloat("vy", k);
+					pip_vz = bank.getFloat("vz", k);
+					pip_beta = bank.getFloat("beta", k);
+					if(pip_mom>0.5 && pip_theta<40 && pip_theta>8 && pip_beta>0){
+						VPIP = new LorentzVector(px,py,pz,Math.sqrt(pip_mom*pip_mom+0.139*0.139));
+						pip_part_ind = k;
+					}
+				}
+				if(inDC && q<0&&pid!=11){
+					float px = bank.getFloat("px", k);
+					float py = bank.getFloat("py", k);
+					float pz = bank.getFloat("pz", k);
+					pim_mom = (float)Math.sqrt(px*px+py*py+pz*pz);
+					pim_theta = (float)Math.toDegrees(Math.acos(pz/pip_mom));
+					pim_phi = (float)Math.toDegrees(Math.atan2(py,px));
+					pim_vx = bank.getFloat("vx", k);
+					pim_vy = bank.getFloat("vy", k);
+					pim_vz = bank.getFloat("vz", k);
+					pim_beta = bank.getFloat("beta", k);
+					//System.out.println(pim_mom+" , "+pim_theta+" , "+pim_beta);
+					if(pim_mom>0.5 && pim_theta<40 && pim_theta>8 && pim_beta>0){
+						VPIM = new LorentzVector(px,py,pz,Math.sqrt(pim_mom*pim_mom+0.139*0.139));
+						pim_part_ind = k;
+					}
+				}
+			}
+		}
+		// if(pim_part_ind>-1)System.out.println("DEBUG PIMPIP part_ind : "+pim_part_ind+" , "+pip_part_ind);
+		return -1;
+	}
 	public int makeElectron(DataBank bank){
 		for(int k = 0; k < bank.rows(); k++){
 			int pid = bank.getInt("pid", k);
@@ -3065,7 +3065,7 @@ System.out.println("Beam energy = "+Ebeam);
 			e_part_ind = makeElectron(partBank);
 			pip_part_ind = makePiPlusPID(partBank);
 			pim_part_ind = makePiMinusPID(partBank);
-			// makePiPlusPimPID(partBank);
+			makePiPlusPimPID(partBank);
 			// if(pim_part_ind>-1)System.out.println("in main : "+pim_part_ind+" , "+pip_part_ind);
 		}
 		if(e_part_ind==-1)return;
