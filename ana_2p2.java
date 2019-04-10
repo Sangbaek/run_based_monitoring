@@ -107,9 +107,9 @@ public class ana_2p2 {
 		ana_mon.write();
 		// ana_cen.plot();
 		ana_cen.write();
-		// ana_tof.analyze();
+		ana_tof.analyze();
 		// ana_tof.plot();
-		// ana_tof.write();
+		ana_tof.write();
 		// ana_occ.plot();
 		// ana_htc.plot();
 		ana_htc.write();
