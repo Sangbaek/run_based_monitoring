@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
   gr.setTitle("Negatives per trigger per sector")
-  gr.setTitleY("Negatives per per sector")
+  gr.setTitleY("Negatives per trigger per sector")
   gr.setTitleX("run number")
   return gr
 }
