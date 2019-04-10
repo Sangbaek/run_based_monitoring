@@ -226,7 +226,7 @@ public class central {
 	public void processEvent(DataEvent event) {
 		BackToBack = false;
 		// event.show();
-		event.getBank("CVTRec::Tracks").show();
+		// event.getBank("CVTRec::Tracks").show();
 		DataBank eventBank = null, trackDetBank = null;
                 if(userTimeBased){
                         if(event.hasBank("REC::Event"))eventBank = event.getBank("REC::Event");
