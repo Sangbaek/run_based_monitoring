@@ -1497,7 +1497,7 @@ System.out.println("Beam energy = "+Ebeam);
 		hndf = new H1F("hndf", 10,0,10);
 		hndf.setTitle("CVT track ndf");
 		hndf.setTitleX("CVT track ndf");
-		hchi2norm = new H1F("hchi2norm", 10,0,10);
+		hchi2norm = new H1F("hchi2norm", 100,0,100);
 		hchi2norm.setTitle("CVT track chi2norm");
 		hchi2norm.setTitleX("CVT track chi2/ndf");
 		hp = new H1F("hp", 100,0,10);
