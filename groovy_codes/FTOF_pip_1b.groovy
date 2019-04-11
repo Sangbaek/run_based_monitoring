@@ -4,8 +4,8 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("Mean FTOF time per sector")
-  gr.setTitleY("Mean FTOF time per sector (ns)")
+  gr.setTitle("FTOF #pi^+ peak")
+  gr.setTitleY("FTOF #pi^+ peak (GeV)")
   gr.setTitleX("run number")
   return gr
 }
@@ -24,17 +24,11 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject('/tof/p1a_pad_vt_S'+(it+1))
+    def h2 = dir.getObject(String.format("H_FTOF_pos_mass_mom_pad1b_%d",it+1))
     def h1 = h2.projectionY()
-    def h4 = dir.getObject('/tof/p1b_pad_vt_S'+(it+1))
-    def h3 = h4.projectionY()
-    def h6 = dir.getObject('/tof/p2_pad_vt_S'+(it+1))
-    def h5 = h6.projectionY()
-    h1.add(h3)
-    h1.add(h5)
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF StartTime - RFtime")
-    h1.setTitleX("FTOF StartTime - RFtime (ns)")
+    h1.setTitle("FTOF pip mass")
+    h1.setTitleX("FTOF pip mass (GeV)")
 
     // def f1 = ROOTFitter.fit(h1)
 
@@ -50,4 +44,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTOF_time.hipo')
+out.writeFile('FTOF1b_pipm.hipo')
