@@ -33,7 +33,7 @@ for(arg in args) {
   def h1 = dir.getObject('/ft/hpi0sum')
 
 //fitting from FT.java
-  def fpi0 = new F1D("fpi0", "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 80 ,200 );
+  def fpi0 = new F1D("fpi0", "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 110 ,160 );
   fpi0.setParameter(0, 0.0);
   fpi0.setParameter(1, 140.0);
   fpi0.setParameter(2, 2.0);
@@ -44,10 +44,10 @@ for(arg in args) {
   double hAmp  = h1.getBinContent(h1.getMaximumBin());
   double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
   double hRMS  = 10; //ns
-  // fpi0.setParameter(0, hAmp);
-  // fpi0.setParLimits(0, hAmp*0.8, hAmp*1.2);
-  // fpi0.setParameter(1, hMean);
-  // fpi0.setParLimits(1, hMean-hRMS, hMean+hRMS);
+  fpi0.setParameter(0, hAmp);
+  fpi0.setParLimits(0, hAmp*0.8, hAmp*1.2);
+  fpi0.setParameter(1, hMean);
+  fpi0.setParLimits(1, hMean-hRMS, hMean+hRMS);
   DataFitter.fit(fpi0,h1,"LQ");
   h1.setFunction(fpi0);
 
