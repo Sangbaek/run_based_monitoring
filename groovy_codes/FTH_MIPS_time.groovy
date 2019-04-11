@@ -43,7 +43,7 @@ for(arg in args) {
   def h2 = dir.getObject('/ft/hi_hodo_tmatch_l2')
   // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
-  def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+  def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
   f1.setParameter(0, 0.0);
   f1.setParameter(1, 0.0);
   f1.setParameter(2, 2.0);
@@ -52,7 +52,7 @@ for(arg in args) {
   initTimeGaussFitPar(f1,h1);
   DataFitter.fit(f1,h1,"LQ");
 
-  def f2 = new F1D("f2", "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+  def f2 = new F1D("f2", "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
   f2.setParameter(0, 0.0);
   f2.setParameter(1, 0.0);
   f2.setParameter(2, 2.0);
