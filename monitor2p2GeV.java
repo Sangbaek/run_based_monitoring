@@ -1478,7 +1478,7 @@ System.out.println("Beam energy = "+Ebeam);
 		hbstOccupancy.setTitleX("BST Occupancy");
 		hbmtOccupancy = new H1F("hbmtOccupancy", 100,0,100);
 		hbmtOccupancy.setTitle("BMT Occupancy");
-		hbmtOccupancy.setTitleX("BMT Occupancy")
+		hbmtOccupancy.setTitleX("BMT Occupancy");
 		htrks = new H1F("htrks", 10,0,10);
 		htrks.setTitle("CVT Tracks");
 		htrks.setTitleX("CVT Tracks");
@@ -1507,11 +1507,11 @@ System.out.println("Beam energy = "+Ebeam);
 		hpathlen.setTitle("CVT pathlength");
 		hpathlen.setTitleX("CVT pathlength (cm)");
 		hbstOnTrkLayers = new H1F("hbstOnTrkLayers", 10,0,10);
-		hbstOnTrkLayers.setTitle("BST Layers per Track")
-		hbstOnTrkLayers.setTitleX("BST Layers per Track")
+		hbstOnTrkLayers.setTitle("BST Layers per Track");
+		hbstOnTrkLayers.setTitleX("BST Layers per Track");
 		hbmtOnTrkLayers = new H1F("hbmtOnTrkLayers", 10,0,10);
-		hbmtOnTrkLayers.setTitle("BMT Layers per Track")
-		hbmtOnTrkLayers.setTitleX("BMT Layers per Track")
+		hbmtOnTrkLayers.setTitle("BMT Layers per Track");
+		hbmtOnTrkLayers.setTitleX("BMT Layers per Track");
 
 		G_accCharge = new GraphErrors();
 		G_accCharge.setMarkerSize(1);
