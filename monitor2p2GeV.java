@@ -1474,19 +1474,44 @@ System.out.println("Beam energy = "+Ebeam);
 
 		//checkpoint_central
 		hbstOccupancy = new H1F("hbstOccupancy", 100,0,100);
+		hbstOccupancy.setTitle("BST Occupancy");
+		hbstOccupancy.setTitleX("BST Occupancy");
 		hbmtOccupancy = new H1F("hbmtOccupancy", 100,0,100);
+		hbmtOccupancy.setTitle("BMT Occupancy");
+		hbmtOccupancy.setTitleX("BMT Occupancy")
 		htrks = new H1F("htrks", 10,0,10);
+		htrks.setTitle("CVT Tracks");
+		htrks.setTitleX("CVT Tracks");
 		hpostrks = new H1F("hpostrks", 10,0,10);
+		hpostrks.setTitle("CVT Positive Tracks");
+		hpostrks.setTitleX("CVT Positive Tracks");
 		hnegtrks = new H1F("hnegtrks", 10,0,10);
+		hnegtrks.setTitle("CVT Negative Tracks");
+		hnegtrks.setTitleX("CVT Negative Tracks");
 		hpostrks_rat = new H1F("hpostrks_rat", 10,0,10);
+		hpostrks_rat.setTitle("CVT Positive Tracks/ trigger");
+		hpostrks_rat.setTitleX("CVT Positive Tracks/ trigger");
 		hnegtrks_rat = new H1F("hnegtrks_rat", 10,0,10);
+		hnegtrks_rat.setTitle("CVT Negative Tracks/ trigger");
+		hnegtrks_rat.setTitleX("CVT Negative Tracks/ trigger");
 		hndf = new H1F("hndf", 10,0,10);
-		hchi2norm = new H1F("hchi2norm", 100,0,100);
+		hndf.setTitle("CVT track ndf");
+		hndf.setTitleX("CVT track ndf");
 		hp = new H1F("hp", 100,0,10);
+		hp.setTitle("CVT track momentum");
+		hp.setTitleX("CVT track momentum (GeV)");
 		hpt = new H1F("hpt", 100,0,10);
+		hpt.setTitle("CVT track transverse momentum");
+		hpt.setTitleX("CVT track transverse momentum (GeV)");
 		hpathlen = new H1F("hpathlen", 100,0,70);
+		hpathlen.setTitle("CVT pathlength");
+		hpathlen.setTitleX("CVT pathlength (cm)");
 		hbstOnTrkLayers = new H1F("hbstOnTrkLayers", 10,0,10);
+		hbstOnTrkLayers.setTitle("BST Layers per Track")
+		hbstOnTrkLayers.setTitleX("BST Layers per Track")
 		hbmtOnTrkLayers = new H1F("hbmtOnTrkLayers", 10,0,10);
+		hbmtOnTrkLayers.setTitle("BMT Layers per Track")
+		hbmtOnTrkLayers.setTitleX("BMT Layers per Track")
 
 		G_accCharge = new GraphErrors();
 		G_accCharge.setMarkerSize(1);
