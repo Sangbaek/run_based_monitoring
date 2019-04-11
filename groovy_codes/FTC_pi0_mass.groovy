@@ -48,7 +48,7 @@ for(arg in args) {
   // fpi0.setParLimits(0, hAmp*0.8, hAmp*1.2);
   // fpi0.setParameter(1, hMean);
   // fpi0.setParLimits(1, hMean-hRMS, hMean+hRMS);
-  DataFitter.fit(fpi0,h1,"L");
+  DataFitter.fit(fpi0,h1);
   h1.setFunction(fpi0);
 
   // h1.add(h2)
