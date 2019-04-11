@@ -33,7 +33,7 @@ for(arg in args) {
   def h1 = dir.getObject('/ft/hpi0sum')
 
 //fitting from FT.java
-  def fpi0 = new F1D("fpi0", "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 110 ,160 );
+  def fpi0 = new F1D("fpi0", "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 100 ,160 );
   fpi0.setParameter(0, 0.0);
   fpi0.setParameter(1, 140.0);
   fpi0.setParameter(2, 2.0);
