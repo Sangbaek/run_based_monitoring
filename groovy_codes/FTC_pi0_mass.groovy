@@ -47,7 +47,6 @@ for(arg in args) {
   fpi0.setParameter(1, hMean);
   fpi0.setParLimits(1, hMean-hRMS, hMean+hRMS);
   DataFitter.fit(fpi0,h1,"LQ");
-  h1.setFunction(null);
 
   // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
