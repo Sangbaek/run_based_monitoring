@@ -39,8 +39,9 @@ for(arg in args) {
   fpi0.setParameter(2, 2.0);
   fpi0.setParameter(3, 0.0);
   fpi0.setParameter(4, 0.0);
-  fpi0.setLineWidth(2);
-  fpi0.setOptStat("1111111");
+  fpi0.setLineColor(5);
+  fpi0.setLineWidth(7);
+  fpi0.setOptStat(111110);
   double hAmp  = h1.getBinContent(h1.getMaximumBin());
   double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
   double hRMS  = 10; //ns
@@ -48,8 +49,8 @@ for(arg in args) {
   // fpi0.setParLimits(0, hAmp*0.8, hAmp*1.2);
   // fpi0.setParameter(1, hMean);
   // fpi0.setParLimits(1, hMean-hRMS, hMean+hRMS);
-  DataFitter.fit(fpi0,h1);
-  h1.setFunction(fpi0);
+  DataFitter.fit(fpi0,h1,"LQ");
+  // h1.setFunction(fpi0);
 
   // h1.add(h2)
   // def f1 = ROOTFitter.fit(h1)
