@@ -50,7 +50,7 @@ for(arg in args) {
   f1.setLineWidth(2);
   f1.setOptStat("1111");
   initTimeGaussFitPar(f1,h1);
-  DataFitter.fit(f1,h1,"LQ");
+  DataFitter.fit(f1,h1,"L");
 
   def f2 = new F1D("f2", "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
   f2.setParameter(0, 0.0);
@@ -59,7 +59,7 @@ for(arg in args) {
   f2.setLineWidth(2);
   f2.setOptStat("1111");
   initTimeGaussFitPar(f2,h1);
-  DataFitter.fit(f2,h1,"LQ");
+  DataFitter.fit(f2,h1,"L");
 
   grtl1.addPoint(run, f1.getParameter(1), 0, 0)
   grtl2.addPoint(run, f1.getParameter(2), 0, 0)
@@ -67,8 +67,8 @@ for(arg in args) {
   grtl4.addPoint(run, f2.getParameter(2), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(h2)
-  out.addDataSet(f1)
-  out.addDataSet(f2)
+  // out.addDataSet(f1)
+  // out.addDataSet(f2)
 
 }
 

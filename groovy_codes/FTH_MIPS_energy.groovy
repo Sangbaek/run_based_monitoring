@@ -39,7 +39,7 @@ for(arg in args) {
     f_charge_landau.setLineWidth(2);
 
     initLandauFitPar(h1, f_charge_landau);
-    DataFitter.fit(f_charge_landau,h1,"LRQ");
+    DataFitter.fit(f_charge_landau,h1,"LR");
    // def h1 = h2.projectionY()
     // h1.setName("layer"+(it+1))
     // h1.setTitle("FTH_MIPS_energy")
@@ -51,7 +51,7 @@ for(arg in args) {
     grtl[it].addPoint(run, f_charge_landau.getParameter(1), 0, 0)
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
-    out.addDataSet(f_charge_landau)
+    // out.addDataSet(f_charge_landau)
   }
 }
 
