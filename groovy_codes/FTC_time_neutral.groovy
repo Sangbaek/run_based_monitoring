@@ -38,7 +38,7 @@ for(arg in args) {
   ftime_neu.setLineWidth(2);
   ftime_neu.setOptStat("1111");
   initTimeGaussFitPar(ftime_neu,h1);
-  DataFitter.fit(ftime_neu,h1,"L");
+  DataFitter.fit(ftime_neu,h1,"LQ");
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   grtl.addPoint(run, ftime_neu.getParameter(1), 0, 0)
@@ -46,7 +46,7 @@ for(arg in args) {
   // grtl.addPoint(run, h1.getMean(), 0, 0)
   // grtl2.addPoint(run, h1.getRMS(), 0, 0)
   out.addDataSet(h1)
-  // out.addDataSet(ftime_neu)
+  out.addDataSet(ftime_neu)
 
 }
 

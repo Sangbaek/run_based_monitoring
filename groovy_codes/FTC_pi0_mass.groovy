@@ -59,7 +59,7 @@ for(arg in args) {
   grtl.addPoint(run, fpi0.getParameter(1), 0, 0)
   grtl2.addPoint(run, fpi0.getParameter(2), 0, 0)
   out.addDataSet(h1)
-  // out.addDataSet(fpi0)
+  out.addDataSet(fpi0)
 
 }
 
