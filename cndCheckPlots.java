@@ -911,7 +911,7 @@ public class cndCheckPlots {
 								for(int layer=0;layer<3;layer++){
 										for(int sector=0;sector<24;sector++){
 												for(int comp=0;comp<2;comp++){
-														dirout.addDataSet(H_CND_align[(comp*3)+layer+(sector*6)],H_CND_alignt[(comp*3)+layer+(sector*6)],H_CND_alignE[(comp*3)+layer+(sector*6)]);
+														dirout.addDataSet(H_CND_alignE[(comp*3)+layer+(sector*6)]);
 												}
 										}
 								}
