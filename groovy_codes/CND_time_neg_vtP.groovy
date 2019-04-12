@@ -47,8 +47,8 @@ for(arg in args) {
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     // grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
-    grtl[it].addPoint(run, h1.getMean(), 0, 0)
-    grtl2[it].addPoint(run, h1.getRMS(), 0, 0)
+    grtl.addPoint(run, h1.getMean(), 0, 0)
+    grtl2.addPoint(run, h1.getRMS(), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
   }
