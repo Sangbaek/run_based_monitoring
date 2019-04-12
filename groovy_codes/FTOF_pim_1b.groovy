@@ -29,7 +29,7 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject(String.format("H_FTOF_neg_mass_mom_pad1b_%d",it+1))
+    def h2 = dir.getObject(String.format("/FTOF/H_FTOF_neg_mass_mom_pad1b_%d",it+1))
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle("FTOF pim mass")
