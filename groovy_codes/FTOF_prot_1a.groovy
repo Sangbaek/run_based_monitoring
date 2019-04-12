@@ -35,7 +35,7 @@ for(arg in args) {
     h1.setTitleX("FTOF prot mass (GeV)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])",0.96,1.2);
+    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])",0.6,1.2);
     f1.setName("fit sec"+(it+1))
     f1.setLineWidth(2);
     f1.setOptStat("1111");
@@ -66,7 +66,7 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, 100);
         // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, 1);
+        f1.setParameter(1, 0.9);
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, 0.1);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
