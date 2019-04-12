@@ -218,7 +218,7 @@ public class cndCheckPlots {
 				for(int layer=0;layer<3;layer++){
 						for(int sector=0;sector<24;sector++){
 								for(int comp=0;comp<2;comp++){
-										H_CND_align[(comp*3)+layer+(sector*6)] = new H1F("CND_align layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1),"CND_align",50,-10,10);
+										H_CND_align[(comp*3)+layer+(sector*6)] = new H1F(String.format("CND_align_L%d_S%d_C%d",layer+1,sector+1,comp+1),"CND_align",50,-10,10);
 										H_CND_align[(comp*3)+layer+(sector*6)].setTitle("layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1));
 										H_CND_align[(comp*3)+layer+(sector*6)].setTitleX("CND z-CVT z (cm)");
 								}
@@ -230,7 +230,7 @@ public class cndCheckPlots {
 				for(int layer=0;layer<3;layer++){
 						for(int sector=0;sector<24;sector++){
 								for(int comp=0;comp<2;comp++){
-										H_CND_alignt[(comp*3)+layer+(sector*6)] = new H1F("CND_alignt layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1),"CND_alignt",100,-1,1);
+										H_CND_alignt[(comp*3)+layer+(sector*6)] = new H1F(String.format("CND_alignt_L%d_S%d_C%d",layer+1,sector+1,comp+1),"CND_alignt",100,-1,1);
 										H_CND_alignt[(comp*3)+layer+(sector*6)].setTitle("layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1));
 										H_CND_alignt[(comp*3)+layer+(sector*6)].setTitleX("vt (ns)");
 								}
@@ -241,7 +241,7 @@ public class cndCheckPlots {
 				for(int layer=0;layer<3;layer++){
 						for(int sector=0;sector<24;sector++){
 								for(int comp=0;comp<2;comp++){
-										H_CND_alignE[(comp*3)+layer+(sector*6)] = new H1F("CND_alignE layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1),"CND_alignE",40,0,6);
+										H_CND_alignE[(comp*3)+layer+(sector*6)] = new H1F(String.format("CND_alignE_L%d_S%d_C%d",layer+1,sector+1,comp+1),"CND_alignE",40,0,6);
 										H_CND_alignE[(comp*3)+layer+(sector*6)].setTitle("layer "+(layer+1)+" sector "+(sector+1)+" comp "+(comp+1));
 										H_CND_alignE[(comp*3)+layer+(sector*6)].setTitleX("dE/dz");
 								}
