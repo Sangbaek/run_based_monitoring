@@ -2,7 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('CVT chi2/ndf')
+def grtl = new GraphErrors('CVT chi2 per ndf')
 grtl.setTitle("CVT chi2/ndf")
 grtl.setTitleY("CVT chi2/ndf")
 grtl.setTitleX("run number")
