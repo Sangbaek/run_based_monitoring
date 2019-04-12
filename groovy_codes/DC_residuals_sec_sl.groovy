@@ -101,42 +101,42 @@ for(arg in args) {
 
     // def f1 = ROOTFitter.fit(h1)
     def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])", 0.15, 0.35);
-    f11.setName("fit sec"+sec_num"sl"+1)
+    f11.setName("fit sec"+sec_num+"sl"+1)
     f11.setLineWidth(2);
     f11.setOptStat("1111");
     initTimeGaussFitPar(f11,h11);
     DataFitter.fit(f11,h11,"LQ");
 
     def f12 = new F1D("f12", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
-    f12.setName("fit sec"+sec_num"sl"+2)
+    f12.setName("fit sec"+sec_num+"sl"+2)
     f12.setLineWidth(2);
     f12.setOptStat("1111");
     initTimeGaussFitPar(f12,h12);
     DataFitter.fit(f12,h12,"LQ");
 
     def f13 = new F1D("f13", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
-    f13.setName("fit sec"+sec_num"sl"+3)
+    f13.setName("fit sec"+sec_num+"sl"+3)
     f13.setLineWidth(3);
     f13.setOptStat("1111");
     initTimeGaussFitPar(f13,h13);
     DataFitter.fit(f13,h13,"LQ");
 
     def f14 = new F1D("f14", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
-    f14.setName("fit sec"+sec_num"sl"+3)
+    f14.setName("fit sec"+sec_num+"sl"+4)
     f14.setLineWidth(3);
     f14.setOptStat("1111");
     initTimeGaussFitPar(f14,h14);
     DataFitter.fit(f14,h14,"LQ");
 
     def f15 = new F1D("f15", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
-    f15.setName("fit sec"+sec_num"sl"+3)
+    f15.setName("fit sec"+sec_num+"sl"+5)
     f15.setLineWidth(3);
     f15.setOptStat("1111");
     initTimeGaussFitPar(f15,h15);
     DataFitter.fit(f15,h15,"LQ");
 
     def f16 = new F1D("f16", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
-    f16.setName("fit sec"+sec_num"sl"+3)
+    f16.setName("fit sec"+sec_num+"sl"+6)
     f16.setLineWidth(3);
     f16.setOptStat("1111");
     initTimeGaussFitPar(f16,h16);
