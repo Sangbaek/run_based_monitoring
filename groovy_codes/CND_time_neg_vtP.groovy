@@ -34,13 +34,12 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<3).each{
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
     iL=it+1
-    def h1 = dir.getObject(String.format("/cnd/H_CND_time_negative_vtP%d",iL))
-    // h1.setName("negative, layer"+iL)
-    // h1.setTitle("CND time - start time")
-    // h1.setTitleX("CND time - start time")
+    def h2 = dir.getObject(String.format("/cnd/H_CND_time_z_charged_L%d",iL))
+    def h1 = h2.projectionY()
+    h1.setName("negative, layer"+iL)
+    h1.setTitle("CND vtP")
+    h1.setTitleX("CND vtP (ns)")
 
     // def f1 = ROOTFitter.fit(h1)
 
