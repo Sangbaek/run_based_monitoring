@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+it+' Mean')
   gr.setTitle("CVT z - CVT z per layer")
-  gr.setTitleY("CVT z - CVT z per layer (ns)")
+  gr.setTitleY("CVT z - CVT z per layer (cm)")
   gr.setTitleX("run number")
   return gr
 }
@@ -13,7 +13,7 @@ def grtl = (1..3).collect{
 def grtl2 = (1..3).collect{
   def gr2 = new GraphErrors('layer'+it+' Sigma')
   gr2.setTitle("CVT z - CVT z per layer")
-  gr2.setTitleY("CVT z - CVT z per layer (ns)")
+  gr2.setTitleY("CVT z - CVT z per layer (cm)")
   gr2.setTitleX("run number")
   return gr2
 }
@@ -33,12 +33,12 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<3).each{
-    def h2 = dir.getObject(String.format("Diff Z CVT_L%d",it+1))
+    def h2 = dir.getObject(String.format("/cnd/Diff Z CVT_L%d",it+1))
     def h1 = h2.projectionY()
     iL=it+1
     h1.setName("layer"+iL)
     h1.setTitle("CVT z - CND z")
-    h1.setTitleX("CVT z - CND z")
+    h1.setTitleX("CVT z - CND z (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
 
