@@ -55,7 +55,8 @@ for(arg in args) {
     // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl.addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
   }
 }
 
