@@ -2,13 +2,10 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("#K^+ per trigger")
-  gr.setTitleY("#K^+ per trigger")
-  gr.setTitleX("run number")
-  return gr
-}
+def grtl =  new GraphErrors("#K^- per trigger")
+grtl.setTitle("#K^- per trigger")
+grtl.setTitleY("#K^- per trigger")
+grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
 
@@ -24,9 +21,7 @@ for(arg in args) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/trig/H_trig_central_kplus_rat')
-    (0..<6).each{
-      grtl[it].addPoint(run, h1.getBinContent(it), 0, 0)
-    }
+    grtl.addPoint(run, h1.getBinContent(0), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.mkdir('/'+run)
     out.cd('/'+run)
@@ -38,4 +33,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('trig_cen_Kplus.hipo')
+out.writeFile('cen_Kplus.hipo')

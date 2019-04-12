@@ -3,9 +3,9 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("Positives per trigger ")
-  gr.setTitleY("Positives per trigger")
+  def gr = new GraphErrors("Protons per trigger")
+  gr.setTitle("Protons per trigger")
+  gr.setTitleY("Protons per trigger")
   gr.setTitleX("run number")
   return gr
 }
@@ -23,10 +23,8 @@ for(arg in args) {
 
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/trig/H_trig_central_positive_rat')
-    (0..<6).each{
-      grtl[it].addPoint(run, h1.getBinContent(it), 0, 0)
-    }
+    def h1 = dir.getObject('/trig/H_trig_central_prot_rat')
+    grtl.addPoint(run, h1.getBinContent(0), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.mkdir('/'+run)
     out.cd('/'+run)
@@ -38,4 +36,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('trig_cen_positive.hipo')
+out.writeFile('cen_prot.hipo')
