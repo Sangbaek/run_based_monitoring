@@ -6,7 +6,6 @@ def grtl = new GraphErrors('CVT chi2/ndf')
 grtl.setTitle("CVT chi2/ndf")
 grtl.setTitleY("CVT chi2/ndf")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

@@ -6,7 +6,6 @@ def grtl = new GraphErrors('BST Occupancy')
 grtl.setTitle("BST Occupancy")
 grtl.setTitleY("BST Occupancy")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

@@ -6,7 +6,6 @@ def grtl = new GraphErrors('CVT ndf')
 grtl.setTitle("CVT ndf")
 grtl.setTitleY("CVT ndf")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

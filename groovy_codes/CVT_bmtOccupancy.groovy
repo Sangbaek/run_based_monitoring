@@ -6,7 +6,6 @@ def grtl = new GraphErrors('BMT Occupancy')
 grtl.setTitle("BMT Occupancy")
 grtl.setTitleY("BMT Occupancy")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()
@@ -19,7 +18,6 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-    System.out.println(run)
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/cvt/hbmtOccupancy')

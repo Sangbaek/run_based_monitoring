@@ -35,7 +35,6 @@ for(arg in args) {
     h1.setTitleX("VZ for electrons (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", -20.0, 10.0);
     f1.setName("fit sec"+(it+1))
     f1.setLineWidth(2);

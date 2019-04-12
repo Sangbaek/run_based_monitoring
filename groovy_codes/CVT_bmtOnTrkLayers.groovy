@@ -6,7 +6,6 @@ def grtl = new GraphErrors('BMT layers per track')
 grtl.setTitle("BMT layers per track")
 grtl.setTitleY("BMT layers per track")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

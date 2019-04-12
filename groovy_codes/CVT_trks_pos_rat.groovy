@@ -6,7 +6,6 @@ def grtl = new GraphErrors('CVT positive tracks per trigger')
 grtl.setTitle("CVT positive tracks per trigger")
 grtl.setTitleY("CVT positive tracks per trigger")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

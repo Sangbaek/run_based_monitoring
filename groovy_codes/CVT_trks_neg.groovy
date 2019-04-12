@@ -6,7 +6,6 @@ def grtl = new GraphErrors('CVT negative tracks')
 grtl.setTitle("CVT negative tracks")
 grtl.setTitleY("CVT negative tracks")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()
