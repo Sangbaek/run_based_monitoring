@@ -167,7 +167,7 @@ public class cndCheckPlots {
 						DiffZCVT[iL] = new H2F(String.format("Diff Z CVT_L%d",iL+1),"Diff Z CVT",50,0,45,150,-10,10);
 						DiffZCVT[iL].setTitle("DiffZ vs zCVT (negative tracks) (layer "+(iL+1)+")");
 
-						DiffZCND[iL] = new H2F(String.format("Diff Z CND_L%d",iL+1),50,0,45,150,-10,10);
+						DiffZCND[iL] = new H2F(String.format("Diff Z CND_L%d",iL+1),"Diff Z CND",50,0,45,150,-10,10);
 						DiffZCND[iL].setTitle("DiffZ vs zCND (negative tracks) (layer "+(iL+1)+")");
 
 						H_CND_beta_energy_L[iL] = new H2F(String.format("H_CND_beta_energy_L%d",iL+1),"H_CND_beta_energy",100,0,40,60,0.,1.4);
@@ -930,8 +930,9 @@ public class cndCheckPlots {
 												}
 										}
 								}
+								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_time_z_charged[iL],DiffZCND[iL]);
 
-								for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_beta_energy_L[iL], H_CND_beta_e_neutral_L[iL],H_CND_time_z_charged[iL],H_CVT_CND_z[iL],H_CVT_CND_z1[iL],DiffZCVT[iL],DiffZCND[iL]);
+								// for(int iL=0;iL<3;iL++) dirout.addDataSet(H_CND_beta_energy_L[iL], H_CND_beta_e_neutral_L[iL],H_CND_time_z_charged[iL],H_CVT_CND_z[iL],H_CVT_CND_z1[iL],DiffZCVT[iL],DiffZCND[iL]);
 								if(write_volatile)if(runNum>0)dirout.writeFile("/volatile/clas12/rgb/spring19/plots"+runNum+"/out_CND_"+runNum+".hipo");
 
 								if(!write_volatile){
