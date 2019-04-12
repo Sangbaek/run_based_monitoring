@@ -39,7 +39,7 @@ for(arg in args) {
     h1.setTitleX("beta for neutral")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", 0.0, 1.4);
+    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", 0.0, 1);
     f1.setName("fit")
     f1.setLineWidth(2);
     f1.setOptStat("1111");
@@ -72,7 +72,7 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double rangeMin = (hMean - (3*hRMS));
         double rangeMax = (hMean + (3*hRMS));
         // double pm = hRMS;
-        f1.setRange(rangeMin, rangeMax);
+        // f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, hAmp);
         // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
         f1.setParameter(1, hMean);
