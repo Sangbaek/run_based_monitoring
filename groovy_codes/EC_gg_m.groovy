@@ -53,10 +53,10 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
         double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
         double hRMS  = h1.getRMS(); //ns
-        double rangeMin = (hMean - (3*hRMS));
-        double rangeMax = (hMean + (3*hRMS));
-        double pm = hRMS*3;
-        f1.setRange(rangeMin, rangeMax);
+        // double rangeMin = (hMean - (3*hRMS));
+        // double rangeMax = (hMean + (3*hRMS));
+        double pm = hRMS;
+        // f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, hAmp);
         f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
         f1.setParameter(1, hMean);
