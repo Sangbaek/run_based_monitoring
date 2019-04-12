@@ -2,7 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors("Protons per trigger")
+def grtl = new GraphErrors("protons per trigger")
 grtl.setTitle("Protons per trigger")
 grtl.setTitleY("Protons per trigger")
 grtl.setTitleX("run number")

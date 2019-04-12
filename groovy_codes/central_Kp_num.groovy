@@ -2,9 +2,9 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl =  new GraphErrors("#K^- per trigger")
-grtl.setTitle("#K^- per trigger")
-grtl.setTitleY("#K^- per trigger")
+def grtl =  new GraphErrors("K plus per trigger")
+grtl.setTitle("#K^+ per trigger")
+grtl.setTitleY("#K^+ per trigger")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
