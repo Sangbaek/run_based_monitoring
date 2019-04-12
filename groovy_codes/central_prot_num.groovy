@@ -6,7 +6,6 @@ def grtl = new GraphErrors("Protons per trigger")
 grtl.setTitle("Protons per trigger")
 grtl.setTitleY("Protons per trigger")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()
