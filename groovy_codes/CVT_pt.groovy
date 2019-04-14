@@ -1,6 +1,10 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-// import ROOTFitter
+import org.jlab.groot.data.H1F
+import org.jlab.groot.group.DataGroup;
+import org.jlab.groot.math.F1D;
+import org.jlab.groot.fitter.DataFitter;
+import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = new GraphErrors('CVT transverse momentum')
 grtl.setTitle("CVT transverse momentum")
