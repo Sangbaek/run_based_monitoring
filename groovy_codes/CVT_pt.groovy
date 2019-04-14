@@ -35,7 +35,7 @@ for(arg in args) {
     initTimeGaussFitPar(f1,h1);
     DataFitter.fit(f1,h1,"LQ");
 
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl.addPoint(run, f1.getParameter(1), 0, 0)
 
     out.mkdir('/'+run)
     out.cd('/'+run)
