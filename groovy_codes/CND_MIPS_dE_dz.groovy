@@ -37,10 +37,29 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<3).each{
-    def h1 = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",it+1,sector+1,comp+1))
-    
+      def h1 = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",it+1,0+1,0+1))
+      for(int sector=0;sector<24;sector++){
+        for(int comp=0;comp<2;comp++){
+               if(sector!=0||comp!=0){
+                 def h2 = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",it+1,sector+1,comp+1))
+                 h1.add(h2)
+               }
+            }
+        }
+    h1.setName("layer"+(it+1));
+    h1.setTitle("dE/dz (GeV/cm)")
+    double maxE = h1.getBinContent(h1.getMaximumBin());
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])",-5,5)
+    f1=new F1D("E resolution layer"+(it+1),"[amp]*gaus(x,[mean],[sigma])+[cst]+[a]*x", 0.0, 6.0);
+    f1.setLineColor(33);
+    f1.setLineWidth(10);
+    f1.setRange(1.5,5);
+    f1.setParameter(1,2.0);
+    f1.setParameter(0,maxE);
+    f1.setParLimits(0,maxE*0.9,maxE*1.1);
+    f1.setParameter(2,1.0);
+    f1.setParameter(3,0.0);
+    f1.setParameter(4,0.0);
     f1.setName("fit layer"+iL)
     f1.setLineWidth(2);
     f1.setOptStat("1111");
@@ -65,20 +84,4 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('CND_zdiff.hipo')
-
-private void initTimeGaussFitPar(F1D f1, H1F h1) {
-        double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = h1.getRMS(); //ns
-        double rangeMin = (hMean - (3*hRMS));
-        double rangeMax = (hMean + (3*hRMS));
-        // double pm = hRMS;
-        f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
-}
+out.writeFile('CND_dEdz.hipo')
