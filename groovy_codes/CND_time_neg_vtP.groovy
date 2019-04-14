@@ -49,13 +49,13 @@ for(arg in args) {
     f1.setLineWidth(10);
     f1.setName("fit layer"+iL)
     f1.setOptStat("1111");
-    double maxz = h1.getBinContent(h1.getMaximumBin());
-    fitz[(comp*3)+layer+(sector*6)].setRange(-5,5);
-    fitz[(comp*3)+layer+(sector*6)].setParameter(1,0.0);
-    fitz[(comp*3)+layer+(sector*6)].setParameter(0,maxz);
-    fitz[(comp*3)+layer+(sector*6)].setParLimits(0,maxz*0.9,maxz*1.1);
-    fitz[(comp*3)+layer+(sector*6)].setParameter(2,3.0);
-    fitz[(comp*3)+layer+(sector*6)].setParameter(3,10.0);
+    double maxt = h1.getBinContent(h1.getMaximumBin());
+    f1.setRange(-0.7,0.7);
+    f1.setParameter(1,0.0);
+    f1.setParLimits(1,-1,1);
+    f1.setParameter(0,maxt);
+    f1.setParLimits(0,maxt*0.95,maxt*1.1);
+    f1.setParameter(2,0.2);
     DataFitter.fit(f1, h1, "");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
