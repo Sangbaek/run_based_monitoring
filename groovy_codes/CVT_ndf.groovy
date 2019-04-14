@@ -22,6 +22,8 @@ for(arg in args) {
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/cvt/hndf')
+    h1.setTitle("CVT track ndf");
+		h1.setTitleX("CVT track ndf");
 
     grtl.addPoint(run, h1.getMean(), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)

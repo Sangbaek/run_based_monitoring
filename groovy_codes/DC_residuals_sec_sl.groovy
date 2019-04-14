@@ -104,7 +104,7 @@ for(arg in args) {
     h16.setTitleX("DC residuals per sector per superlayer (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])", 0.15, 0.35);
+    def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
     f11.setName("fit sec"+sec_num+"sl"+1)
     f11.setLineWidth(2);
     f11.setOptStat("1111");

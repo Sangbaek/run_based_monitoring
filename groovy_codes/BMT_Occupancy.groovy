@@ -2,9 +2,9 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('BST Occupancy')
-grtl.setTitle("BST Occupancy")
-grtl.setTitleY("BST Occupancy")
+def grtl = new GraphErrors('BMT Occupancy')
+grtl.setTitle("BMT Occupancy")
+grtl.setTitleY("BMT Occupancy")
 grtl.setTitleX("run number")
 
 
@@ -18,10 +18,11 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
     // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/cvt/hbstOccupancy')
+    def h1 = dir.getObject('/cvt/hbmtOccupancy')
+    h1.setTitle("BMT Occupancy");
+		h1.setTitleX("BMT Occupancy");
 
     grtl.addPoint(run, h1.getMean(), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
@@ -35,4 +36,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('BST_Occupancy.hipo')
+out.writeFile('BMT_Occupancy.hipo')

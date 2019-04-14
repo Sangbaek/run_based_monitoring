@@ -23,18 +23,23 @@ for(arg in args) {
   def run = m[0].toInteger()
   def h1 = dir.getObject('/ctof/H_CVT_t_pos')
 
-  // def f1 = ROOTFitter.fit(h1)
+  def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", -5,5);
+  f1.setLineWidth(2);
+  f1.setOptStat("1111");
+  initTimeGaussFitPar(f1,h1);
+  DataFitter.fit(f1,h1,"LQ");
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
   // grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
-  grtl.addPoint(run, h1.getMean(), 0, 0)
-  grtl2.addPoint(run, h1.getRMS(), 0, 0)
+  // grtl.addPoint(run, h1.getMean(), 0, 0)
+  // grtl2.addPoint(run, h1.getRMS(), 0, 0)
   // out.addDataSet(f1)
 
   out.mkdir('/'+run)
   out.cd('/'+run)
   out.addDataSet(h1)
+  out.addDataSet(f1)
 }
 
 
@@ -43,3 +48,19 @@ out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
 out.writeFile('CTOF_time_pos.hipo')
+
+private void initTimeGaussFitPar(F1D f1, H1F h1) {
+        double hAmp  = h1.getBinContent(h1.getMaximumBin());
+        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
+        double hRMS  = h1.getRMS(); //ns
+        double rangeMin = (hMean - 0.5);
+        double rangeMax = (hMean + 0.5);
+        // double pm = hRMS;
+        f1.setRange(rangeMin, rangeMax);
+        f1.setParameter(0, hAmp);
+        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
+        f1.setParameter(1, hMean);
+        // f1.setParLimits(1, hMean-pm, hMean+(pm));
+        f1.setParameter(2, 0.1);
+        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+}
