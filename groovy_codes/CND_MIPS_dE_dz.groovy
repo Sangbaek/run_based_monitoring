@@ -53,13 +53,12 @@ for(arg in args) {
     f1=new F1D("E resolution layer"+(it+1),"[amp]*gaus(x,[mean],[sigma])+[cst]+[a]*x", 0.0, 6.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
-    f1.setRange(1.5,5);
-    f1.setParameter(1,2.0);
-    f1.setParameter(0,maxE);
-    f1.setParLimits(0,maxE*0.9,maxE*1.1);
-    f1.setParameter(2,1.0);
-    f1.setParameter(3,0.0);
-    f1.setParameter(4,0.0);
+    f1.setRange(-0.7,0.7);
+    f1.setParameter(1,0.0);
+    f1.setParLimits(1,-1,1);
+    f1.setParameter(0,maxt);
+    f1.setParLimits(0,maxt*0.95,maxt*1.1);
+    f1.setParameter(2,0.2);
     f1.setName("fit layer"+(it+1))
     DataFitter.fit(f1,h1,"LQ")
 

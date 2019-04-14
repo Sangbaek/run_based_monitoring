@@ -45,12 +45,19 @@ for(arg in args) {
     h1.setTitleX("CVT z - CND z (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])",-5,5)
+    def f1 =new F1D("z resolution","[amp]*gaus(x,[mean],[sigma])+[cst]", -5.0, 5.0);
+    f1.setLineColor(33);
+    f1.setLineWidth(10);
     f1.setName("fit layer"+iL)
-    f1.setLineWidth(2);
     f1.setOptStat("1111");
-    initTimeGaussFitPar(f1,h1);
-    DataFitter.fit(f1,h1,"LQ");
+    double maxz = h1.getBinContent(h1.getMaximumBin());
+    fitz[(comp*3)+layer+(sector*6)].setRange(-5,5);
+    fitz[(comp*3)+layer+(sector*6)].setParameter(1,0.0);
+    fitz[(comp*3)+layer+(sector*6)].setParameter(0,maxz);
+    fitz[(comp*3)+layer+(sector*6)].setParLimits(0,maxz*0.9,maxz*1.1);
+    fitz[(comp*3)+layer+(sector*6)].setParameter(2,3.0);
+    fitz[(comp*3)+layer+(sector*6)].setParameter(3,10.0);
+    DataFitter.fit(f1, h1, "");
 
     // def f1 = ROOTFitter.fit(h1)
 
