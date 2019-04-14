@@ -166,34 +166,34 @@ public void initInvertedSFitPar(int slayer, F1D function) {
   double min = 100.;
   double max = 220.;
   if (slayer == 1) {
-    min = 100.; max = 240.;
+    min = 100.0; max = 240.0;
     function.setParameter(1,-0.038); function.setParLimits(1,-0.01,-0.06);
-    function.setParameter(2,118.); function.setParLimits(2,100.,150.);
+    function.setParameter(2,118.0); function.setParLimits(2,100.0,150.0);
   }
   if (slayer == 2) {
-    min = 120.; max = 240.;
+    min = 120.0; max = 240.0;
     function.setParameter(1,-0.040); function.setParLimits(1,-0.01,-0.06);
-    function.setParameter(2,136.); function.setParLimits(2,100.,200.);
+    function.setParameter(2,136.0); function.setParLimits(2,100.0,200.0);
   }
   if (slayer == 3) {
-    min = 200.; max = 450.;
+    min = 200.0; max = 450.0;
     function.setParameter(1,-0.030);function.setParLimits(1,-0.01,-0.05);
-    function.setParameter(2,320.); function.setParLimits(2,200.,500.);
+    function.setParameter(2,320.0); function.setParLimits(2,200.0,500.0);
   }
   if (slayer == 4) {
-    min = 200.; max = 500.;
+    min = 200.0; max = 500.0;
     function.setParameter(1,-0.023); function.setParLimits(1,-0.01,-0.05);
-    function.setParameter(2,350.); function.setParLimits(2,200.,500.);
+    function.setParameter(2,350.0); function.setParLimits(2,200.0,500.0);
   }
   if (slayer == 5) {
-    min = 400.; max = 700.;
+    min = 400.0; max = 700.0;
     function.setParameter(1,-0.024);function.setParLimits(1,-0.01,-0.05);
-    function.setParameter(2,623.); function.setParLimits(2,500.,700.);
+    function.setParameter(2,623.0); function.setParLimits(2,500.0,700.0);
   }
   if (slayer == 6) {
-    min = 480.; max = 700.;
+    min = 480.0; max = 700.0;
     function.setParameter(1,-0.034); function.setParLimits(1,-0.01,-0.05);
-    function.setParameter(2,683.); function.setParLimits(2,500.,750.);
+    function.setParameter(2,683.0); function.setParLimits(2,500.0,750.0);
   }
   function.setRange(min,max);
   function.setLineColor(2);
