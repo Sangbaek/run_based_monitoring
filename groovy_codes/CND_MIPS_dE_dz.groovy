@@ -60,7 +60,7 @@ for(arg in args) {
     f1.setParameter(2,1.0);
     f1.setParameter(3,0.0);
     f1.setParameter(4,0.0);
-    f1.setName("fit layer"+iL)
+    f1.setName("fit layer"+(it+1))
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
