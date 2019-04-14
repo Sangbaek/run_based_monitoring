@@ -2,9 +2,9 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
 
-def grtl = new GraphErrors('cvt_chi2_pos')
-grtl.setTitle("Average CVT chi2, negatives")
-grtl.setTitleY("Average CVT chi2, negatives")
+def grtl = new GraphErrors('cvt_chi2_elec')
+grtl.setTitle("Average CVT chi2, electrons")
+grtl.setTitleY("Average CVT chi2, electrons")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -17,7 +17,7 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/cvt/H_CVT_chi2_neg')
+  def h1 = dir.getObject('/cvt/H_CVT_chi2')
 
   grtl.addPoint(run, h1.getMean(), 0, 0)
 
@@ -30,4 +30,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('CVT_chi2_neg.hipo')
+out.writeFile('CVT_chi2_elec.hipo')

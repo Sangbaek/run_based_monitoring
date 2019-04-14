@@ -39,4 +39,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('trig_neutral.hipo')
+out.writeFile('rat_neutral.hipo')
