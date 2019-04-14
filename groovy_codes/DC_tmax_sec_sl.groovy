@@ -163,8 +163,8 @@ grtl6.each{ out.addDataSet(it) }
 out.writeFile('DC_tmax_sec_sl.hipo')
 
 public void initInvertedSFitPar(int slayer, F1D function) {
-  double min = 100.;
-  double max = 220.;
+  double min = 100.0;
+  double max = 220.0;
   if (slayer == 1) {
     min = 100.0; max = 240.0;
     function.setParameter(1,-0.038); function.setParLimits(1,-0.01,-0.06);
