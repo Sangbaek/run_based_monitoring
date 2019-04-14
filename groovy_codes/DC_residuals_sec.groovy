@@ -9,8 +9,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 def grtl = (1..6).collect{
   sec_num = it
   def gr = new GraphErrors('sec'+sec_num)
-  gr.setTitle("DC residuals (peak value) per sector per superlayer")
-  gr.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
+  gr.setTitle("DC residuals (peak value) per sector")
+  gr.setTitleY("DC residuals (peak value) per sector (cm)")
   gr.setTitleX("run number")
   return gr
 }
