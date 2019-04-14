@@ -10,7 +10,6 @@ def grtl = new GraphErrors('CVT momentum')
 grtl.setTitle("CVT momentum")
 grtl.setTitleY("CVT momentum (GeV/c)")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()

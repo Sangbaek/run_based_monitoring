@@ -10,7 +10,6 @@ def grtl = new GraphErrors('CVT pathlength')
 grtl.setTitle("CVT pathlength")
 grtl.setTitleY("CVT pathlength (cm)")
 grtl.setTitleX("run number")
-return grtl
 
 
 TDirectory out = new TDirectory()
