@@ -44,6 +44,7 @@ for(arg in args) {
   out.mkdir('/'+run)
   out.cd('/'+run)
   out.addDataSet(h1)
+  out.addDataSet(f1)
 }
 
 
