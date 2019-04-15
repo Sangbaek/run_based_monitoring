@@ -31,7 +31,7 @@ for(arg in args) {
 
   def h1 = dir.getObject('/ft/hi_cal_time_cut_neu')
   // def f1 = ROOTFitter.fit(h1)
-  def ftime_neu = new F1D("ftime_neu", "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+  def ftime_neu = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
   ftime_neu.setParameter(0, 0.0);
   ftime_neu.setParameter(1, 0.0);
   ftime_neu.setParameter(2, 2.0);

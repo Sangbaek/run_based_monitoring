@@ -27,7 +27,7 @@ for(arg in args) {
   def h1 = dir.getObject('/cvt/H_CVT_z_pos')
   // def f1 = ROOTFitter.fit(h1)
   def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
-  f1.setName("fit")
+  f1.setName("fit:"+h1.getName())
   f1.setLineWidth(2);
   f1.setOptStat("1111");
   initTimeGaussFitPar(f1,h1);

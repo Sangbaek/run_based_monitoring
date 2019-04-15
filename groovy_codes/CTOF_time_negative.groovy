@@ -28,7 +28,7 @@ for(arg in args) {
 
   def h1 = dir.getObject('/ctof/H_CVT_t_neg')
 
-  def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", -5,5);
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -5,5);
   f1.setLineWidth(2);
   f1.setOptStat("1111");
   initTimeGaussFitPar(f1,h1);

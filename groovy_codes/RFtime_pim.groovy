@@ -29,7 +29,7 @@ for(arg in args) {
 
   (0..<6).each{
     def h1 = dir.getObject('/RF/H_pim_RFtime1_S'+(it+1))
-    def f1 = new F1D("fit sec"+(it+1), "[amp]*gaus(x,[mean],[sigma])", -50,200);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -50,200);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);

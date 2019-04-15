@@ -60,7 +60,7 @@ for(arg in args) {
     f1.setParameter(2,1.0);
     f1.setParameter(3,0.0);
     f1.setParameter(4,0.0);
-    f1.setName("fit layer"+(it+1))
+    f1.setName("fit:"+h1.getName())
     DataFitter.fit(f1,h1,"LQ")
 
     // def f1 = ROOTFitter.fit(h1)

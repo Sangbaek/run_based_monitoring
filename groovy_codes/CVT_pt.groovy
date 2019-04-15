@@ -29,7 +29,7 @@ for(arg in args) {
     h1.setTitle("CVT track transverse momentum");
 		h1.setTitleX("CVT track transverse momentum (GeV/c)");
 
-    def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", 0,10);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", 0,10);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);

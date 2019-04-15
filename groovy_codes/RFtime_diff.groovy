@@ -23,7 +23,7 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/RF/H_RFtimediff')
-  def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", -50,200);
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -50,200);
   f1.setLineWidth(2);
   f1.setOptStat("1111");
   initTimeGaussFitPar(f1,h1);

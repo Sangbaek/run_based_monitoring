@@ -29,7 +29,7 @@ for(arg in args) {
 
   (0..<2).each{
     def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
-    def f_charge_landau = new F1D(String.format("Landau_%d",it+1),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(it+1), 10.0);
+    def f_charge_landau = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(it+1), 10.0);
     f_charge_landau.setParameter(0,0.0);
     f_charge_landau.setParameter(1,0.0);
     f_charge_landau.setParameter(2,1.0);

@@ -36,7 +36,7 @@ for(arg in args) {
     h1.setTitleX("ECAL Sampling Fraction")
 
     def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", 0.15, 0.35);
-    f1.setName("fit sec"+(it+1))
+    f1.setName("fit:"+h1.getName())
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);

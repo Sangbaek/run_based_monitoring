@@ -29,7 +29,7 @@ for(arg in args) {
     h1.setTitle("CVT pathlength");
 		h1.setTitleX("CVT pathlength (cm)");
 
-    def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", 0,70);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", 0,70);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);

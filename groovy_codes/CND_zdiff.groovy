@@ -48,7 +48,7 @@ for(arg in args) {
     def f1 =new F1D("z resolution","[amp]*gaus(x,[mean],[sigma])+[cst]", -5.0, 5.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
-    f1.setName("fit layer"+iL)
+    f1.setName("fit:"+h1.getName())
     f1.setOptStat("1111");
     double maxz = h1.getBinContent(h1.getMaximumBin());
     f1.setRange(-5,5);

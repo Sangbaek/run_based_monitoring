@@ -27,7 +27,7 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/tof/H_pip_vtd')
-  def f1 = new F1D("fit", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
   f1.setLineWidth(2);
   f1.setOptStat("1111");
   initTimeGaussFitPar(f1,h1);

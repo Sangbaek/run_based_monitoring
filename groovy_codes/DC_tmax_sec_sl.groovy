@@ -87,42 +87,42 @@ for(arg in args) {
 
     // def f1 = ROOTFitter.fit(h1)
     def f11 = new F1D(String.format("Inverted_S_%d_%d",sec_num,0+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f11.setName("fit sec"+sec_num+"sl"+1)
+    f11.setName("fit:"+h11.getName())
     f11.setLineWidth(2);
     f11.setOptStat("111111");
     initInvertedSFitPar(1,f11);
     DataFitter.fit(f11,h11,"LQ");
 
     def f12 = new F1D(String.format("Inverted_S_%d_%d",sec_num,1+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f12.setName("fit sec"+sec_num+"sl"+2)
+    f12.setName("fit:"+h12.getName())
     f12.setLineWidth(2);
     f12.setOptStat("111111");
     initInvertedSFitPar(2,f12);
     DataFitter.fit(f12,h12,"LQ");
 
     def f13 = new F1D(String.format("Inverted_S_%d_%d",sec_num,2+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f13.setName("fit sec"+sec_num+"sl"+3)
+    f13.setName("fit:"+h13.getName())
     f13.setLineWidth(3);
     f13.setOptStat("111111");
     initInvertedSFitPar(3,f13);
     DataFitter.fit(f13,h13,"LQ");
 
     def f14 = new F1D(String.format("Inverted_S_%d_%d",sec_num,3+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f14.setName("fit sec"+sec_num+"sl"+4)
+    f14.setName("fit:"+h14.getName())
     f14.setLineWidth(3);
     f14.setOptStat("111111");
     initInvertedSFitPar(4,f14);
     DataFitter.fit(f14,h14,"LQ");
 
     def f15 = new F1D(String.format("Inverted_S_%d_%d",sec_num,4+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f15.setName("fit sec"+sec_num+"sl"+5)
+    f15.setName("fit:"+h15.getName())
     f15.setLineWidth(3);
     f15.setOptStat("111111");
     initInvertedSFitPar(5,f15);
     DataFitter.fit(f15,h15,"LQ");
 
     def f16 = new F1D(String.format("Inverted_S_%d_%d",sec_num,5+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f16.setName("fit sec"+sec_num+"sl"+6)
+    f16.setName("fit:"+h16.getName())
     f16.setLineWidth(3);
     f16.setOptStat("111111");
     initInvertedSFitPar(6,f16);

@@ -44,7 +44,7 @@ for(arg in args) {
     h1.setTitle("CND vtP")
     h1.setTitleX("CND vtP (ns)")
 
-    def f1 =new F1D("t resolution","[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+    def f1 =new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
     f1.setName("fit layer"+iL)

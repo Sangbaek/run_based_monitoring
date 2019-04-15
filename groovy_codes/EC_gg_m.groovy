@@ -24,7 +24,7 @@ for(arg in args) {
 
   def h1 = dir.getObject('/gg/H_gg_m')
   // def f1 = ROOTFitter.fit(h1)
-  def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])", 0.05, 0.2);
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", 0.05, 0.2);
   f1.setParameter(0, 0.0);
   f1.setParameter(1, 0.0);
   f1.setParameter(2, 2.0);
