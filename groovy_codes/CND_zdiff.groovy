@@ -45,10 +45,9 @@ for(arg in args) {
     h1.setTitleX("CVT z - CND z (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 =new F1D("z resolution","[amp]*gaus(x,[mean],[sigma])+[cst]", -5.0, 5.0);
+    def f1 =new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])+[cst]", -5.0, 5.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
-    f1.setName("fit:"+h1.getName())
     f1.setOptStat("1111");
     double maxz = h1.getBinContent(h1.getMaximumBin());
     f1.setRange(-5,5);

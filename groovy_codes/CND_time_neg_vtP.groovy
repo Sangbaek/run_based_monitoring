@@ -47,7 +47,6 @@ for(arg in args) {
     def f1 =new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
-    f1.setName("fit layer"+iL)
     f1.setOptStat("1111");
     double maxt = h1.getBinContent(h1.getMaximumBin());
     f1.setRange(-0.7,0.7);

@@ -37,7 +37,6 @@ for(arg in args) {
 
     // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",-0.2,0.2);
-    f1.setName("fit sec"+(it+1))
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);

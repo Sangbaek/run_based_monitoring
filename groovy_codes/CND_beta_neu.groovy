@@ -39,11 +39,9 @@ for(arg in args) {
     h1.setTitleX("beta for neutral")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("f1", "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 0.0, 1);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x", 0.0, 1);
     f1.setParameter(3, 0.0);
     f1.setParameter(4, 0.0);
-
-    f1.setName("fit:"+h1.getName())
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
