@@ -41,10 +41,11 @@ for(arg in args) {
     h1.setTitleX("FTOF StartTime - RFtime (ns)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
+    f1.setParameter(3,0);
     DataFitter.fit(f1,h1,"LQ");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
