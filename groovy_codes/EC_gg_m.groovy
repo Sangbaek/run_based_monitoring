@@ -38,7 +38,7 @@ for(arg in args) {
   DataFitter.fit(f1,h1,"LQ");
 
   grtl.addPoint(run, f1.getParameter(1), 0, 0)
-  grtl2.addPoint(run, f1.getParameter(1), 0, 0)
+  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
 
   // grtl.addPoint(run, h1.getRMS(), 0, 0)
 
@@ -53,6 +53,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('EC_gg_m.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
