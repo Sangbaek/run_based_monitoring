@@ -6,10 +6,14 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
+def grtl = new GraphErrors('Mean')
+grtl.setTitle("#gamma #gamma invariant mass ECAL")
+grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
+grtl.setTitleX("run number")
 
-def grtl = new GraphErrors('Sigma')
-grtl.setTitle("#gamma #gamma invariant mass ECAL (sigma)")
-grtl.setTitleY("#gamma #gamma invariant mass ECAL (sigma) (GeV)")
+def grtl2 = new GraphErrors('Sigma')
+grtl.setTitle("#gamma #gamma invariant mass ECAL")
+grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -33,7 +37,9 @@ for(arg in args) {
   initTimeGaussFitPar(f1,h1);
   DataFitter.fit(f1,h1,"LQ");
 
-  grtl.addPoint(run, f1.getParameter(2), 0, 0)
+  grtl.addPoint(run, f1.getParameter(1), 0, 0)
+  grtl2.addPoint(run, f1.getParameter(1), 0, 0)
+
   // grtl.addPoint(run, h1.getRMS(), 0, 0)
 
   out.mkdir('/'+run)
