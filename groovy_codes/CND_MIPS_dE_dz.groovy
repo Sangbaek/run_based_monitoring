@@ -50,7 +50,7 @@ for(arg in args) {
     h1.setTitle("dE/dz (GeV/cm)")
     double maxE = h1.getBinContent(h1.getMaximumBin());
     // def f1 = ROOTFitter.fit(h1)
-    f1=new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])+[cst]+[a]*x", 0.0, 5.0);
+    f1=new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])+[cst]", 0.0, 5.0);
     f1.setLineColor(33);
     f1.setLineWidth(10);
     // f1.setRange(1.5,5);
@@ -59,7 +59,6 @@ for(arg in args) {
     f1.setParLimits(0,maxE*0.9,maxE*1.1);
     f1.setParameter(2,1.0);
     f1.setParameter(3,0.0);
-    f1.setParameter(4,0.0);
     DataFitter.fit(f1,h1,"LQ")
 
     // def f1 = ROOTFitter.fit(h1)
