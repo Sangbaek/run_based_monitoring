@@ -50,8 +50,9 @@ for(arg in args) {
     f1.setOptStat("1111");
     double maxt = h1.getBinContent(h1.getMaximumBin());
     f1.setRange(-0.7,0.7);
-    f1.setParameter(1,0.0);
-    f1.setParLimits(1,-1,1);
+    double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
+    f1.setParameter(1,hMean);
+    f1.setParLimits(1,hMean-1,hMean+1);
     f1.setParameter(0,maxt);
     f1.setParLimits(0,maxt*0.95,maxt*1.1);
     f1.setParameter(2,0.2);

@@ -55,6 +55,7 @@ for(arg in args) {
     f1.setParameter(0,maxz);
     f1.setParLimits(0,maxz*0.9,maxz*1.1);
     f1.setParameter(2,3.0);
+    f1.setParLimits(2, 0.1, 0.6);
     f1.setParameter(3,10.0);
     DataFitter.fit(f1, h1, "");
 
@@ -77,19 +78,3 @@ out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
 out.writeFile('CND_zdiff.hipo')
-
-private void initTimeGaussFitPar(F1D f1, H1F h1) {
-        double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = h1.getRMS(); //ns
-        double rangeMin = (hMean - (3*hRMS));
-        double rangeMax = (hMean + (3*hRMS));
-        // double pm = hRMS;
-        f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
-}
