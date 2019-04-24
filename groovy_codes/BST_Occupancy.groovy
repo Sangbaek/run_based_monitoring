@@ -4,7 +4,7 @@ import org.jlab.groot.data.GraphErrors
 
 def grtl = new GraphErrors('BST Occupancy')
 grtl.setTitle("BST Occupancy")
-grtl.setTitleY("BST Occupancy")
+grtl.setTitleY("BST Occupancy (%)")
 grtl.setTitleX("run number")
 
 
@@ -23,7 +23,7 @@ for(arg in args) {
     // def h1 = h2.projectionY()
     def h1 = dir.getObject('/cvt/hbstOccupancy')
     h1.setTitle("BST Occupancy");
-		h1.setTitleX("BST Occupancy");
+		h1.setTitleX("BST Occupancy (%)");
 
     grtl.addPoint(run, h1.getMean(), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
