@@ -3,8 +3,8 @@ import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
 def grtl = new GraphErrors('CVT negative tracks per trigger')
-grtl.setTitle("CVT negative tracks per trigger")
-grtl.setTitleY("CVT negative tracks per trigger")
+grtl.setTitle("CVT negative track multiplicity per trigger")
+grtl.setTitleY("CVT negative track multiplicity per trigger")
 grtl.setTitleX("run number")
 
 
