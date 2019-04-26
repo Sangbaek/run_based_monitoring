@@ -43,7 +43,6 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
 out.writeFile('CTOF_edep_pim.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {

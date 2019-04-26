@@ -40,7 +40,6 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
 out.writeFile('CTOF_m2_pip.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
