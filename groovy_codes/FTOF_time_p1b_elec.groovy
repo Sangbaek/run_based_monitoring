@@ -28,7 +28,7 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject('/FTOF/p1b_pad_vt_elec'+(it+1))
+    def h2 = dir.getObject('/FTOF/p1b_pad_vt_elec_S'+(it+1))
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle(h2.getTitle())

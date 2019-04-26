@@ -28,8 +28,8 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h1 = dir.getObject('/FTOF/p1a_pad_edep_elec'+(it+1))
-    
+    def h1 = dir.getObject('/FTOF/p1a_pad_edep_elec_S'+(it+1))
+
     // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
     f1.setLineWidth(2);
