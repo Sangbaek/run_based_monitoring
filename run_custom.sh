@@ -6,7 +6,9 @@ export pdir=`pwd`
 export groovy=$pdir"/../.groovy/coatjava/bin/run-groovy"
 
 #Orange Cells
-out_CTOF=(CTOF_time_negative CTOF_time_positive)
+out_CTOF=(CTOF_m2_pim CTOF_m2_pip CTOF_m2_prot CTOF_time_pim CTOF_edep_pim)
+dst_mon=(FTOF_time_p1a_elec FTOF_time_p1a_pion FTOF_time_p1b_elec FTOF_time_p1b_pion FTOF_time_p2 \
+FTOF_edep_p1a_elec FTOF_edep_p1a_pion FTOF_edep_p1b_elec FTOF_edep_p1b_pion FTOF_edep_p2)
 #out_TOF=(DC_tmax_sec_sl)
 cd groovy_output
 #for name in out_monitor out_TOF out_FT
