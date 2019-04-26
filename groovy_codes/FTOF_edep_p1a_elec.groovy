@@ -29,11 +29,12 @@ for(arg in args) {
 
   (0..<6).each{
     def h1 = dir.getObject('/FTOF/p1a_pad_edep_elec_S'+(it+1))
-    def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+exp(-[p1]*x)", 0, 50.0);
+    def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
     f1.setParameter(0,0.0);
     f1.setParameter(1,0.0);
     f1.setParameter(2,1.0);
     f1.setParameter(3,0.0);
+    f1.setParameter(4,0.0);
     f1.setOptStat(1111111);
     f1.setLineWidth(2);
 
@@ -65,4 +66,6 @@ private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
         fcharge.setParameter(2, 0.3);//Changed from 2
         fcharge.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+        fcharge.setParLimits(3,0, hAmp);
+        fcharge.setParLimits(4,0,100);
 }

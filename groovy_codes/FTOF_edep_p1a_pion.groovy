@@ -29,17 +29,20 @@ for(arg in args) {
 
   (0..<6).each{
     def h1 = dir.getObject('/FTOF/p1a_pad_edep_pion_S'+(it+1))
-
-    // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
+    def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
+    f1.setParameter(0,0.0);
+    f1.setParameter(1,0.0);
+    f1.setParameter(2,1.0);
+    f1.setParameter(3,0.0);
+    f1.setParameter(4,0.0);
+    f1.setOptStat(1111111);
     f1.setLineWidth(2);
-    f1.setOptStat("1111");
-    initTimeGaussFitPar(f1,h1);
-    f1.setParameter(3,0);
-    DataFitter.fit(f1,h1,"LQ");
+
+    initLandauFitPar(h1, f1);
+    DataFitter.fit(f1,h1,"LRQ");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
@@ -52,18 +55,17 @@ out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 out.writeFile('FTOF_edep_p1a_pion.hipo')
 
-private void initTimeGaussFitPar(F1D f1, H1F h1) {
-        double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = h1.getRMS(); //ns
-        // double rangeMin = (hMean - (3*hRMS));
-        // double rangeMax = (hMean + (3*hRMS));
-        // double pm = hRMS;
-        // f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+private void initLandauFitPar(H1F hcharge, F1D fcharge) {
+        double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
+        double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
+        double hRMS  = hcharge.getRMS(); //ns
+        fcharge.setRange(fcharge.getRange().getMin(), hMean*2.0);
+        fcharge.setParameter(0, hAmp);
+        fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
+        fcharge.setParameter(1, hMean);
+        fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+        fcharge.setParameter(2, 0.3);//Changed from 2
+        fcharge.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+        fcharge.setParLimits(3,0, hAmp);
+        fcharge.setParLimits(4,0,100);
 }
