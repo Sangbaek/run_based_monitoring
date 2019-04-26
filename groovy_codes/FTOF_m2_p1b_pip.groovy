@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF #pi^- mass^2 peak")
-  gr.setTitleY("FTOF #pi^- mass^2 peak (GeV^2)")
+  gr.setTitle("FTOF p1b #pi^+ mass^2 peak")
+  gr.setTitleY("FTOF p1b #pi^+ mass^2 peak (GeV^2)")
   gr.setTitleX("run number")
   return gr
 }
@@ -28,11 +28,11 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject(String.format("/FTOF/H_FTOF_neg_mass_mom_pad1a_%d",it+1))
+    def h2 = dir.getObject(String.format("/FTOF/H_FTOF_pos_mass_mom_pad1b_%d",it+1))
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF p1a negative, mass^2")
-    h1.setTitleX("FTOF p1a negative, mass^2 (GeV^2)")
+    h1.setTitle("FTOF p1b positive, mass^2")
+    h1.setTitleX("FTOF p1b positive, mass^2 (GeV^2)")
 
     // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",-0.2,0.2);
@@ -53,7 +53,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTOF1a_pimm.hipo')
+out.writeFile('FTOF_m2_p1b_pip.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());

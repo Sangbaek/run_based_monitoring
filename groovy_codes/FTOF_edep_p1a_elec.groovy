@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF p1b #pi^+ mass^2 peak")
-  gr.setTitleY("FTOF p1b #pi^+ mass^2 peak (GeV^2)")
+  gr.setTitle("Mean FTOF edep per sector, p1a electron")
+  gr.setTitleY("Mean FTOF edep per sector, p1a electron (MeV)")
   gr.setTitleX("run number")
   return gr
 }
@@ -28,22 +28,19 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject(String.format("/FTOF/H_FTOF_pos_mass_mom_pad1b_%d",it+1))
-    def h1 = h2.projectionY()
-    h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF p1b positive, mass^2")
-    h1.setTitleX("FTOF p1b positive, mass^2 (GeV^2)")
-
+    def h1 = dir.getObject('/FTOF/p1a_pad_edep_elec'+(it+1))
+    
     // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",-0.2,0.2);
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
+    f1.setParameter(3,0);
     DataFitter.fit(f1,h1,"LQ");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-
+    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
   }
@@ -53,14 +50,14 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTOF1b_pipm.hipo')
+out.writeFile('FTOF_edep_p1a_elec.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
         double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
         double hRMS  = h1.getRMS(); //ns
-        double rangeMin = (hMean - (3*hRMS));
-        double rangeMax = (hMean + (3*hRMS));
+        // double rangeMin = (hMean - (3*hRMS));
+        // double rangeMax = (hMean + (3*hRMS));
         // double pm = hRMS;
         // f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, hAmp);

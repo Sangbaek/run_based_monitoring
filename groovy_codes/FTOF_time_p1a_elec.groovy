@@ -31,8 +31,8 @@ for(arg in args) {
     def h2 = dir.getObject('/FTOF/p1a_pad_vt_elec'+(it+1))
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF p1a vertex_time - RFtime")
-    h1.setTitleX("FTOF p1a vertex_time - RFtime (ns)")
+    h1.setTitle(h2.getTitle())
+    h1.setTitleX(h2.getTitleX())
 
     // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
