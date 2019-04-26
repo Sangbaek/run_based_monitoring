@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF #pi^- peak")
-  gr.setTitleY("FTOF #pi^- peak (GeV)")
+  gr.setTitle("FTOF #pi^- mass^2 peak")
+  gr.setTitleY("FTOF #pi^- mass^2 peak (GeV^2)")
   gr.setTitleX("run number")
   return gr
 }
@@ -31,8 +31,8 @@ for(arg in args) {
     def h2 = dir.getObject(String.format("/FTOF/H_FTOF_neg_mass_mom_pad1a_%d",it+1))
     def h1 = h2.projectionY()
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF pim mass")
-    h1.setTitleX("FTOF pim mass (GeV)")
+    h1.setTitle("FTOF p1a negative, mass^2")
+    h1.setTitleX("FTOF p1a negative, mass^2 (GeV^2)")
 
     // def f1 = ROOTFitter.fit(h1)
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",-0.2,0.2);
