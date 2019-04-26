@@ -6,15 +6,10 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
-def grtl = new GraphErrors('Mean')
+def grtl = new GraphErrors('mass2')
 grtl.setTitle("CTOF mass^2 peak, #pi^-")
 grtl.setTitleY("CTOF mass^2 peak, #pi^- (GeV^2)")
 grtl.setTitleX("run number")
-
-def grtl2 = new GraphErrors('Sigma')
-grtl2.setTitle("CTOF mass^2 peak, #pi^-")
-grtl2.setTitleY("CTOF mass^2 peak, #pi^- (GeV^2)")
-grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
 
@@ -35,7 +30,7 @@ for(arg in args) {
   DataFitter.fit(f1,h1,"LQ");
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
+  grtl.addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
 
   out.addDataSet(h1)
   out.addDataSet(f1)
