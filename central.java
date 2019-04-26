@@ -212,10 +212,7 @@ public class central {
 							H_CTOF_neg_mass.fill(CTOFmass);
 							//pi- fiducial cut borrowing from Pierre's CND
 							if (Math.sqrt(Math.abs(CTOFmass))<0.38 && CTOFmass>-0.35*0.35){
-								float thisTime =CTOFTime-RFT;
-								thisTime = (thisTime+1.002f) % 2.004f;
-								thisTime = thisTime - 1.002f;		
-								H_CTOF_vt_pim.fill(thisTime,CTOFTime-STT);
+								H_CTOF_vt_pim.fill(CTOFTime-RFT,CTOFTime-STT);
 								H_CTOF_edep_pim.fill(e);
 							}			
 						}
