@@ -31,7 +31,8 @@ for(arg in args) {
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
   grtl.addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
-
+  out.mkdir('/'+run)
+  out.cd('/'+run)
   out.addDataSet(h1)
   out.addDataSet(f1)
 }
