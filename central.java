@@ -135,7 +135,7 @@ public class central {
 		H_CTOF_vt_pim.setTitleY("vertex time - STTime (ns)");
 		H_CTOF_edep_pim = new H1F("H_CTOF_edep_pim","H_CTOF_edep_pim",100,0,150);
 		H_CTOF_edep_pim.setTitle("CTOF MIP (pi-) Edep");
-		H_CTOF_edep_pim.setTitle("E (MeV)");
+		H_CTOF_edep_pim.setTitleX("E (MeV)");
 	}
 	public double Vangle(Vector3 v1, Vector3 v2){ 
 		double res = 0; 
@@ -212,7 +212,10 @@ public class central {
 							H_CTOF_neg_mass.fill(CTOFmass);
 							//pi- fiducial cut borrowing from Pierre's CND
 							if (Math.sqrt(Math.abs(CTOFmass))<0.38 && CTOFmass>-0.35*0.35){
-								H_CTOF_vt_pim.fill(CTOFTime-RFT,CTOFTime-STT);
+								float thisTime =CTOFTime-RFT;
+								thisTime = (thisTime+1.002f) % 2.004f;
+								thisTime = thisTime - 1.002f;		
+								H_CTOF_vt_pim.fill(thisTime,CTOFTime-STT);
 								H_CTOF_edep_pim.fill(e);
 							}			
 						}
@@ -240,7 +243,7 @@ public class central {
                 }
 
 		if(eventBank!=null)STT = eventBank.getFloat("STTime",0);
-		if(eventBank!=null)RFT = eventBank.getFloat("STTime",0);
+		if(eventBank!=null)RFT = eventBank.getFloat("RFTime",0);
 		else return;
 		if(trackDetBank != null && event.hasBank("CVTRec::Tracks"))FillTracks(trackDetBank,event.getBank("CVTRec::Tracks"));
 		if(BackToBack && event.hasBank("CVTRec::Tracks") && event.hasBank("CTOF::hits"))FillCVTCTOF(event.getBank("CVTRec::Tracks"),event.getBank("CTOF::hits"));

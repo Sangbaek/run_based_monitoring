@@ -48,8 +48,7 @@ public class dst_mon {
 	public float pip_FTOF1a_t, pip_FTOF1a_path, pip_FTOF1a_vt;
 	public float pim_mom, pim_FTOF1a_t, pim_FTOF1a_path, pim_FTOF1a_vt;
 	public float pim_FTOF1b_t, pim_FTOF1b_path, pim_FTOF1b_vt;
-
-	public float CTOF_mom, CTOF_t, CTOF_path, CTOF_vt;
+	public float thisTime;
 
 	public int G1_part_ind, G2_part_ind, G1_pcal_ind, G2_pcal_ind, G1_cal_layers, G2_cal_layers;
 	public float G1_mom, G1_the, G1_phi, G2_mom, G2_the, G2_phi;
@@ -754,7 +753,10 @@ public class dst_mon {
 					e_FTOF1a_t = bank.getFloat("time",r);
 					e_FTOF1a_path = bank.getFloat("path",r);
 					e_FTOF1a_vt = e_FTOF1a_t - e_FTOF1a_path/29.98f - STT;
-					p1a_pad_vt_elec[s].fill(e_FTOF1a_t - e_FTOF1a_path/29.98f - RFT,e_FTOF1a_vt);
+					thisTime = e_FTOF1a_t - e_FTOF1a_path/29.98f - RFT;
+					thisTime = (thisTime+1.002f) % 2.004f;
+					thisTime = thisTime - 1.002f;
+					p1a_pad_vt_elec[s].fill(thisTime,e_FTOF1a_vt);
 					p1a_pad_edep_elec[s].fill(e_FTOF1a_edep);
 				}
 				if(bank.getByte("layer",r)==2){
@@ -767,7 +769,10 @@ public class dst_mon {
 					e_FTOF1b_t = bank.getFloat("time",r);
 					e_FTOF1b_path = bank.getFloat("path",r);
 					e_FTOF1b_vt = e_FTOF1b_t - e_FTOF1b_path/29.98f - STT;
-					p1b_pad_vt_elec[s].fill(e_FTOF1b_t - e_FTOF1b_path/29.98f - RFT,e_FTOF1b_vt);
+					thisTime = e_FTOF1b_t - e_FTOF1b_path/29.98f -  RFT;
+					thisTime = (thisTime+1.002f) % 2.004f;
+					thisTime = thisTime - 1.002f;
+					p1b_pad_vt_elec[s].fill(thisTime,e_FTOF1b_vt);
 					p1b_pad_edep_elec[s].fill(e_FTOF1b_edep);
 				}
 			}
@@ -777,7 +782,10 @@ public class dst_mon {
 				pip_FTOF1a_path = bank.getFloat("path",r);
 				float pip_beta = pip_mom/(float)Math.sqrt(pip_mom*pip_mom + 0.13957f*0.13957f);
 				pip_FTOF1a_vt = pip_FTOF1a_t - pip_FTOF1a_path / ( pip_beta * 29.98f ) - STT;
-				p1a_pad_vt_pion[s].fill(pip_FTOF1a_t - pip_FTOF1a_path / ( pip_beta * 29.98f ) - RFT,pip_FTOF1a_vt);
+				thisTime = pip_FTOF1a_t - pip_FTOF1a_path / ( pip_beta * 29.98f ) - RFT;
+				thisTime = (thisTime+1.002f) % 2.004f;
+				thisTime = thisTime - 1.002f;
+				p1a_pad_vt_pion[s].fill(thisTime,pip_FTOF1a_vt);
 				p1a_pad_edep_pion[s].fill(bank.getFloat("path",r));
 			}
 			if( bank.getShort("pindex",r)==pip_part_ind && bank.getByte("layer",r)==2 ){
@@ -786,7 +794,10 @@ public class dst_mon {
 				pip_FTOF1b_path = bank.getFloat("path",r);
 				float pip_beta = pip_mom/(float)Math.sqrt(pip_mom*pip_mom + 0.13957f*0.13957f);
 				pip_FTOF1b_vt = pip_FTOF1b_t - pip_FTOF1b_path / ( pip_beta * 29.98f ) - STT;
-				p1b_pad_vt_pion[s].fill(pip_FTOF1b_t - pip_FTOF1b_path / ( pip_beta * 29.98f ) - RFT,pip_FTOF1b_vt);
+				thisTime = pip_FTOF1b_t - pip_FTOF1b_path / ( pip_beta * 29.98f ) - RFT;
+				thisTime = (thisTime+1.002f) % 2.004f;
+				thisTime = thisTime - 1.002f;
+				p1b_pad_vt_pion[s].fill(thisTime, pip_FTOF1b_vt);
 				p1b_pad_edep_pion[s].fill(bank.getFloat("path",r));
 			}
 
@@ -796,7 +807,10 @@ public class dst_mon {
 				pim_FTOF1a_path = bank.getFloat("path",r);
 				float pim_beta = pim_mom/(float)Math.sqrt(pim_mom*pim_mom + 0.13957f*0.13957f);
 				pim_FTOF1a_vt = pim_FTOF1a_t - pim_FTOF1a_path / ( pim_beta * 29.98f ) - STT;
-				p1a_pad_vt_pion[s].fill(pim_FTOF1a_t - pim_FTOF1a_path / ( pim_beta * 29.98f ) - RFT,pim_FTOF1a_vt);
+				thisTime = pim_FTOF1a_t - pim_FTOF1a_path / ( pim_beta * 29.98f ) -  RFT;
+				thisTime = (thisTime+1.002f) % 2.004f;
+				thisTime = thisTime - 1.002f;
+				p1a_pad_vt_pion[s].fill(thisTime, pim_FTOF1a_vt);
 				p1a_pad_edep_pion[s].fill(bank.getFloat("path",r));
 			}
 			if( bank.getShort("pindex",r)==pim_part_ind && bank.getByte("layer",r)==2 ){
@@ -804,13 +818,19 @@ public class dst_mon {
 				pim_FTOF1b_path = bank.getFloat("path",r);
 				float pim_beta = pim_mom/(float)Math.sqrt(pim_mom*pim_mom + 0.13957f*0.13957f);
 				pim_FTOF1b_vt = pim_FTOF1b_t - pim_FTOF1b_path / ( pim_beta * 29.98f ) - STT;
-				p1b_pad_vt_pion[s].fill(pim_FTOF1b_t - pim_FTOF1b_path / ( pim_beta * 29.98f ) - RFT,pim_FTOF1b_vt);
+				thisTime = pim_FTOF1b_t - pim_FTOF1b_path / ( pim_beta * 29.98f ) -  RFT;
+				thisTime = (thisTime+1.002f) % 2.004f;
+				thisTime = thisTime - 1.002f;
+				p1b_pad_vt_pion[s].fill(thisTime, pim_FTOF1b_vt);
 				p1b_pad_edep_pion[s].fill(bank.getFloat("path",r));
 			}
 
 			//all particles at p2
 			if(bank.getByte("layer",r)==3){
-				p2_pad_vt[s].fill(bank.getFloat("time",r) - bank.getFloat("path",r)/29.98f - RFT,bank.getFloat("time",r) - bank.getFloat("path",r)/29.98f - STT);
+				thisTime = bank.getFloat("time",r) - bank.getFloat("path",r)/29.98f - RFT;
+				thisTime = (thisTime+1.002f) % 2.004f;
+				thisTime = thisTime - 1.002f;		
+				p2_pad_vt[s].fill(thisTime, bank.getFloat("time",r) - bank.getFloat("path",r)/29.98f - STT);
 				p2_pad_edep[s].fill(bank.getFloat("energy",r));
 			}
 
