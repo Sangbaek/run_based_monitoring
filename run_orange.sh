@@ -12,9 +12,15 @@ central_Km_num central_Kp_num central_pim_num central_pip_num central_prot_num \
 Forward_Tracking_Elechi2 \
 CVT_Vz_negative CVT_Vz_positive CVT_chi2_neg CVT_chi2_pos \
 RFtime_diff RFtime_elec RFtime_pim RFtime_pip EC_pim_time EC_pip_time)
-dst_mon=(FTOF_pim_1a FTOF_pim_1b FTOF_pip_1a FTOF_pip_1b FTOF_prot_1a FTOF_prot_1b)
+dst_mon=(FTOF_time_p1a_elec FTOF_time_p1a_pion FTOF_time_p1b_elec FTOF_time_p1b_pion FTOF_time_p2 \
+FTOF_edep_p1a_elec FTOF_edep_p1a_pion FTOF_edep_p1b_elec FTOF_edep_p1b_pion FTOF_edep_p2 \
+FTOF_m2_p1a_pim FTOF_m2_p1a_pip FTOF_m2_p1a_prot FTOF_m2_p1b_pim FTOF_m2_p1b_pip FTOF_m2_p1b_prot)
 out_CND=(CND_beta_neu CND_zdiff CND_time_neg_vtP CND_MIPS_dE_dz) 
-out_CTOF=(CTOF_time_negative CTOF_time_positive)
+out_CTOF=(CTOF_time_negative CTOF_time_positive \
+CTOF_m2_pim CTOF_m2_pip CTOF_m2_prot CTOF_time_pim CTOF_edep_pim)
+
+dst_mon=(FTOF_m2_p1a_pim FTOF_m2_p1a_pip FTOF_m2_p1a_prot FTOF_m2_p1b_pim FTOF_m2_p1b_pip FTOF_m2_p1b_prot)
+
 out_HTCC=(HTCC_nphe_ring_sector)
 out_TOF=(DC_tmax_sec_sl)
 
