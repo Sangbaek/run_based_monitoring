@@ -6,13 +6,15 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF p1a proton mass^2 peak")
-  gr.setTitleY("FTOF p1a proton mass^2 peak (GeV^2)")
-  gr.setTitleX("run number")
-  return gr
-}
+def grtl = new GraphErrors('Mean')
+grtl.setTitle("CTOF mass^2 peak, #pi^-")
+grtl.setTitleY("CTOF mass^2 peak, #pi^- (GeV^2)")
+grtl.setTitleX("run number")
+
+def grtl2 = new GraphErrors('Sigma')
+grtl2.setTitle("CTOF mass^2 peak, #pi^-")
+grtl2.setTitleY("CTOF mass^2 peak, #pi^- (GeV^2)")
+grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
 
@@ -23,37 +25,28 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
+  def h1 = dir.getObject('/ctof/H_CTOF_pos_mass')
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
+  // def f1 = ROOTFitter.fit(h1)
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",0.6,1.2);
+  f1.setLineWidth(2);
+  f1.setOptStat("1111");
+  initTimeGaussFitPar(f1,h1);
+  DataFitter.fit(f1,h1,"LQ");
 
-  (0..<6).each{
-    def h2 = dir.getObject(String.format("/FTOF/H_FTOF_pos_mass_mom_pad1a_%d",it+1))
-    def h1 = h2.projectionY()
-    h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF p1a positive, mass^2")
-    h1.setTitleX("FTOF p1a positive, mass^2 (GeV^2)")
+  //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+  grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
 
-    // def f1 = ROOTFitter.fit(h1)
-    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])",0.6,1.2);
-    f1.setLineWidth(2);
-    f1.setOptStat("1111");
-    initTimeGaussFitPar(f1,h1);
-    DataFitter.fit(f1,h1,"LQ");
-
-    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
-
-    out.addDataSet(h1)
-    out.addDataSet(f1)
-  }
+  out.addDataSet(h1)
+  out.addDataSet(f1)
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTOF_m2_p1a_prot.hipo')
+grtl2.each{ out.addDataSet(it) }
+out.writeFile('CTOF_m2_prot.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
@@ -63,10 +56,10 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double rangeMax = (hMean + (3*hRMS));
         // double pm = hRMS;
         // f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, 100);
+        f1.setParameter(0, hAmp);
         // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, 0.9);
+        f1.setParameter(1, hMean);
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, 0.1);
+        f1.setParameter(2, hRMS);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
 }

@@ -43,7 +43,7 @@ for(arg in args) {
     DataFitter.fit(f1,h1,"LQ");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
 
     out.addDataSet(h1)
     out.addDataSet(f1)

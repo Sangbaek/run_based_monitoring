@@ -27,6 +27,7 @@ for(arg in args) {
   def run = m[0].toInteger()
   def h2 = dir.getObject('/ctof/H_CTOF_vt_pim')
   def h1 = h2.projectionX()
+  h1.setName("CTOF_vt")
   h1.setTitle(h2.getTitle());
   h1.setTitleX(h2.getTitleX());
   def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -5,5);
