@@ -25,10 +25,7 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
-  def h2 = dir.getObject('/ctof/H_CTOF_edep_pim')
-  def h1 = h2.projectionX()
-  h1.setTitle(h2.getTitle());
-  h1.setTitleX(h2.getTitleX());
+  def h1 = dir.getObject('/ctof/H_CTOF_edep_pim')
 
   grtl.addPoint(run, h1.getMean(), 0, 0)
   grtl2.addPoint(run, h1.getRMS(), 0, 0)
