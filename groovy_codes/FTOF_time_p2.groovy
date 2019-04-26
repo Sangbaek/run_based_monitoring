@@ -29,7 +29,7 @@ for(arg in args) {
 
   (0..<6).each{
     def h2 = dir.getObject('/FTOF/p2_pad_vt_S'+(it+1))
-    def h1 = h2.projectionY()
+    def h1 = h2.projectionX()
     h1.setName("sec"+(it+1))
     h1.setTitle(h2.getTitle())
     h1.setTitleX(h2.getTitleX())
