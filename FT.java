@@ -1,4 +1,3 @@
-package org.jlab.detector.calib.utils;
 
 import java.io.*;
 import java.util.*;
@@ -189,6 +188,10 @@ public class FT {
                                                   "slot/I:"+//4
                                                   "chan/I");
             ccdb = new ConstantsManager();
+	    ccdb.init(Arrays.asList(new String[]{
+                    "/daq/fadc/fthodo",
+                    "/daq/tt/fthodo",
+                    "/geometry/ft/fthodo"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
 
             for (int slotn = 3; slotn < 20; slotn++) {
