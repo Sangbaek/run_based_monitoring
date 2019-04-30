@@ -1,3 +1,5 @@
+package org.jlab.detector.calib.utils;
+
 import java.io.*;
 import java.util.*;
 
