@@ -215,10 +215,7 @@ public class FT {
                                                   "slot/I:"+//4
                                                   "chan/I");
             ccdb = new ConstantsManager();
-	        ccdb.init(Arrays.asList(new String[]{
-                    "/daq/fadc/fthodo",
-                    "/daq/tt/fthodo",
-                    "/geometry/ft/fthodo"}));
+	        ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
 
             for (int slotn = 3; slotn < 20; slotn++) {
