@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -98,7 +97,7 @@ public class FT {
 			hi_hodo_ematch[layer].setTitleY(String.format("Counts"));
 			hi_hodo_ematch[layer].setFillColor(3);
 			f_charge_landau[layer] = new F1D(String.format("Landau_%d",layer+1),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(layer+1), 10.0);
-        	f_charge_landau[layer].setParameter(0,0.0);
+            f_charge_landau[layer].setParameter(0,0.0);
             f_charge_landau[layer].setParameter(1,0.0);
             f_charge_landau[layer].setParameter(2,1.0);
             f_charge_landau[layer].setParameter(3,0.0);
@@ -215,7 +214,7 @@ public class FT {
                                                   "slot/I:"+//4
                                                   "chan/I");
             ccdb = new ConstantsManager();
-	        ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo"}));
+            ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
 
             for (int slotn = 3; slotn < 20; slotn++) {
@@ -286,18 +285,18 @@ public class FT {
 			hi_hodo_eall[hodoL-1].fill(hodoHitE);
 
 			for(int j=0; j<HodoClusters.rows(); j++) {
-                        	if(clusterId==HodoClusters.getShort("id", j) && HodoClusters.getShort("size", j)>1) {
-                                    hi_hodo_ematch[hodoL-1].fill(hodoHitE);
-                            		hi_hodo_ematch_2D[hodoL-1].fill(hodoHitE,tile);
-                                    hi_hodo_ematch_board[counter].fill(hodoHitE);
-                            		if(startTime > -100) {
-                                		hi_hodo_tmatch[hodoL-1].fill(hodoHitT-path/29.97-startTime);
-                                        hi_hodo_tmatch_board[counter].fill(hodoHitT-path/29.97-startTime);
-                                		hi_hodo_tmatch_2D[hodoL-1].fill(hodoHitT-path/29.97-startTime,tile);
-                            		}
-                        	}
-                    	}
+                if(clusterId==HodoClusters.getShort("id", j) && HodoClusters.getShort("size", j)>1) {
+                    hi_hodo_ematch[hodoL-1].fill(hodoHitE);
+                    hi_hodo_ematch_2D[hodoL-1].fill(hodoHitE,tile);
+                    hi_hodo_ematch_board[counter].fill(hodoHitE);
+                    if(startTime > -100) {
+                        hi_hodo_tmatch[hodoL-1].fill(hodoHitT-path/29.97-startTime);
+                        hi_hodo_tmatch_board[counter].fill(hodoHitT-path/29.97-startTime);
+                        hi_hodo_tmatch_2D[hodoL-1].fill(hodoHitT-path/29.97-startTime,tile);
+                    }
                 }
+            }
+        }
 	}
 
 	public void fillFTCalo(DataBank ftPart, DataBank CalClusters) {
