@@ -241,10 +241,11 @@ public class FT {
 			int hodoL = HodoHits.getByte("layer",i);
 			int component = HodoHits.getShort("component",i);
 			int tile = -1;
-            int chan=InverseTranslationTable.getIntValue("chan", hodoS, hodoL, hodoC);
-            int slot=InverseTranslationTable.getIntValue("slot", hodoS, hodoL, hodoC);
+            int chan=InverseTranslationTable.getIntValue("chan", hodoS, hodoL, component);
+            int slot=InverseTranslationTable.getIntValue("slot", hodoS, hodoL, component);
             int board = slot-3; //mezzanine board number = slot-3
             if (slot>12) board=board-2; //slot skips 10->13.
+            System.out.println(String.format("%d\t%d\t%d\t%d\t%d",board,slot,hodoS, hodoL, component )); // debuggin line
             int counter = 15*hodoL-15+board; //board runs from 0 to 14.
 			switch (hodoS) {
 				case 1:
@@ -286,7 +287,6 @@ public class FT {
 
 			for(int j=0; j<HodoClusters.rows(); j++) {
                         	if(clusterId==HodoClusters.getShort("id", j) && HodoClusters.getShort("size", j)>1) {
-                   		            if (board<0) System.out.println(String.format("%d\t%d\t%d\t%d\t%d",board,slot,hodoS, hodoL, component ));
                                     hi_hodo_ematch[hodoL-1].fill(hodoHitE);
                             		hi_hodo_ematch_2D[hodoL-1].fill(hodoHitE,tile);
                                     hi_hodo_ematch_board[counter].fill(hodoHitE);
