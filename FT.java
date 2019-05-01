@@ -248,7 +248,7 @@ public class FT {
             int slot=InverseTranslationTable.getIntValue("slot", hodoS, hodoL, hodoC);
             int board = slot-3; //mezzanine board number = slot-3
             if (slot>12) board=board-2; //slot skips 10->13.
-            int counter = 15*hodoL+board; //board runs from 0 to 14.
+            int counter = 15*hodoL-15+board; //board runs from 0 to 14.
             System.out.println(String.format("%d\t%d\t%d\t%d\t%d",board,slot,hodoS, hodoL, component ));
 			switch (hodoS) {
 				case 1:
