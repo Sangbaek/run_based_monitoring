@@ -289,7 +289,7 @@ public class FT {
 
 			for(int j=0; j<HodoClusters.rows(); j++) {
                         	if(clusterId==HodoClusters.getShort("id", j) && HodoClusters.getShort("size", j)>1) {
-                   		            System.out.println(String.format("%d\t%d\t%d\t%d\t%d",board,slot,hodoS, hodoL, component ));
+                   		            if (board<0) System.out.println(String.format("%d\t%d\t%d\t%d\t%d",board,slot,hodoS, hodoL, component ));
                                     hi_hodo_ematch[hodoL-1].fill(hodoHitE);
                             		hi_hodo_ematch_2D[hodoL-1].fill(hodoHitE,tile);
                                     hi_hodo_ematch_board[counter].fill(hodoHitE);
