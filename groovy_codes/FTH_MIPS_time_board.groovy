@@ -5,7 +5,6 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
-import org.jlab.groot.math.RandomFunc;
 
 def grtl = (1..30).collect{
   board=(it-1)%15+1
