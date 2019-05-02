@@ -29,8 +29,8 @@ for(arg in args) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-for (l = 0; s <2; s++) {
-  for (b = 0; r <15; r++) {
+for (l = 0; l <2; s++) {
+  for (b = 0; b <15; r++) {
     counter=l*15+b
     layer = l+1
     board = b+1
