@@ -7,8 +7,8 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..30).collect{
-  layer=(it-1)%15+1
-  board=(it-1).intdiv(15)+1
+  board=(it-1)%15+1
+  layer=(it-1).intdiv(15)+1
   def gr = new GraphErrors('layer'+layer+'board'+board)
   gr.setTitle("FTH MIPS energy per layer (Mean)")
   gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")

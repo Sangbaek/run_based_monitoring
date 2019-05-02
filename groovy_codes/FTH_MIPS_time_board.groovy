@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 import org.jlab.groot.math.RandomFunc;
 
 def grtl = (1..30).collect{
-  layer=(it-1)%15+1
-  board=(it-1).intdiv(15)+1
+  board=(it-1)%15+1
+  layer=(it-1).intdiv(15)+1
   def gr = new GraphErrors('layer'+layer+'board'+board)
   gr.setTitle("FTH MIPS energy per layer (Mean)")
   gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
@@ -18,8 +18,8 @@ def grtl = (1..30).collect{
 }
 
 def grtl2 = (1..30).collect{
-  layer=(it-1)%15+1
-  board=(it-1).intdiv(15)+1
+  board=(it-1)%15+1
+  layer=(it-1).intdiv(15)+1
   def gr2 = new GraphErrors('layer'+it+'board'+board)
   gr2.setTitle("FTH MIPS energy per layer (Sigma)")
   gr2.setTitleY("FTH MIPS energy per layer (Sigma) (MeV)")
