@@ -6,8 +6,10 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
-def grtl = (1..2).collect{
-  def gr = new GraphErrors('layer'+it)
+def grtl = (1..30).collect{
+  layer=(it-1)%15+1
+  board=(it-1).intdiv(15)+1
+  def gr = new GraphErrors('layer'+layer+'board'+board)
   gr.setTitle("FTH MIPS energy per layer (Mean)")
   gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
   gr.setTitleX("run number")
@@ -27,9 +29,13 @@ for(arg in args) {
   out.mkdir('/'+run)
   out.cd('/'+run)
 
-  (0..<2).each{
-    def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
-    def f_charge_landau = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(it+1), 10.0);
+for (l = 0; s <2; s++) {
+  for (b = 0; r <15; r++) {
+    counter=l*15+b
+    layer = l+1
+    board = b+1
+    def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(layer)+'_b'+(board))
+    def f_charge_landau = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(l+1), 10.0);
     f_charge_landau.setParameter(0,0.0);
     f_charge_landau.setParameter(1,0.0);
     f_charge_landau.setParameter(2,1.0);
@@ -48,11 +54,12 @@ for(arg in args) {
     // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f_charge_landau.getParameter(1), 0, 0)
+    grtl[counter].addPoint(run, f_charge_landau.getParameter(1), 0, 0)
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f_charge_landau)
   }
+}
 }
 
 
