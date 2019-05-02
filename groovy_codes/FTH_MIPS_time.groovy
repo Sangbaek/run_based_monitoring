@@ -5,29 +5,27 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import org.jlab.groot.math.RandomFunc;
+
 // import ROOTFitter
+def grtl = (1..2).collect{
+  def gr = new GraphErrors('layer'+it)
+  gr.setTitle("FTH MIPS energy per layer (Mean)")
+  gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
+  gr.setTitleX("run number")
+  return gr
+}
 
-def grtl1 = new GraphErrors('layer 1, Mean')
-grtl1.setTitle("FTH MIPS time, neutral")
-grtl1.setTitleY("FTH MIPS time, neutral (ns)")
-grtl1.setTitleX("run number")
-
-def grtl2 = new GraphErrors('layer 1, Sigma')
-grtl2.setTitle("FTH MIPS time, neutral")
-grtl2.setTitleY("FTH MIPS time, neutral (ns)")
-grtl2.setTitleX("run number")
-
-def grtl3 = new GraphErrors('layer 2, Mean')
-grtl3.setTitle("FTH MIPS time, neutral")
-grtl3.setTitleY("FTH MIPS time, neutral (ns)")
-grtl3.setTitleX("run number")
-
-def grtl4 = new GraphErrors('layer 2, Sigma')
-grtl4.setTitle("FTH MIPS time, neutral")
-grtl4.setTitleY("FTH MIPS time, neutral (ns)")
-grtl4.setTitleX("run number")
+def grtl2 = (1..2).collect{
+  def gr2 = new GraphErrors('layer'+it)
+  gr2.setTitle("FTH MIPS energy per layer (Sigma)")
+  gr2.setTitleY("FTH MIPS energy per layer (Sigma) (MeV)")
+  gr2.setTitleX("run number")
+  return gr2
+}
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 for(arg in args) {
   TDirectory dir = new TDirectory()
   dir.readFile(arg)
@@ -38,48 +36,45 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
+  (0..<2).each{
+    def h1 = dir.getObject('/ft/hi_hodo_tmatch_l'+(it+1))
+    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -10.0, 10.0);
+    f1.setParameter(0, 0.0);
+    f1.setParameter(1, 0.0);
+    f1.setParameter(2, 2.0);
+    f1.setParameter(3, h1.getMin());
+    f1.setLineWidth(2);
+    f1.setOptStat("1111");
+    initTimeGaussFitPar(f1,h1);
+    DataFitter.fit(f1,h1,"LQ");
+    recursive_Gaussian_fitting(f1,h1)
+   // def h1 = h2.projectionY()
+    // h1.setName("layer"+(it+1))
+    // h1.setTitle("FTH_MIPS_energy")
+    // h1.setTitleX("E (MeV)")
 
-  def h1 = dir.getObject('/ft/hi_hodo_tmatch_l1')
-  def h2 = dir.getObject('/ft/hi_hodo_tmatch_l2')
-  // h1.add(h2)
-  // def f1 = ROOTFitter.fit(h1)
-  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
-  f1.setParameter(0, 0.0);
-  f1.setParameter(1, 0.0);
-  f1.setParameter(2, 2.0);
-  f1.setLineWidth(2);
-  f1.setOptStat("1111");
-  initTimeGaussFitPar(f1,h1);
-  DataFitter.fit(f1,h1,"LQ");
+    // def f1 = ROOTFitter.fit(h1)
 
-  def f2 = new F1D("f2", "[amp]*gaus(x,[mean],[sigma])", -10.0, 10.0);
-  f2.setParameter(0, 0.0);
-  f2.setParameter(1, 0.0);
-  f2.setParameter(2, 2.0);
-  f2.setLineWidth(2);
-  f2.setOptStat("1111");
-  initTimeGaussFitPar(f2,h1);
-  DataFitter.fit(f2,h1,"L");
-
-  grtl1.addPoint(run, f1.getParameter(1), 0, 0)
-  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
-  grtl3.addPoint(run, f2.getParameter(1), 0, 0)
-  grtl4.addPoint(run, f2.getParameter(2), 0, 0)
-  out.addDataSet(h1)
-  out.addDataSet(h2)
-  out.addDataSet(f1)
-  out.addDataSet(f2)
-
+    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
+    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
+    out.addDataSet(h1)
+    out.addDataSet(f1)
+    out2.addDataSet(h1)
+    out2.addDataSet(f1)
+  }
 }
-
-
 out.mkdir('/timelines')
 out.cd('/timelines')
-grtl1.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-grtl3.each{ out.addDataSet(it) }
-grtl4.each{ out.addDataSet(it) }
-out.writeFile('FTH_MIPS_time.hipo')
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl.each{ out.addDataSet(it) }
+grtl2.each{ out2.addDataSet(it) }
+out.writeFile('FTH_MIPS_time_mean.hipo')
+out2.writeFile('FTH_MIPS_time_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D ftime, H1F htime) {
         double hAmp  = htime.getBinContent(htime.getMaximumBin());
@@ -90,9 +85,25 @@ private void initTimeGaussFitPar(F1D ftime, H1F htime) {
         double pm = hRMS*3;
         ftime.setRange(rangeMin, rangeMax);
         ftime.setParameter(0, hAmp);
-        ftime.setParLimits(0, hAmp*0.8, hAmp*1.2);
+        ftime.setParLimits(0, hAmp*0.9, hAmp*1.1);
         ftime.setParameter(1, hMean);
         ftime.setParLimits(1, hMean-pm, hMean+(pm));
         ftime.setParameter(2, 0.2);
         ftime.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+}
+
+private void recursive_Gaussian_fitting(F1D f1, H1F h1){
+        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
+        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
+        // limit fitting range as 2 sigma
+        f1.setRange(rangeMin, rangeMax)
+        // if with noise, don't fit such noise
+        if(f1.getNPars()>3){
+          (3..f1.getNPars()-1).each{
+            f1.setParLimits(it,f1.getParameter(it)*1.0, f1.getParameter(it)*1.0)
+          }
+        }
+        System.out.println(f1.getParameter(1))
+        DataFitter.fit(f1,h1,"LQ");
+        System.out.println(f1.getParameter(1))
 }
