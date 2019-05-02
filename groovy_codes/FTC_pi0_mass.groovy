@@ -19,6 +19,7 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 for(arg in args) {
   TDirectory dir = new TDirectory()
   dir.readFile(arg)
@@ -29,6 +30,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   def h1 = dir.getObject('/ft/hpi0sum')
 
@@ -60,12 +63,17 @@ for(arg in args) {
   grtl2.addPoint(run, fpi0.getParameter(2), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(fpi0)
+  out2.addDataSet(h1)
+  out2.addDataSet(fpi0)
 
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
+out2.mkdir('/timelines')
+out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out.addDataSet(it) }
-out.writeFile('FTC_pi0_mass.hipo')
+out.writeFile('FTC_pi0_mass_mean.hipo')
+out2.writeFile('FTC_pi0_mass_sigma.hipo')

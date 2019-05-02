@@ -18,6 +18,7 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 for(arg in args) {
   TDirectory dir = new TDirectory()
   dir.readFile(arg)
@@ -28,6 +29,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   def h1 = dir.getObject('/ft/hi_cal_time_cut_neu')
   // def f1 = ROOTFitter.fit(h1)
@@ -47,15 +50,20 @@ for(arg in args) {
   // grtl2.addPoint(run, h1.getRMS(), 0, 0)
   out.addDataSet(h1)
   out.addDataSet(ftime_neu)
+  out2.addDataSet(h1)
+  out2.addDataSet(ftime_neu)
 
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
+out2.mkdir('/timelines')
+out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-out.writeFile('FTC_time_neu.hipo')
+grtl2.each{ out2.addDataSet(it) }
+out.writeFile('FTC_time_neu_mean.hipo')
+out2.writeFile('FTC_time_neu_sigma.hipo')
 
 
 private void initTimeGaussFitPar(F1D ftime, H1F htime) {
