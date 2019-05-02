@@ -66,7 +66,7 @@ for (l = 0; s <2; s++) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTH_MIPS_energy.hipo')
+out.writeFile('FTH_MIPS_energy_board.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());

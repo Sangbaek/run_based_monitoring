@@ -72,8 +72,8 @@ out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out2.addDataSet(it) }
-out.writeFile('FTH_MIPS_time_mean.hipo')
-out2.writeFile('FTH_MIPS_time_sigma.hipo')
+out.writeFile('FTH_MIPS_time_board_mean.hipo')
+out2.writeFile('FTH_MIPS_time__board_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D ftime, H1F htime) {
         double hAmp  = htime.getBinContent(htime.getMaximumBin());
