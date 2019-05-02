@@ -97,10 +97,8 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
         // if with noise, don't fit such noise
         if(f1.getNPars()>3){
           (3..f1.getNPars()-1).each{
-            f1.setParLimits(it,f1.getParameter(it)*1.0, f1.getParameter(it)*1.0)
+            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
           }
         }
-        System.out.println(f1.getParameter(1))
         DataFitter.fit(f1,h1,"LQ");
-        System.out.println(f1.getParameter(1))
 }
