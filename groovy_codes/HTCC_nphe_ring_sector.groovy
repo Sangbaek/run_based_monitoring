@@ -41,7 +41,6 @@ for (s = 0; s <6; s++) {
     // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     // grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
     grtl[counter].addPoint(run, h1.getMean(), 0, 0)
-    grtl[counter].addPoint(run, h1.getRMS(), 0, 0)
     out.addDataSet(h1)
     // out.addDataSet(f1)
   }
