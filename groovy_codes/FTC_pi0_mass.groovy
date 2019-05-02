@@ -74,6 +74,6 @@ out.cd('/timelines')
 out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
+grtl2.each{ out2.addDataSet(it) }
 out.writeFile('FTC_pi0_mass_mean.hipo')
 out2.writeFile('FTC_pi0_mass_sigma.hipo')
