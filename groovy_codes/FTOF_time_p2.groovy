@@ -71,6 +71,7 @@ out.cd('/timelines')
 out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
+grtl2.each{ out2.addDataSet(it) }
 out.writeFile('FTOF_time_p2_mean.hipo')
 out2.writeFile('FTOF_time_p2_sigma.hipo')
 
