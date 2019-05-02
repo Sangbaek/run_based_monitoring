@@ -20,7 +20,7 @@ def grtl = (1..30).collect{
 def grtl2 = (1..30).collect{
   board=(it-1)%15+1
   layer=(it-1).intdiv(15)+1
-  def gr2 = new GraphErrors('layer'+it+'board'+board)
+  def gr2 = new GraphErrors('layer'+layer+'board'+board)
   gr2.setTitle("FTH MIPS energy per layer (Sigma)")
   gr2.setTitleY("FTH MIPS energy per layer (Sigma) (MeV)")
   gr2.setTitleX("run number")
