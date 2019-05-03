@@ -29,7 +29,7 @@ for(arg in args) {
 
   def h1 = dir.getObject('/gg/H_gg_m')
   // def f1 = ROOTFitter.fit(h1)
-  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", 0.05, 0.2);
+  def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", 0.05, 0.2);
   f1.setParameter(0, 0.0);
   f1.setParameter(1, 0.0);
   f1.setParameter(2, 2.0);
@@ -77,6 +77,7 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         f1.setParameter(1, hMean);
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, 0.02);
+        f1.setParameter(3,0);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
 }
 
@@ -92,4 +93,9 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
           }
         }
         DataFitter.fit(f1,h1,"LQ");
+        System.out.println("chi2 too large")
+        if (f1.getChiSquare()>500){
+          initTimeGaussFitPar(f1,h1);
+          DataFitter.fit(f1,h1,"LQ");
+        }
 }

@@ -50,7 +50,6 @@ for(arg in args) {
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
-    f1.setParameter(3,0);
     DataFitter.fit(f1,h1,"LQ");
     recursive_Gaussian_fitting(f1,h1)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
@@ -86,6 +85,7 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, hRMS);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+        f1.setParameter(3,0);
 }
 
 private void recursive_Gaussian_fitting(F1D f1, H1F h1){
@@ -100,4 +100,9 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
           }
         }
         DataFitter.fit(f1,h1,"LQ");
+        System.out.println("chi2 too large")
+        if (f1.getChiSquare()>500){
+          initTimeGaussFitPar(f1,h1);
+          DataFitter.fit(f1,h1,"LQ");
+        }
 }
