@@ -24,6 +24,7 @@ def grtl2 = (1..3).collect{
 
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -35,6 +36,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   (0..<3).each{
     def h2 = dir.getObject(String.format("/cnd/Diff Z CND_L%d",it+1))
@@ -55,9 +58,8 @@ for(arg in args) {
     f1.setParameter(0,maxz);
     f1.setParLimits(0,maxz*0.9,maxz*1.1);
     f1.setParameter(2,3.0);
-    f1.setParameter(3,10.0);
     DataFitter.fit(f1, h1, "");
-
+    recursive_Gaussian_fitting(f1,h1)
     // def f1 = ROOTFitter.fit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
@@ -66,6 +68,8 @@ for(arg in args) {
 
     out.addDataSet(h1)
     out.addDataSet(f1)
+    out2.addDataSet(h1)
+    out2.addDataSet(f1)
 
 
   }
@@ -75,8 +79,12 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-out.writeFile('CND_zdiff.hipo')
+out.writeFile('CND_zdiff_mean.hipo')
+
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl2.each{ out2.addDataSet(it) }
+out2.writeFile('CND_zdiff_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
@@ -92,4 +100,24 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, hRMS);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+        f1.setParameter(3,10.0);
+}
+
+private void recursive_Gaussian_fitting(F1D f1, H1F h1){
+        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
+        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
+        // limit fitting range as 2 sigma
+        f1.setRange(rangeMin, rangeMax)
+        // if with noise, don't fit such noise
+        if(f1.getNPars()>3){
+          (3..f1.getNPars()-1).each{
+            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
+          }
+        }
+        DataFitter.fit(f1,h1,"LQ");
+        if (f1.getChiSquare()>500){
+          System.out.println("chi2 too large")
+          initTimeGaussFitPar(f1,h1);
+          DataFitter.fit(f1,h1,"LQ");
+        }
 }
