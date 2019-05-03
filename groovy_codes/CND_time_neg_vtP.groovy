@@ -24,6 +24,7 @@ def grtl2 = (1..3).collect{
 
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
