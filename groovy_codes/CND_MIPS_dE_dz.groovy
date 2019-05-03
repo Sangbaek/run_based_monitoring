@@ -53,6 +53,7 @@ for(arg in args) {
     h1.setTitle("dE/dz (GeV/cm)")
     // def f1 = ROOTFitter.fit(h1)
     f1=new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])+[cst]", 0.0, 5.0);
+    initMIPSGaussFitPar(f1,h1)
     DataFitter.fit(f1,h1,"LQ")
     recursive_Gaussian_fitting(f1,h1)
     // def f1 = ROOTFitter.fit(h1)

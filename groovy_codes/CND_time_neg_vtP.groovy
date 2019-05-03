@@ -48,6 +48,7 @@ for(arg in args) {
     h1.setTitleX("CND vtP (ns)")
 
     def f1 =new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
+    initTimeGaussFitPar(f1,h1)
     DataFitter.fit(f1, h1, "");
     recursive_Gaussian_fitting(f1,h1)
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
