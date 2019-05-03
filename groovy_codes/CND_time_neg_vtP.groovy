@@ -24,7 +24,6 @@ def grtl2 = (1..3).collect{
 
 
 TDirectory out = new TDirectory()
-TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -36,8 +35,6 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
-  out2.mkdir('/'+run)
-  out2.cd('/'+run)
 
   (0..<3).each{
     iL=it+1
@@ -67,8 +64,6 @@ for(arg in args) {
 
     out.addDataSet(h1)
     out.addDataSet(f1)
-    out2.addDataSet(h1)
-    out2.addDataSet(f1)
 
   }
 }
@@ -76,9 +71,6 @@ for(arg in args) {
 
 out.mkdir('/timelines')
 out.cd('/timelines')
-out2.mkdir('/timelines')
-out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out2.addDataSet(it) }
-out.writeFile('CND_time_neg_vtP_mean.hipo')
-out.writeFile('CND_time_neg_vtP_sigma.hipo')
+grtl2.each{ out.addDataSet(it) }
+out.writeFile('CND_time_neg_vtP.hipo')
