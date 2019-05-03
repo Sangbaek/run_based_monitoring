@@ -40,7 +40,7 @@ for(arg in args) {
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
     DataFitter.fit(f1,h1,"LQ");
-
+    recursive_Gaussian_fitting(f1,h1)
     // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
@@ -69,4 +69,18 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, hRMS);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+}
+
+private void recursive_Gaussian_fitting(F1D f1, H1F h1){
+        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
+        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
+        // limit fitting range as 2 sigma
+        f1.setRange(rangeMin, rangeMax)
+        // if with noise, don't fit such noise
+        if(f1.getNPars()>3){
+          (3..f1.getNPars()-1).each{
+            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
+          }
+        }
+        DataFitter.fit(f1,h1,"LQ");
 }
