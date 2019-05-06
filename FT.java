@@ -73,7 +73,7 @@ public class FT {
         ccdb = new ConstantsManager();
         ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
         rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
-        rfperiod = rfTable.getDoubleValue("clock",1,1,1);
+        rfPeriod = rfTable.getDoubleValue("clock",1,1,1);
 		
         H1F summary = new H1F("summary","summary",6,1,7);
        		summary.setTitleX("sector");
