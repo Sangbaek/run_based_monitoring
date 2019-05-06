@@ -74,8 +74,8 @@ public class FT {
         ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
         rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
         if (rfTable.hasEntry(1, 1, 1)){
-            System.out.println(String.format("RF period from ccdb for run %d: %f"),runNum,rfTable.getDoubleValue("clock",1,1,1));
             rfPeriod = rfTable.getDoubleValue("clock",1,1,1);
+            System.out.println(String.format("RF period from ccdb for run %d: %f"),runNum,rfPeriod);
         }
 		
         System.out.println(String.format("RF period\trun\n%f\t%d",rfPeriod,runNum));
