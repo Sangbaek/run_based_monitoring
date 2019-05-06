@@ -34,7 +34,6 @@ public class FT {
 	public double startTime, rfTime;
 
 	public double rfPeriod;
-	
 	public H1F summary;
 	//Hodoscope
                public H1F[] hi_hodo_eall, hi_hodo_ematch, hi_hodo_tmatch;
@@ -57,8 +56,9 @@ public class FT {
 	
     public IndexedTable InverseTranslationTable;
     public IndexedTable calibrationTranslationTable;
-    public ConstantsManager ccdb;
+    public IndexedTable rfTable;
 
+    public ConstantsManager ccdb;
 	public FT(int reqrunNum, boolean reqTimeBased, boolean reqwrite_volatile) {
 		runNum = reqrunNum;
 		userTimeBased=reqTimeBased;
@@ -69,8 +69,8 @@ public class FT {
 		rfTime=-1000;
 		trigger = 0;
 		
-		rfPeriod = 2.004;
-
+		//rfPeriod = 4.008;
+        rfPeriod = rfPeriod_ccdb.getFloatValue("clock");
 		H1F summary = new H1F("summary","summary",6,1,7);
        		summary.setTitleX("sector");
        		summary.setTitleY("DC hits");
@@ -214,8 +214,10 @@ public class FT {
                                                   "slot/I:"+//4
                                                   "chan/I");
             ccdb = new ConstantsManager();
-            ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo"}));
+            ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
+            rfperiod_ccdb=ccdb.getConstants(runNum, "/calibration/eb/rf/config");
+            rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
 
             for (int slotn = 3; slotn < 20; slotn++) {
                 for (int chann = 0; chann < 16; chann++) {
