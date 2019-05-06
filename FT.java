@@ -216,7 +216,6 @@ public class FT {
             ccdb = new ConstantsManager();
             ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
-            rfperiod_ccdb=ccdb.getConstants(runNum, "/calibration/eb/rf/config");
             rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
 
             for (int slotn = 3; slotn < 20; slotn++) {
