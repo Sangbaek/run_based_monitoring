@@ -70,8 +70,12 @@ public class FT {
 		trigger = 0;
 		
 		//rfPeriod = 4.008;
-        rfPeriod = rfPeriod_ccdb.getFloatValue("clock");
-		H1F summary = new H1F("summary","summary",6,1,7);
+        ccdb = new ConstantsManager();
+        ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
+        rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
+        rfperiod = rfTable.getDoubleValue("clock",1,1,1);
+		
+        H1F summary = new H1F("summary","summary",6,1,7);
        		summary.setTitleX("sector");
        		summary.setTitleY("DC hits");
        		summary.setFillColor(33);
@@ -213,11 +217,7 @@ public class FT {
                                                   "crate/I:" +//3
                                                   "slot/I:"+//4
                                                   "chan/I");
-            ccdb = new ConstantsManager();
-            ccdb.init(Arrays.asList(new String[]{"/daq/tt/fthodo","/calibration/eb/rf/config"}));
             calibrationTranslationTable=ccdb.getConstants(runNum, "/daq/tt/fthodo");
-            rfTable = ccdb.getConstants(runNum,"/calibration/eb/rf/config");
-
             for (int slotn = 3; slotn < 20; slotn++) {
                 for (int chann = 0; chann < 16; chann++) {
                     if (!calibrationTranslationTable.hasEntry(crate, slotn, chann)) continue;
