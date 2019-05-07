@@ -12,9 +12,9 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
-  grtl.setTitle("FTC time - start time, neutral (sigma)")
-  grtl.setTitleY("FTC time - start time, neutral (sigma) (ns)")
-  grtl.setTitleX("run number")
+  grtl2.setTitle("FTC time - start time, neutral (sigma)")
+  grtl2.setTitleY("FTC time - start time, neutral (sigma) (ns)")
+  grtl2.setTitleX("run number")
 
 
 TDirectory out = new TDirectory()

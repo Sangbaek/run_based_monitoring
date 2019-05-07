@@ -13,9 +13,9 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
-  grtl.setTitle("FTC pi0 mass")
-  grtl.setTitleY("FTC pi0 mass (MeV)")
-  grtl.setTitleX("run number")
+  grtl2.setTitle("FTC pi0 mass")
+  grtl2.setTitleY("FTC pi0 mass (MeV)")
+  grtl2.setTitleX("run number")
 
 
 TDirectory out = new TDirectory()
