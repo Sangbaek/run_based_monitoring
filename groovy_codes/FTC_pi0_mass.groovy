@@ -9,12 +9,12 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
   def grtl = new GraphErrors('Mean')
   grtl.setTitle("FTC pi0 mass")
-  grtl.setTitleY("FTC pi0 mass (MeV)")
+  grtl.setTitleY("FTC pi0 mass (peak value) (MeV)")
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
   grtl2.setTitle("FTC pi0 mass")
-  grtl2.setTitleY("FTC pi0 mass (MeV)")
+  grtl2.setTitleY("FTC pi0 mass (sigma) (MeV)")
   grtl2.setTitleX("run number")
 
 
