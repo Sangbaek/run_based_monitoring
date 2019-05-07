@@ -10,16 +10,16 @@ import org.jlab.groot.math.RandomFunc;
 // import ROOTFitter
 def grtl = (1..2).collect{
   def gr = new GraphErrors('layer'+it)
-  gr.setTitle("FTH MIPS energy per layer (Mean)")
-  gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
+  gr.setTitle("FTH MIPS time per layer (peak value)")
+  gr.setTitleY("FTH MIPS time per layer (peak value) (ns)")
   gr.setTitleX("run number")
   return gr
 }
 
 def grtl2 = (1..2).collect{
   def gr2 = new GraphErrors('layer'+it)
-  gr2.setTitle("FTH MIPS energy per layer (Sigma)")
-  gr2.setTitleY("FTH MIPS energy per layer (Sigma) (MeV)")
+  gr2.setTitle("FTH MIPS time per layer (sigma)")
+  gr2.setTitleY("FTH MIPS time per layer (sigma) (ns)")
   gr2.setTitleX("run number")
   return gr2
 }

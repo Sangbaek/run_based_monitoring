@@ -7,13 +7,13 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
   def grtl = new GraphErrors('Mean')
-  grtl.setTitle("FTC time - start time, charged")
-  grtl.setTitleY("FTC time - start time, charged (ns)")
+  grtl.setTitle("FTC time - start time, charged (peak value)")
+  grtl.setTitleY("FTC time - start time, charged (peak value) (ns)")
   grtl.setTitleX("run number")
 
   def grtl2 = new GraphErrors('Sigma')
-  grtl.setTitle("FTC time - start time, charged")
-  grtl.setTitleY("FTC time - start time, charged (ns)")
+  grtl.setTitle("FTC time - start time, charged (sigma)")
+  grtl.setTitleY("FTC time - start time, charged (sigma) (ns)")
   grtl.setTitleX("run number")
 
 

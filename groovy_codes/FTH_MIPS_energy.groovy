@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..2).collect{
   def gr = new GraphErrors('layer'+it)
-  gr.setTitle("FTH MIPS energy per layer (Mean)")
-  gr.setTitleY("FTH MIPS energy per layer (Mean) (MeV)")
+  gr.setTitle("FTH MIPS energy per layer (peak value)")
+  gr.setTitleY("FTH MIPS energy per layer (peak value) (MeV)")
   gr.setTitleX("run number")
   return gr
 }
