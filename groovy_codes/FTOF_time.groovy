@@ -110,6 +110,7 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
         System.out.println("chi2 too large")
         if (f1.getChiSquare()>1000){
           initTimeGaussFitPar(f1,h1);
+          f1.setRange(-0.25, 0.25)
           DataFitter.fit(f1,h1,"LQ");
         }
 }
