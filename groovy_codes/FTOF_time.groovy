@@ -112,5 +112,6 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
           initTimeGaussFitPar(f1,h1);
           f1.setRange(-0.25, 0.25)
           DataFitter.fit(f1,h1,"LQ");
+          recursive_Gaussian_fitting(f1,h1)
         }
 }
