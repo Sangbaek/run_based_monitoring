@@ -8,15 +8,15 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF time per sector, p1a electron, mean")
-  gr.setTitleY("FTOF time per sector, p1a electron, mean (ns)")
+  gr.setTitle("FTOF Vertex Time - RF Time, p1a electron, mean")
+  gr.setTitleY("FTOF Vertex Time - RF Time, p1a electron, mean (ns)")
   gr.setTitleX("run number")
   return gr
 }
 def grtl2 = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF time per sector, p1a electron, sigma")
-  gr.setTitleY("FTOF time per sector, p1a electron, sigma (ns)")
+  gr.setTitle("FTOF Vertex Time - RF Time, p1a electron, sigma")
+  gr.setTitleY("FTOF Vertex Time - RF Time, p1a electron, sigma (ns)")
   gr.setTitleX("run number")
   return gr
 }
