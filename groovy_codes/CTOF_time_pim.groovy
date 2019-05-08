@@ -7,8 +7,8 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = new GraphErrors('Mean')
-grtl.setTitle("CTOF time - RF time, #pi^-")
-grtl.setTitleY("CTOF time - RF time, #pi^- (ns)")
+grtl.setTitle("CTOF time - RF time, #pi^- (peak)")
+grtl.setTitleY("CTOF time - RF time, #pi^- (peak) (ns)")
 grtl.setTitleX("run number")
 
 def grtl2 = new GraphErrors('Sigma')
@@ -17,6 +17,7 @@ grtl2.setTitleY("CTOF time - RF time, #pi^- (ns)")
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -46,6 +47,12 @@ for(arg in args) {
   out.cd('/'+run)
   out.addDataSet(h1)
   out.addDataSet(f1)
+
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
+  out2.addDataSet(h1)
+  out2.addDataSet(f1)
+
 }
 
 
@@ -69,4 +76,23 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, 0.1);
         // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+}
+
+private void recursive_Gaussian_fitting(F1D f1, H1F h1){
+        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
+        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
+        // limit fitting range as 2 sigma
+        f1.setRange(rangeMin, rangeMax)
+        // if with noise, don't fit such noise
+        if(f1.getNPars()>3){
+          (3..f1.getNPars()-1).each{
+            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
+          }
+        }
+        DataFitter.fit(f1,h1,"LQ");
+        if (f1.getChiSquare()>500){
+          System.out.println("chi2 too large")
+          initTimeGaussFitPar(f1,h1);
+          DataFitter.fit(f1,h1,"LQ");
+        }
 }
