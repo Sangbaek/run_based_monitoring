@@ -36,6 +36,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   (0..<6).each{
     def h2 = dir.getObject('/FTOF/p1b_pad_vt_pion_S'+(it+1))
