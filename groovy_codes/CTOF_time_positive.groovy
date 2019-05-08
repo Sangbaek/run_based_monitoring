@@ -45,14 +45,25 @@ for(arg in args) {
   out.cd('/'+run)
   out.addDataSet(h1)
   out.addDataSet(f1)
+
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
+  out2.addDataSet(h1)
+  out2.addDataSet(f1)
+
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-out.writeFile('CTOF_time_pos.hipo')
+out.writeFile('CTOF_time_pos_mean.hipo')
+
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl2.each{ out2.addDataSet(it) }
+out2.writeFile('CTOF_time_pos_sigma.hipo')
+
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
