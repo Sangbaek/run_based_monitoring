@@ -14,7 +14,7 @@ def grtl = (1..6).collect{
   return gr
 }
 
-def grtl = (1..6).collect{
+def grtl2 = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
   gr.setTitle("FTOF Vertex Time - RF Time, p1a pion, sigma")
   gr.setTitleY("FTOF Vertex Time - RF Time, p1a pion, sigma (ns)")
