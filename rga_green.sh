@@ -13,18 +13,19 @@ HTCC_nphe_sector LTCC_nphe_sector)
 out_TOF=(FTOF_time DC_residuals_sec DC_residuals_sec_sl)
 #out_CTOF=(CTOF_time)
 out_FT=(FTC_pi0_mass FTC_time_charged FTC_time_neutral FTH_MIPS_energy FTH_MIPS_time)
-out_TOF=(FTOF_time)
+out_FT=(FTH_MIPS_time_board FTH_MIPS_energy_board)
+out_monitor=(Forward_Tracking_PosVz)
+#out_TOF=(FTOF_time)
+cd rga_output
 
-cd groovy_output
-
-out_monitor=(EC_Sampl EC_gg_m)
+#out_monitor=(trig_muon_num EC_gg_m HTCC_nphe_sector)
 #for name in out_monitor out_TOF out_FT
-for name in out_TOF
+for name in out_FT
 do
 	var=$name[@]
 	for script in ${!var}
 	do
 		#$groovy ../groovy_codes/$script.groovy `find /volatile/clas12/rga/pass0/monitoring/plots* -name "$name*"` #rga
-		$groovy ../groovy_codes/$script.groovy `find /work/clas12/rg-b/offline_monitoring/plots* -name "$name*"` #rgb
+	$groovy ../groovy_codes/$script.groovy `find /work/clas12/rg-a/data/monplots/pass0/v0/plots* -name "$name*" ! -name "*5590*"` #rga
 	done
 done
