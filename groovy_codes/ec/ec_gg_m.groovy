@@ -58,11 +58,11 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('EC_gg_m_mean.hipo')
+out.writeFile('ec_gg_m_mean.hipo')
 out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl2.each{ out2.addDataSet(it) }
-out2.writeFile('EC_gg_m_sigma.hipo')
+out2.writeFile('ec_gg_m_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());

@@ -53,7 +53,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('FTOF_edep_p1a_elec.hipo')
+out.writeFile('ftof_edep_p1a_elec.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());

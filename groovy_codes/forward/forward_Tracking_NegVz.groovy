@@ -54,7 +54,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('Forward_negative_VZ.hipo')
+out.writeFile('forward_negative_VZ.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());

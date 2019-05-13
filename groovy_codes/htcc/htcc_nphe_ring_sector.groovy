@@ -50,4 +50,4 @@ for (s = 0; s <6; s++) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('HTCC_nphe_sec_ring.hipo')
+out.writeFile('htcc_nphe_sec_ring.hipo')

@@ -36,4 +36,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('BMT_Occupancy.hipo')
+out.writeFile('bmt_Occupancy.hipo')

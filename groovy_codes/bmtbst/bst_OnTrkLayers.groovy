@@ -37,4 +37,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('BST_OnTrkLayers.hipo')
+out.writeFile('bst_OnTrkLayers.hipo')

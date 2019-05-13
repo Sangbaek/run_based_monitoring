@@ -160,7 +160,7 @@ grtl3.each{ out.addDataSet(it) }
 grtl4.each{ out.addDataSet(it) }
 grtl5.each{ out.addDataSet(it) }
 grtl6.each{ out.addDataSet(it) }
-out.writeFile('DC_tmax_sec_sl.hipo')
+out.writeFile('dc_tmax_sec_sl.hipo')
 
 public void initInvertedSFitPar(int slayer, F1D function) {
   double min = 100.0;

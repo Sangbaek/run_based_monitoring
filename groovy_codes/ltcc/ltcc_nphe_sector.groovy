@@ -46,4 +46,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('LTCC_nphe_sec.hipo')
+out.writeFile('ltcc_nphe_sec.hipo')

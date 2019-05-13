@@ -59,12 +59,12 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('CTOF_time_pim_mean.hipo')
+out.writeFile('ctof_time_pim_mean.hipo')
 
 out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl2.each{ out2.addDataSet(it) }
-out2.writeFile('CTOF_time_pim_sigma.hipo')
+out2.writeFile('ctof_time_pim_sigma.hipo')
 
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {

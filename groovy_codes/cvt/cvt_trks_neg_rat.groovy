@@ -37,4 +37,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('CVT_neg_tracks_ratio.hipo')
+out.writeFile('cvt_neg_tracks_ratio.hipo')

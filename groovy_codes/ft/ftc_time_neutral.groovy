@@ -62,8 +62,8 @@ out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out2.addDataSet(it) }
-out.writeFile('FTC_time_neu_mean.hipo')
-out2.writeFile('FTC_time_neu_sigma.hipo')
+out.writeFile('ftc_time_neu_mean.hipo')
+out2.writeFile('ftc_time_neu_sigma.hipo')
 
 
 private void initTimeGaussFitPar(F1D ftime, H1F htime) {
