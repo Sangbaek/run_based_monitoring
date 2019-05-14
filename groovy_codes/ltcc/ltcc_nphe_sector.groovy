@@ -5,8 +5,8 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (0..1).collect{
   sec_num=2*it+3
   def gr = new GraphErrors('sec'+sec_num)
-  gr.setTitle("LTCC Number of Photoelectrons")
-  gr.setTitleY("LTCC Number of Photoelectrons per sector")
+  gr.setTitle("LTCC Number of Photoelectrons for electrons")
+  gr.setTitleY("LTCC Number of Photoelectrons for electrons per sector")
   gr.setTitleX("run number")
   return gr
 }
@@ -29,8 +29,8 @@ for(arg in args) {
     def h2 = dir.getObject('/elec/H_trig_LTCCn_theta_S'+(sec_num))
     def h1 = h2.projectionY()
     h1.setName("sec"+(sec_num))
-    h1.setTitle("LTCC Number of Photoelectrons")
-    h1.setTitleX("LTCC Number of Photoelectrons")
+    h1.setTitle("LTCC Number of Photoelectrons for elec")
+    h1.setTitleX("LTCC Number of Photoelectrons for elec")
 
     // def f1 = ROOTFitter.fit(h1)
 
@@ -46,4 +46,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ltcc_nphe_sec.hipo')
+out.writeFile('ltcc_elec_nphe_sec.hipo')
