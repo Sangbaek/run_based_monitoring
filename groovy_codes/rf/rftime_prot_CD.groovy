@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 
 def grtl = new GraphErrors('RFtime_diff')
-grtl.setTitle("Average rftime difference")
-grtl.setTitleY("Average rftime difference (ns)")
+grtl.setTitle("Average proton rftime1, CD")
+grtl.setTitleY("Average proton rftime1, CD (ns)")
 grtl.setTitleX("run number")
 
 TDirectory out = new TDirectory()
@@ -22,7 +22,7 @@ for(arg in args) {
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/RF/H_RFtimediff')
+  def h1 = dir.getObject('/RF/H_p_RFtime1')
 
   grtl.addPoint(run, h1.getMean(), 0, 0)
 
@@ -35,4 +35,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('rftime_12_diff.hipo')
+out.writeFile('rftime_prot_CD.hipo')
