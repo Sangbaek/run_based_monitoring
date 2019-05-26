@@ -7,23 +7,21 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF Vertex Time - RF Time, p1a pion, mean")
-  gr.setTitleY("FTOF Vertex Time - RF Time, p1a pion, mean (ns)")
+  def gr = new GraphErrors('Mean, sec'+it)
+  gr.setTitle("p1a Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean)")
+  gr.setTitleY("p1a Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean/sigma) (ns)")
   gr.setTitleX("run number")
   return gr
 }
-
 def grtl2 = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("FTOF Vertex Time - RF Time, p1a pion, sigma")
-  gr.setTitleY("FTOF Vertex Time - RF Time, p1a pion, sigma (ns)")
+  def gr = new GraphErrors('Sigma,'+it)
+  gr.setTitle("p1a Vertex-time difference FTOF_vtime-RFT for pions and electrons (sigma)")
+  gr.setTitleY("p1a Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean/sigma) (ns)")
   gr.setTitleX("run number")
   return gr
 }
 
 TDirectory out = new TDirectory()
-TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -35,41 +33,30 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
-  out2.mkdir('/'+run)
-  out2.cd('/'+run)
 
   (0..<6).each{
-    def h2 = dir.getObject('/FTOF/p1a_pad_vt_pion_S'+(it+1))
-    def h1 = h2.projectionX()
-    h1.setName("sec"+(it+1))
-    h1.setTitle(h2.getTitle())
-    h1.setTitleX(h2.getTitleX())
-
-    // def f1 = ROOTFitter.fit(h1)
+    def h1 = dir.getObject('/FTOF/p1a_dt_S'+(it+1))
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
     f1.setLineWidth(2);
     f1.setOptStat("1111");
     initTimeGaussFitPar(f1,h1);
     DataFitter.fit(f1,h1,"LQ");
     recursive_Gaussian_fitting(f1,h1)
+    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
+    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
-    out2.addDataSet(h1)
-    out2.addDataSet(f1)
   }
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
-out2.mkdir('/timelines')
-out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out2.addDataSet(it) }
-out.writeFile('ftof_time_p1a_pion_mean.hipo')
-out2.writeFile('ftof_time_p1a_pion_sigma.hipo')
+grtl2.each{ out1.addDataSet(it) }
+out.writeFile('ftof_time_p1a.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());

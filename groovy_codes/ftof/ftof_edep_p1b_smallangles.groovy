@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("Mean FTOF edep per sector, p1a pion")
-  gr.setTitleY("Mean FTOF edep per sector, p1a pion (MeV)")
+  gr.setTitle("p1b Pathlength Corrected Edep for negative tracks, small angles (<= 11 deg)")
+  gr.setTitleY("p1b Pathlength Corrected Edep for negative tracks, small angles (<= 11 deg) (MeV)")
   gr.setTitleX("run number")
   return gr
 }
@@ -28,7 +28,7 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h1 = dir.getObject('/FTOF/p1a_pad_edep_pion_S'+(it+1))
+    def h1 = dir.getObject('/FTOF/p1b_edep_smallangles_S'+(it+1))
     def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
     f1.setParameter(0,0.0);
     f1.setParameter(1,0.0);
@@ -42,7 +42,7 @@ for(arg in args) {
     DataFitter.fit(f1,h1,"LRQ");
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
+    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
@@ -53,7 +53,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ftof_edep_p1a_pion.hipo')
+out.writeFile('ftof_edep_p1b_smallangles.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());

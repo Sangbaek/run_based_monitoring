@@ -8,8 +8,8 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
-  gr.setTitle("p2 Path-length Corrected Edep for negative tracks")
-  gr.setTitleY("p2 Path-length Corrected Edep for negative tracks (MeV)")
+  gr.setTitle("p1a Pathlength Corrected Edep for negative tracks, small angles (<= 11 deg)")
+  gr.setTitleY("p1a Pathlength Corrected Edep for negative tracks, small angles (<= 11 deg) (MeV)")
   gr.setTitleX("run number")
   return gr
 }
@@ -28,7 +28,7 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h1 = dir.getObject('/FTOF/p2_edep_S'+(it+1))
+    def h1 = dir.getObject('/FTOF/p1a_edep_smallangles_S'+(it+1))
     def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
     f1.setParameter(0,0.0);
     f1.setParameter(1,0.0);
@@ -53,7 +53,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ftof_edep_p2.hipo')
+out.writeFile('ftof_edep_p1a_smallangles.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
