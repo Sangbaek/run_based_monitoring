@@ -28,7 +28,7 @@ for(arg in args) {
   out.cd('/'+run)
 
   (0..<6).each{
-    def h1 = dir.getObject('/ftof/p1b_edep_largeangles_S'+(it+1))
+    def h1 = dir.getObject('/tof/p1b_edep_largeangles_S'+(it+1))
     def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
     f1.setParameter(0,0.0);
     f1.setParameter(1,0.0);
