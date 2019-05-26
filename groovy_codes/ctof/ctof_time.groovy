@@ -55,8 +55,8 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ctof_time.hipo')
 grtl2.each{ out.addDataSet(it) }
+out.writeFile('ctof_time.hipo')
 // out2.mkdir('/timelines')
 // out2.cd('/timelines')
 // grtl2.each{ out2.addDataSet(it) }

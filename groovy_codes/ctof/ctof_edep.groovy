@@ -6,7 +6,7 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
-def grtl = new GraphErrors('Path-length corrected edep for negative tracks')
+def grtl = new GraphErrors('Edep')
 grtl.setTitle("Path-length corrected edep for negative tracks")
 grtl.setTitleY("Path-length corrected edep for negative tracks (MeV)")
 grtl.setTitleX("run number")
