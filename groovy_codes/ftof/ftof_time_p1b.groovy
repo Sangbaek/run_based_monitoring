@@ -55,7 +55,7 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out1.addDataSet(it) }
+grtl2.each{ out.addDataSet(it) }
 out.writeFile('ftof_time_p1b.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
