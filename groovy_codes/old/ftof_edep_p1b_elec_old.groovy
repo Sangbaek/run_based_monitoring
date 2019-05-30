@@ -6,10 +6,13 @@ import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
-def grtl = new GraphErrors('Path-length corrected edep for negative tracks')
-grtl.setTitle("Path-length corrected edep for negative tracks")
-grtl.setTitleY("Path-length corrected edep for negative tracks (MeV)")
-grtl.setTitleX("run number")
+def grtl = (1..6).collect{
+  def gr = new GraphErrors('sec'+it)
+  gr.setTitle("Mean FTOF edep per sector, p1b electron")
+  gr.setTitleY("Mean FTOF edep per sector, p1b electron (MeV)")
+  gr.setTitleX("run number")
+  return gr
+}
 
 TDirectory out = new TDirectory()
 
@@ -20,33 +23,37 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d\d\d\d/
   def run = m[0].toInteger()
-  def h1 = dir.getObject('/ctof/PathLCorrected Edep')
-  def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 30.0);
-  f1.setParameter(0,0.0);
-  f1.setParameter(1,0.0);
-  f1.setParameter(2,1.0);
-  f1.setParameter(3,0.0);
-  f1.setParameter(4,0.0);
-  f1.setOptStat(1111111);
-  f1.setLineWidth(2);
 
-  initLandauFitPar(h1, f1);
-  DataFitter.fit(f1,h1,"LRQ");
-
-  //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl.addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
-  // grtl[it].addPoint(run, h1.getMean(), 0, 0)
   out.mkdir('/'+run)
   out.cd('/'+run)
-  out.addDataSet(h1)
-  out.addDataSet(f1)
+
+  (0..<6).each{
+    def h1 = dir.getObject('/FTOF/p1b_pad_edep_elec_S'+(it+1))
+    def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
+    f1.setParameter(0,0.0);
+    f1.setParameter(1,0.0);
+    f1.setParameter(2,1.0);
+    f1.setParameter(3,0.0);
+    f1.setParameter(4,0.0);
+    f1.setOptStat(1111111);
+    f1.setLineWidth(2);
+
+    initLandauFitPar(h1, f1);
+    DataFitter.fit(f1,h1,"LRQ");
+
+    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    grtl[it].addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
+    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
+    out.addDataSet(h1)
+    out.addDataSet(f1)
+  }
 }
 
 
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('ctof_PathLCorrected_Edep.hipo')
+out.writeFile('ftof_edep_p1b_elec.hipo')
 
 private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());

@@ -17,7 +17,7 @@ grtl2.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks (mean
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()
-// TDirectory out2 = new TDirectory()
+TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -44,10 +44,10 @@ for(arg in args) {
   out.addDataSet(h1)
   out.addDataSet(f1)
 
-  // out2.mkdir('/'+run)
-  // out2.cd('/'+run)
-  // out2.addDataSet(h1)
-  // out2.addDataSet(f1)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
+  out2.addDataSet(h1)
+  out2.addDataSet(f1)
 
 }
 
@@ -55,12 +55,12 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-out.writeFile('ctof_time.hipo')
-// out2.mkdir('/timelines')
-// out2.cd('/timelines')
-// grtl2.each{ out2.addDataSet(it) }
-// out2.writeFile('ctof_time_pim_sigma.hipo')
+// grtl2.each{ out.addDataSet(it) }
+out.writeFile('ctof_time_mean.hipo')
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl2.each{ out2.addDataSet(it) }
+out2.writeFile('ctof_time_sigma.hipo')
 
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {

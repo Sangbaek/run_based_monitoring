@@ -33,6 +33,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   (0..<6).each{
     def h1 = dir.getObject('/tof/p2_dt_S'+(it+1))
@@ -48,6 +50,8 @@ for(arg in args) {
     // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
+    out2.addDataSet(h1)
+    out2.addDataSet(f1)
   }
 }
 
@@ -55,8 +59,12 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-grtl2.each{ out.addDataSet(it) }
-out.writeFile('ftof_time_p2.hipo')
+out.writeFile('ftof_time_p2_mean.hipo')
+
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl2.each{ out2.addDataSet(it) }
+out2.writeFile('ftof_time_p2_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
