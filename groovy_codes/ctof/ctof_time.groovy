@@ -7,13 +7,13 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 
 def grtl = new GraphErrors('Mean')
-grtl.setTitle("Vertex-time difference CTOF_vtime-STT for negative tracks (mean/sigma)")
-grtl.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks (mean/sigma) (ns)")
+grtl.setTitle("Vertex-time difference CTOF_vtime-STT for negative tracks (mean)")
+grtl.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks (mean) (ns)")
 grtl.setTitleX("run number")
 
 def grtl2 = new GraphErrors('Sigma')
-grtl2.setTitle("Vertex-time difference CTOF_vtime-STT for negative tracks (mean/sigma)")
-grtl2.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks (mean/sigma) (ns)")
+grtl2.setTitle("Vertex-time difference CTOF_vtime-STT for negative tracks (sigma)")
+grtl2.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks (sigma) (ns)")
 grtl2.setTitleX("run number")
 
 TDirectory out = new TDirectory()

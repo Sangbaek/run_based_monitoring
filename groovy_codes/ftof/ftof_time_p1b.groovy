@@ -9,14 +9,14 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 def grtl = (1..6).collect{
   def gr = new GraphErrors('Mean, sec'+it)
   gr.setTitle("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean)")
-  gr.setTitleY("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean/sigma) (ns)")
+  gr.setTitleY("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean) (ns)")
   gr.setTitleX("run number")
   return gr
 }
 def grtl2 = (1..6).collect{
   def gr = new GraphErrors('Sigma,'+it)
   gr.setTitle("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (sigma)")
-  gr.setTitleY("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (mean/sigma) (ns)")
+  gr.setTitleY("p1b Vertex-time difference FTOF_vtime-RFT for pions and electrons (sigma) (ns)")
   gr.setTitleX("run number")
   return gr
 }
