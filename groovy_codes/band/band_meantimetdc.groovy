@@ -25,8 +25,8 @@ for(arg in args) {
     def h1 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination1')
     def h2 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination2')
 
-    grtl.addPoint(run, h1.getMean(), 0, 0)
-    grtl.addPoint(run, h2.getMean(), 0, 0)
+    grtl[0].addPoint(run, h1.getMean(), 0, 0)
+    grtl[1].addPoint(run, h2.getMean(), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.mkdir('/'+run)
     out.cd('/'+run)
