@@ -7,6 +7,7 @@ def grtl = (1..2).collect{
   gr.setTitle("BAND adc LR Sector Combination")
   gr.setTitleY("sqrt( adcLcorr * adcRcorr )")
   gr.setTitleX("run number")
+  return gr
 }
 
 

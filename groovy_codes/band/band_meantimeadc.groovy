@@ -2,10 +2,13 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('Comb'+it)
-grtl.setTitle("BAND mean time fadc sector combination")
-grtl.setTitleY("meantimeFadc – sqrt(x^2+y^2+z^2)/c (ns)")
-grtl.setTitleX("run number")
+def grtl = (1..2).collect{
+  def gr = new GraphErrors('Comb'+it)
+  gr.setTitle("BAND mean time fadc sector combination")
+  gr.setTitleY("meantimeFadc – sqrt(x^2+y^2+z^2)/c (ns)")
+  gr.setTitleX("run number")
+  return gr
+}
 
 
 TDirectory out = new TDirectory()
