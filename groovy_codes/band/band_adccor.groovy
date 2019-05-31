@@ -2,10 +2,12 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('BAND adc LR Sector Combination')
-grtl.setTitle("BAND adc LR Sector Combination")
-grtl.setTitleY("sqrt( adcLcorr * adcRcorr )")
-grtl.setTitleX("run number")
+def grtl = (1..2).collect{
+  def gr = new GraphErrors('Comb'+it)
+  gr.setTitle("BAND adc LR Sector Combination")
+  gr.setTitleY("sqrt( adcLcorr * adcRcorr )")
+  gr.setTitleX("run number")
+}
 
 
 TDirectory out = new TDirectory()
@@ -23,8 +25,8 @@ for(arg in args) {
     def h1 = dir.getObject('/BAND/H_BAND_ADC_LR_SectorCombination1')
     def h2 = dir.getObject('/BAND/H_BAND_ADC_LR_SectorCombination2')
 
-    grtl.addPoint(run, h1.getMean(), 0, 0)
-    grtl.addPoint(run, h2.getMean(), 0, 0)
+    grtl[1].addPoint(run, h1.getMean(), 0, 0)
+    grtl[2].addPoint(run, h2.getMean(), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.mkdir('/'+run)
     out.cd('/'+run)

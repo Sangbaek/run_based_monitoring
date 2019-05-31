@@ -2,7 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 // import ROOTFitter
 
-def grtl = new GraphErrors('BAND mean time tdc sector combination')
+def grtl = new GraphErrors('Comb'+it)
 grtl.setTitle("BAND mean time tdc sector combination")
 grtl.setTitleY("meantimeTDC – sqrt(x^2+y^2+z^2)/c (ns)")
 grtl.setTitleX("run number")
