@@ -169,6 +169,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
       if (histo.getBinContent(bin)<cut && histo.getBinContent(bin-1)>cut){
         min=histo.getDataX(bin)-100
         max=histo.getDataX(bin)
+        break
       }
   }
   if (slayer == 1) {
