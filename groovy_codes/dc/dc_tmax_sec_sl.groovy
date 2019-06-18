@@ -164,8 +164,7 @@ out.writeFile('dc_tmax_sec_sl.hipo')
 public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   double min = 100.0;
   double max = 220.0;
-  cut=histo.getMax()
-  cut=0.1*max
+  cut=0.1*histo.getMax()
   for(int bin = histo.getXaxis().getNBins(); bin >0; bin--){
       if (histo.getBinContent(bin)<cut && histo.getBinContent(bin-1)>cut){
         min=histo.getDataX(bin)-100
