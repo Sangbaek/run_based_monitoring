@@ -84,53 +84,47 @@ for(arg in args) {
     h14.setName("sec"+sec_num+"sl"+4)
     h15.setName("sec"+sec_num+"sl"+5)
     h16.setName("sec"+sec_num+"sl"+6)
-    max=h11.getMax()
-    cut=0.1*max
-    for(int bin = 0; bin < h11.getXaxis().getNBins(); bin++){
-        if (h11.getBinContent(bin)>cut && h11.getBinContent(bin)<cut)
-        System.out.println(bin)
-    }
     // def f1 = ROOTFitter.fit(h1)
     def f11 = new F1D(String.format("Inverted_S_%d_%d",sec_num,0+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f11.setName("fit:"+h11.getName())
     f11.setLineWidth(2);
     f11.setOptStat("111111");
-    initInvertedSFitPar(1,f11);
+    initInvertedSFitPar(1,f11,h11);
     DataFitter.fit(f11,h11,"LQ");
 
     def f12 = new F1D(String.format("Inverted_S_%d_%d",sec_num,1+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f12.setName("fit:"+h12.getName())
     f12.setLineWidth(2);
     f12.setOptStat("111111");
-    initInvertedSFitPar(2,f12);
+    initInvertedSFitPar(2,f12,h12);
     DataFitter.fit(f12,h12,"LQ");
 
     def f13 = new F1D(String.format("Inverted_S_%d_%d",sec_num,2+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f13.setName("fit:"+h13.getName())
     f13.setLineWidth(3);
     f13.setOptStat("111111");
-    initInvertedSFitPar(3,f13);
+    initInvertedSFitPar(3,f13,h13);
     DataFitter.fit(f13,h13,"LQ");
 
     def f14 = new F1D(String.format("Inverted_S_%d_%d",sec_num,3+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f14.setName("fit:"+h14.getName())
     f14.setLineWidth(3);
     f14.setOptStat("111111");
-    initInvertedSFitPar(4,f14);
+    initInvertedSFitPar(4,f14,h14);
     DataFitter.fit(f14,h14,"LQ");
 
     def f15 = new F1D(String.format("Inverted_S_%d_%d",sec_num,4+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f15.setName("fit:"+h15.getName())
     f15.setLineWidth(3);
     f15.setOptStat("111111");
-    initInvertedSFitPar(5,f15);
+    initInvertedSFitPar(5,f15,h15);
     DataFitter.fit(f15,h15,"LQ");
 
     def f16 = new F1D(String.format("Inverted_S_%d_%d",sec_num,5+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f16.setName("fit:"+h16.getName())
     f16.setLineWidth(3);
     f16.setOptStat("111111");
-    initInvertedSFitPar(6,f16);
+    initInvertedSFitPar(6,f16,h16);
     DataFitter.fit(f16,h16,"LQ");
 
     //t_max = p2-(2/p1)
@@ -167,38 +161,46 @@ grtl5.each{ out.addDataSet(it) }
 grtl6.each{ out.addDataSet(it) }
 out.writeFile('dc_tmax_sec_sl.hipo')
 
-public void initInvertedSFitPar(int slayer, F1D function) {
+public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   double min = 100.0;
   double max = 220.0;
+  cut=histo.getMax()
+  cut=0.1*max
+  for(int bin = histo.getXaxis().getNBins(); bin >0; bin--){
+      if (histo.getBinContent(bin)<cut && histo.getBinContent(bin-1)>cut){
+        min=getBinCenter(bin)-100
+        max=getBinCenter(bin)
+      }
+  }
   if (slayer == 1) {
-    min = 100.0; max = 240.0;
+    // min = 100.0; max = 240.0;
     function.setParameter(1,-0.038); function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,118.0); function.setParLimits(2,100.0,150.0);
+    function.setParameter(2,max-50); function.setParLimits(2,max-100,max);
   }
   if (slayer == 2) {
-    min = 120.0; max = 240.0;
-    function.setParameter(1,-0.040); function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,136.0); function.setParLimits(2,100.0,200.0);
+    // min = 120.0; max = 240.0;
+    function.setParameter(1,-0.038); function.setParLimits(1,-0.02,-0.05);
+    function.setParameter(2,max-50); function.setParLimits(2,max-100,max);
   }
   if (slayer == 3) {
-    min = 200.0; max = 450.0;
-    function.setParameter(1,-0.030);function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,320.0); function.setParLimits(2,200.0,500.0);
+    // min = 200.0; max = 450.0;
+    function.setParameter(1,-0.038);function.setParLimits(1,-0.02,-0.05);
+    function.setParameter(2,max-50); function.setParLimits(2,max-150,max+50);
   }
   if (slayer == 4) {
-    min = 200.0; max = 500.0;
-    function.setParameter(1,-0.023); function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,350.0); function.setParLimits(2,200.0,500.0);
+    // min = 200.0; max = 500.0;
+    function.setParameter(1,-0.038); function.setParLimits(1,-0.02,-0.05);
+    function.setParameter(2,max-50); function.setParLimits(2,max-150,max+50);
   }
   if (slayer == 5) {
-    min = 400.0; max = 700.0;
-    function.setParameter(1,-0.024);function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,623.0); function.setParLimits(2,500.0,700.0);
+    // min = 400.0; max = 700.0;
+    function.setParameter(1,-0.038);function.setParLimits(1,-0.02,-0.05);
+    function.setParameter(2,max-50); function.setParLimits(2,max-150,max+50);
   }
   if (slayer == 6) {
-    min = 480.0; max = 700.0;
-    function.setParameter(1,-0.034); function.setParLimits(1,-0.02,-0.05);
-    function.setParameter(2,683.0); function.setParLimits(2,500.0,750.0);
+    // min = 480.0; max = 700.0;
+    function.setParameter(1,-0.038); function.setParLimits(1,-0.02,-0.05);
+    function.setParameter(2,max-50); function.setParLimits(2,max-150,max+50);
   }
   function.setRange(min,max);
   function.setLineColor(2);
