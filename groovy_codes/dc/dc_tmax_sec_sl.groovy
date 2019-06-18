@@ -84,7 +84,12 @@ for(arg in args) {
     h14.setName("sec"+sec_num+"sl"+4)
     h15.setName("sec"+sec_num+"sl"+5)
     h16.setName("sec"+sec_num+"sl"+6)
-
+    max=h11.getMax()
+    cut=0.1*max
+    for(int bin = 0; bin < h11.getXaxis().getNBins(); bin++){
+        if (h11.getBinContent(bin)>cut && h11.getBinContent(bin)<cut)
+        System.out.println(bin)
+    }
     // def f1 = ROOTFitter.fit(h1)
     def f11 = new F1D(String.format("Inverted_S_%d_%d",sec_num,0+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
     f11.setName("fit:"+h11.getName())
@@ -167,32 +172,32 @@ public void initInvertedSFitPar(int slayer, F1D function) {
   double max = 220.0;
   if (slayer == 1) {
     min = 100.0; max = 240.0;
-    function.setParameter(1,-0.038); function.setParLimits(1,-0.01,-0.06);
+    function.setParameter(1,-0.038); function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,118.0); function.setParLimits(2,100.0,150.0);
   }
   if (slayer == 2) {
     min = 120.0; max = 240.0;
-    function.setParameter(1,-0.040); function.setParLimits(1,-0.01,-0.06);
+    function.setParameter(1,-0.040); function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,136.0); function.setParLimits(2,100.0,200.0);
   }
   if (slayer == 3) {
     min = 200.0; max = 450.0;
-    function.setParameter(1,-0.030);function.setParLimits(1,-0.01,-0.05);
+    function.setParameter(1,-0.030);function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,320.0); function.setParLimits(2,200.0,500.0);
   }
   if (slayer == 4) {
     min = 200.0; max = 500.0;
-    function.setParameter(1,-0.023); function.setParLimits(1,-0.01,-0.05);
+    function.setParameter(1,-0.023); function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,350.0); function.setParLimits(2,200.0,500.0);
   }
   if (slayer == 5) {
     min = 400.0; max = 700.0;
-    function.setParameter(1,-0.024);function.setParLimits(1,-0.01,-0.05);
+    function.setParameter(1,-0.024);function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,623.0); function.setParLimits(2,500.0,700.0);
   }
   if (slayer == 6) {
     min = 480.0; max = 700.0;
-    function.setParameter(1,-0.034); function.setParLimits(1,-0.01,-0.05);
+    function.setParameter(1,-0.034); function.setParLimits(1,-0.02,-0.05);
     function.setParameter(2,683.0); function.setParLimits(2,500.0,750.0);
   }
   function.setRange(min,max);
