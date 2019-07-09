@@ -9,40 +9,40 @@ import org.jlab.groot.graphics.EmbeddedCanvas;
 def grtl1 = (1..6).collect{
   sec_num = it
   def gr1 = new GraphErrors('sec'+sec_num+' sl'+1)
-  gr1.setTitle("t max per sector per superlayer")
-  gr1.setTitleY("t max per sector per superlayer (ns)")
+  gr1.setTitle("t0 per sector per superlayer")
+  gr1.setTitleY("t0 per sector per superlayer (ns)")
   gr1.setTitleX("run number")
   return gr1
 }
 def grtl2 = (1..6).collect{
   sec_num = it
   def gr2 = new GraphErrors('sec'+sec_num+' sl'+2)
-  gr2.setTitle("t max per sector per superlayer")
-  gr2.setTitleY("t max per sector per superlayer (ns)")
+  gr2.setTitle("t0 per sector per superlayer")
+  gr2.setTitleY("t0 per sector per superlayer (ns)")
   gr2.setTitleX("run number")
   return gr2
 }
 def grtl3 = (1..6).collect{
   sec_num = it
   def gr3 = new GraphErrors('sec'+sec_num+' sl'+3)
-  gr3.setTitle("t max per sector per superlayer")
-  gr3.setTitleY("t max per sector per superlayer (ns)")
+  gr3.setTitle("t0 per sector per superlayer")
+  gr3.setTitleY("t0 per sector per superlayer (ns)")
   gr3.setTitleX("run number")
   return gr3
 }
 def grtl4 = (1..6).collect{
   sec_num = it
   def gr4 = new GraphErrors('sec'+sec_num+' sl'+4)
-  gr4.setTitle("t max per sector per superlayer")
-  gr4.setTitleY("t max per sector per superlayer (ns)")
+  gr4.setTitle("t0 per sector per superlayer")
+  gr4.setTitleY("t0 per sector per superlayer (ns)")
   gr4.setTitleX("run number")
   return gr4
 }
 def grtl5 = (1..6).collect{
   sec_num = it
   def gr5 = new GraphErrors('sec'+sec_num+' sl'+5)
-  gr5.setTitle("t max per sector per superlayer")
-  gr5.setTitleY("t max per sector per superlayer (ns)")
+  gr5.setTitle("t0 per sector per superlayer")
+  gr5.setTitleY("t0 per sector per superlayer (ns)")
   gr5.setTitleX("run number")
   return gr5
 }
@@ -168,43 +168,43 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   cut90=0.9*histo.getMax()
   for(int bin =0; bin < histo.getMaximumBin(); bin++){
       if (histo.getBinContent(bin)<cut10 && histo.getBinContent(bin+1)>cut10) T10=histo.getDataX(bin)
-      if (histo.getBinContent(bin)<cut90 && histo.getBinContent(bin+1)>cut90) T90=histo.getDataX(bin)
+      if (histo.getBinContent(bin)<cut90 && histo.getBinContent(bin+1)>cut90) T90=histo.getDataX(bin+1)
   }
   P0 = T10 + T90
   P1= 0.8*(histo.getMax())/((T10+T90)*(T90-T10))
   if (slayer == 1) {
     // min = 100.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-100,T10);
   }
   if (slayer == 2) {
     // min = 120.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-100,T10);
   }
   if (slayer == 3) {
     // min = 200.0; max = 450.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1);function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
   }
   if (slayer == 5) {
     // min = 400.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1);function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
   }
   if (slayer == 6) {
     // min = 480.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,T10,T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
     function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
   }
