@@ -170,43 +170,45 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
       if (histo.getBinContent(bin)<cut10 && histo.getBinContent(bin+1)>cut10) T10=histo.getDataX(bin)
       if (histo.getBinContent(bin)<cut90 && histo.getBinContent(bin+1)>cut90) T90=histo.getDataX(bin+1)
   }
-  P0 = T10 + T90
+  System.out.println(T10+"\t"+T90)
+  P0 = histo.getMax()
   P1= 0.8*(histo.getMax())/((T10+T90)*(T90-T10))
+  P2 = (T10+T90)/2
   if (slayer == 1) {
     // min = 100.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-100,T10);
+    function.setParameter(2,P2); function.setParLimits(2,T10,T90);
   }
   if (slayer == 2) {
     // min = 120.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-100,T10);
+    function.setParameter(2,P2); function.setParLimits(2,T10,T90);
   }
   if (slayer == 3) {
     // min = 200.0; max = 450.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1);function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
+    function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
+    function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
   if (slayer == 5) {
     // min = 400.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1);function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
+    function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
   if (slayer == 6) {
     // min = 480.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*T10,2*T90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,0.02,0.05);
-    function.setParameter(2,T10-50); function.setParLimits(2,T10-150,T10+50);
+    function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
   function.setRange(T10,T90);
   function.setLineColor(2);
