@@ -164,13 +164,21 @@ out.writeFile('dc_t0_sec_sl.hipo')
 public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   // double min = 0;
   // double max = 220.0;
+
+  test = 0.05
+  cut_test = test* histo.getMax()
+  T_test=-10000
+  test2 = 0.85
+  cut_test2 = test2* histo.getMax()
   cut10=0.1*histo.getMax()
   cut90=0.9*histo.getMax()
   for(int bin =0; bin < histo.getMaximumBin(); bin++){
+      if (histo.getBinContent(bin)<cut_test && histo.getBinContent(bin+1)>cut_test) T_test=histo.getDataX(bin)
+      if (histo.getBinContent(bin)<cut_test2 && histo.getBinContent(bin+1)>cut_test2) T_test2=histo.getDataX(bin+1)
       if (histo.getBinContent(bin)<cut10 && histo.getBinContent(bin+1)>cut10) T10=histo.getDataX(bin)
       if (histo.getBinContent(bin)<cut90 && histo.getBinContent(bin+1)>cut90) T90=histo.getDataX(bin+1)
   }
-  System.out.println(T10+"\t"+T90)
+  if (T_test==-10000) T_test=T10
   P0 = histo.getMax()
   P1= 4/(T90-T10)
   P2 = (T10+T90)/2
@@ -191,12 +199,14 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
     function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1);function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
+    function.setRange(T_test,T90);
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
+    function.setParameter(0,P0); function.setParLimits(1,2*cut_test,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
+    function.setRange(T_test,T90);
   }
   if (slayer == 5) {
     // min = 400.0; max = 700.0;
@@ -210,7 +220,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
-  function.setRange(T10,T90);
+  function.setRange(T_test,T_test2);  
   function.setLineColor(2);
   function.setLineWidth(4);
 }
