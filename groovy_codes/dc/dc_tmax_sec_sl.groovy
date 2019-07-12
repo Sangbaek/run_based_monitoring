@@ -197,7 +197,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*cut90);
+    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
   }
