@@ -164,7 +164,7 @@ out.writeFile('dc_tmax_sec_sl.hipo')
 public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   double min = 100.0;
   double max = 220.0;
-  cut_test=0.1*histo.getMax()
+  cut=0.1*histo.getMax()
   for(int bin = histo.getXaxis().getNBins(); bin >0; bin--){
       if (histo.getBinContent(bin)<cut && histo.getBinContent(bin-1)>cut){
         T_cut=histo.getDataX(bin)-100
@@ -173,7 +173,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   }
   bin_cut = histo.getXaxis().getBin(T_cut)
   y_cut = histo.getBinContent(bin_cut)
-  y10 = cut_test
+  y10 = cut
   P0 = y_cut
   P1= -4/(T10-T_cut)
   P2 = (T10+T_cut)/2
@@ -198,7 +198,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*cut_test,2*cut90);
+    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
     function.setRange(T_test,T90);
