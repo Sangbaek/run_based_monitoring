@@ -199,14 +199,12 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
     function.setParameter(0,P0); function.setParLimits(1,2*cut10,2*cut90);
     function.setParameter(1,P1);function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
-    function.setRange(T_test,T90);
   }
   if (slayer == 4) {
     // min = 200.0; max = 500.0;
     function.setParameter(0,P0); function.setParLimits(1,2*cut_test,2*cut90);
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
-    function.setRange(T_test,T90);
   }
   if (slayer == 5) {
     // min = 400.0; max = 700.0;
@@ -220,7 +218,7 @@ public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
     function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
     function.setParameter(2,P2); function.setParLimits(2,T10-50,T90+50);
   }
-  function.setRange(T_test,T_test2);  
+  function.setRange(T_test,T_test2);
   function.setLineColor(2);
   function.setLineWidth(4);
 }
