@@ -6,5 +6,7 @@ These groovy scripts will read offline monitoring codes that was initiated by FX
 
 # How to run them
 
-The run scripts in repo are pretty self-explanatory. Please ask Sangbaek or Andrey about running the scripts.
-
+The sample script can be found as rga_pass0v7.sh
+Environment variables like path for coatjava must be edited.
+Groovy must be ready at users' ifarm.
+Copying /group/clas12/packages/groovy to an editable location is recommended
