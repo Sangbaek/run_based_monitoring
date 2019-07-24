@@ -275,5 +275,5 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         f1.setParameter(1, hMean);
         // f1.setParLimits(1, hMean-pm, hMean+(pm));
         f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+        f1.setParLimits(2, 0.1*hRMS, 1.5*hRMS);
 }
