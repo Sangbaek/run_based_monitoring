@@ -15,7 +15,17 @@ def grtl = (1..6).collect{
   return gr
 }
 
+def grtl2 = (1..6).collect{
+  sec_num = it
+  def gr = new GraphErrors('sec'+sec_num)
+  gr.setTitle("DC residuals (sigma) per sector")
+  gr.setTitleY("DC residuals (sigma) per sector (cm)")
+  gr.setTitleX("run number")
+  return gr
+}
+
 TDirectory out = new TDirectory()
+TDirectory out2 = new TDirectory()
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -27,6 +37,8 @@ for(arg in args) {
 
   out.mkdir('/'+run)
   out.cd('/'+run)
+  out2.mkdir('/'+run)
+  out2.cd('/'+run)
 
   (0..<6).each{
     sec_num = (it+1)
@@ -61,8 +73,11 @@ for(arg in args) {
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     // grtl[it].addPoint(run, h11.getMean(), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
+    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
     out.addDataSet(h11)
     out.addDataSet(f1)
+    out2.addDataSet(h11)
+    out2.addDataSet(f1)
   }
 }
 
@@ -70,7 +85,12 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('dc_residuals_sec.hipo')
+out.writeFile('dc_residuals_sec_peak.hipo')
+
+out2.mkdir('/timelines')
+out2.cd('/timelines')
+grtl2.each{ out2.addDataSet(it) }
+out2writeFile('dc_residuals_sec_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
