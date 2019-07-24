@@ -154,47 +154,53 @@ for(arg in args) {
     h16.setTitleX("DC residuals per sector per superlayer (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f11.setName("fit:"+h11.getName())
     f11.setLineWidth(2);
     f11.setOptStat("1111");
     initTimeGaussFitPar(f11,h11);
     DataFitter.fit(f11,h11,"LQ");
+    recursive_Gaussian_fitting(f11,h11)
 
-    def f12 = new F1D("f12", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f12 = new F1D("f12", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f12.setName("fit:"+h12.getName())
     f12.setLineWidth(2);
     f12.setOptStat("1111");
     initTimeGaussFitPar(f12,h12);
     DataFitter.fit(f12,h12,"LQ");
+    recursive_Gaussian_fitting(f12,h12)
 
-    def f13 = new F1D("f13", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f13 = new F1D("f13", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f13.setName("fit:"+h13.getName())
     f13.setLineWidth(3);
     f13.setOptStat("1111");
     initTimeGaussFitPar(f13,h13);
     DataFitter.fit(f13,h13,"LQ");
+    recursive_Gaussian_fitting(f13,h13)
 
-    def f14 = new F1D("f14", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f14 = new F1D("f14", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f14.setName("fit:"+h14.getName())
     f14.setLineWidth(3);
     f14.setOptStat("1111");
     initTimeGaussFitPar(f14,h14);
     DataFitter.fit(f14,h14,"LQ");
+    recursive_Gaussian_fitting(f14,h14)
 
-    def f15 = new F1D("f15", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f15 = new F1D("f15", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f15.setName("fit:"+h15.getName())
     f15.setLineWidth(3);
     f15.setOptStat("1111");
     initTimeGaussFitPar(f15,h15);
     DataFitter.fit(f15,h15,"LQ");
+    recursive_Gaussian_fitting(f15,h15)
 
-    def f16 = new F1D("f16", "[amp]*gaus(x,[mean],[sigma])", -0.2, 0.2);
+    def f16 = new F1D("f16", "[amp]*gaus(x,[mean],[sigma])",-0.5,0.5);
     f16.setName("fit:"+h16.getName())
     f16.setLineWidth(3);
     f16.setOptStat("1111");
     initTimeGaussFitPar(f16,h16);
     DataFitter.fit(f16,h16,"LQ");
+    recursive_Gaussian_fitting(f16,h16)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl1[it].addPoint(run, f11.getParameter(1), 0, 0)
@@ -269,11 +275,27 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
         // double rangeMin = (hMean - (3*hRMS));
         // double rangeMax = (hMean + (3*hRMS));
         // double pm = hRMS;
-        // f1.setRange(rangeMin, rangeMax);
+        f1.setRange(hMean-1, hMean+1);
         f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
+        //f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
         f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
+        f1.setParLimits(1, hMean-0.5, hMean+0.5);
         f1.setParameter(2, hRMS);
-        f1.setParLimits(2, 0.1*hRMS, 1.5*hRMS);
+        //f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
+        f1.setParameter(3,0);
+}
+
+private void recursive_Gaussian_fitting(F1D f1, H1F h1){
+        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
+        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
+        // limit fitting range as 2 sigma
+        def f2 = new F1D("temp", "[amp]*gaus(x,[mean],[sigma])+[const]", -0.5, 0.5);
+        f2=f1
+        f2.setRange(rangeMin,rangeMax)
+        DataFitter.fit(f1,h1,"LQ");
+        if (f1.getChiSquare()>f2.getChiSquare()){
+          System.out.println("Replacing fitting function")
+          f1=f2
+          f1.setName("fit:"+h1.getName())
+        }
 }
