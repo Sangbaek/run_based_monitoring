@@ -90,7 +90,7 @@ out.writeFile('dc_residuals_sec_peak.hipo')
 out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl2.each{ out2.addDataSet(it) }
-out2writeFile('dc_residuals_sec_sigma.hipo')
+out2.writeFile('dc_residuals_sec_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
