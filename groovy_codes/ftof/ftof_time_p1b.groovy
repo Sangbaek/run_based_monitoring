@@ -89,14 +89,11 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
         double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
         // limit fitting range as 2 sigma
         def f2 = new F1D("temp", "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
-        f1.setRange(rangeMin, rangeMax)
-        // if with noise, don't fit such noise
+        f2=f1
         f2.setRange(rangeMin,rangeMax)
-        f2.setParameter(0,f1.getParameter(0))
-        f2.setParameter(1,f1.getParameter(1))
-        f2.setParameter(2,f1.getParameter(2))
-        DataFitter.fit(f2,h1,"LQ");
+        DataFitter.fit(f1,h1,"LQ");
         if (f1.getChiSquare()>f2.getChiSquare()){
+          System.out.println("Replacing fitting function")
           f1=f2
           f1.setName("fit:"+h1.getName())
         }
