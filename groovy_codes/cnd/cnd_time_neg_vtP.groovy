@@ -81,4 +81,4 @@ out2.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 grtl2.each{ out2.addDataSet(it) }
 out.writeFile('cnd_time_neg_vtP_mean.hipo')
-out.writeFile('cnd_time_neg_vtP_sigma.hipo')
+out2.writeFile('cnd_time_neg_vtP_sigma.hipo')
