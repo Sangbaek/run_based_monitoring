@@ -10,19 +10,23 @@ class FTFitter {
     double hRMS  = 5
 
     f1.setParameter(1, hMean)
+    f1.setParLimits(1, hMean-hRMS, hMean+hRMS)
     f1.setParameter(2, hRMS)
     f1.setParameter(3, 0)
     f1.setParLimits(3, 0, h1.getMax()*0.2)
 
-    def fits1 = (0..20).collect{
-      hRMS = f1.getParameter(2).abs()
-      f1.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS)
-      DataFitter.fit(f1,h1,"Q")
-      return [f1.getChiSquare(), (0..<f1.getNPars()).collect{f1.getParameter(it)}]
+    def makefit = {func->
+      hMean = func.getParameter(1)
+      hRMS = func.getParameter(2).abs()
+      func.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS)
+      DataFitter.fit(func,h1,"Q")
+      return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
 
+    def fits1 = (0..20).collect{makefit(f1)}
     def bestfit = fits1.sort()[0]
     f1.setParameters(*bestfit[1])
+    makefit(f1)
 
     return f1
   }

@@ -21,7 +21,7 @@ for(arg in args) {
 }
 
 
-['mean', 'sigma', 'chi2'].each{name->
+['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
   grtl.setTitle("FTC pi0 mass")
   grtl.setTitleY("FTC pi0 mass ("+name+" value) (MeV)")
