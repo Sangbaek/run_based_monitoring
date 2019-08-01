@@ -1,18 +1,13 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
 import org.jlab.groot.group.DataGroup;
+import org.jlab.groot.data.H1F
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import RFFitter;
 
-
-def grtl = new GraphErrors('RFtime_diff')
-grtl.setTitle("Average rftime difference")
-grtl.setTitleY("Average rftime difference (ns)")
-grtl.setTitleX("run number")
-
-TDirectory out = new TDirectory()
+def data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -24,15 +19,31 @@ for(arg in args) {
 
   def h1 = dir.getObject('/RF/H_RFtimediff')
 
-  grtl.addPoint(run, h1.getMean(), 0, 0)
+  f1 = RFFitter.fit(h1)
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-  out.addDataSet(h1)
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2), h1:h1, f1:f1])
 }
 
 
-out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
-out.writeFile('rftime_12_diff.hipo')
+['mean', 'sigma'].each{name ->
+  TDirectory out = new TDirectory()
+
+  def grtl = new GraphErrors('RFtime_diff_'+name)
+  grtl.setTitle("Average rftime difference ("+name+")")
+  grtl.setTitleY("Average rftime difference (ns)")
+  grtl.setTitleX("run number")
+
+  data.each{
+    grtl.addPoint(it.run, it[name], 0, 0)
+    out.mkdir('/'+it.run)
+    out.cd('/'+it.run)
+    out.addDataSet(it.h1)
+    out.addDataSet(it.f1)
+  }
+
+  out.mkdir('/timelines')
+  out.cd('/timelines')
+  grtl.each{ out.addDataSet(it) }
+  out.writeFile('rftime_12_diff_'+name+'.hipo')
+}
+
