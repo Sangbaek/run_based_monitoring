@@ -21,7 +21,7 @@ for(arg in args) {
 
   f1 = RFFitter.fit(h1)
 
-  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2), h1:h1, f1:f1])
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
 
 
