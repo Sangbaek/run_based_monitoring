@@ -20,7 +20,7 @@ for(arg in args) {
   def h1 = dir.getObject('/RF/H_p_RFtime1')
   def f1 = RFFitter.fit(h1)
 
-  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2), h1:h1, f1:f1])
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
 
 

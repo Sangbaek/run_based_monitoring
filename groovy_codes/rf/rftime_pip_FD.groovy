@@ -23,7 +23,7 @@ for(arg in args) {
     rr.h1.add(h1)
     rr.f1.add(f1)
     rr.mean.add(f1.getParameter(1))
-    rr.sigma.add(f1.getParameter(2))
+    rr.sigma.add(f1.getParameter(2).abs())
   }
   data.add(rr)
 }
