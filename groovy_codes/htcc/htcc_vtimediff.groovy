@@ -31,7 +31,7 @@ for (s = 0; s <6; s++) {
   for (r = 0; r <4; r++) {
     for (side=0; side<2; side++){
       int counter = r + 4*( side + 2*s );
-      def h1 = dir.getObject(String.format('/HTCC/H_HTCC_vtime%d',counter+1)) //left
+      def h1 = dir.getObject(String.format("H_HTCC_vtime_s%d_r%d_side%d",s+1,r+1,side+1) //left
       h1.setName("sec"+(s+1) +"ring"+(r+1)+"side"+(side+1))
 
       // def f1 = ROOTFitter.fit(h1)
