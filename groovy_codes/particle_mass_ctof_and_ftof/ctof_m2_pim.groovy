@@ -7,6 +7,8 @@ import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
 import CTOFFitter;
 
+def data = []
+
 for(arg in args) {
   TDirectory dir = new TDirectory()
   dir.readFile(arg)
