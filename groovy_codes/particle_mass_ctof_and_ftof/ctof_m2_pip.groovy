@@ -42,5 +42,5 @@ for(arg in args) {
   out.mkdir('/timelines')
   out.cd('/timelines')
   out.addDataSet(grtl)
-  out.writeFile('ctof_m2_pip_'+name'.hipo')
+  out.writeFile('ctof_m2_pip_'+name+'.hipo')
 }
