@@ -15,7 +15,7 @@ for(arg in args) {
   dir.readFile(arg)
 
   def name = arg.split('/')[-1]
-  def m = name =~ /d{4,5}/
+  def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
     // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
