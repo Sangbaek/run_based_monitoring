@@ -14,7 +14,7 @@ for(arg in args) {
   dir.readFile(arg)
 
   def name = arg.split('/')[-1]
-  def m = name =~ /\d\d\d\d/
+  def m = name =~ /d{4,5}/
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/RF/H_pip_RFtime1')
