@@ -51,20 +51,19 @@ for(arg in args) {
         }
     h1.setName("layer"+(it+1));
     h1.setTitle("dE/dz (GeV/cm)")
-    double maxE = h1.getBinContent(h1.getMaximumBin());
-    // def f1 = ROOTFitter.fit(h1)
-    f1=new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])+[cst]", 0.0, 5.0);
-    f1.setLineColor(33);
-    f1.setLineWidth(10);
-    // f1.setRange(1.5,5);
-    f1.setParameter(1,2.0);
-    f1.setParameter(0,maxE);
-    f1.setParLimits(0,maxE*0.9,maxE*1.1);
-    f1.setParameter(2,1.0);
-    f1.setParameter(3,0.0);
+    // double maxE = h1.getBinContent(h1.getMaximumBin());
+    f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[cst]", 0.0, 5.0);
+    initLandauFitPar(h1, f1)
+    // f1.setLineColor(33);
+    // f1.setLineWidth(10);
+    // // f1.setRange(1.5,5);
+    // f1.setParameter(1,2.0);
+    // f1.setParameter(0,maxE);
+    // f1.setParLimits(0,maxE*0.9,maxE*1.1);
+    // f1.setParameter(2,1.0);
+    // f1.setParameter(3,0.0);
     DataFitter.fit(f1,h1,"LQ")
-    recursive_Gaussian_fitting(f1,h1)
-    // def f1 = ROOTFitter.fit(h1)
+    // recursive_Gaussian_fitting(f1,h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
@@ -89,38 +88,16 @@ out2.cd('/timelines')
 grtl2.each{ out2.addDataSet(it) }
 out2.writeFile('cnd_dEdz_sigma.hipo')
 
-private void initTimeGaussFitPar(F1D f1, H1F h1) {
-        double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = h1.getRMS(); //ns
-        double rangeMin = (hMean - (3*hRMS));
-        double rangeMax = (hMean + (3*hRMS));
-        // double pm = hRMS;
-        f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
-        f1.setParameter(3,0.0);
-}
-
-private void recursive_Gaussian_fitting(F1D f1, H1F h1){
-        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
-        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
-        // limit fitting range as 2 sigma
-        f1.setRange(rangeMin, rangeMax)
-        // if with noise, don't fit such noise
-        if(f1.getNPars()>3){
-          (3..f1.getNPars()-1).each{
-            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
-          }
-        }
-        DataFitter.fit(f1,h1,"LQ");
-        if (f1.getChiSquare()>500){
-          System.out.println("chi2 too large")
-          initTimeGaussFitPar(f1,h1);
-          DataFitter.fit(f1,h1,"LQ");
-        }
+private void initLandauFitPar(H1F hcharge, F1D fcharge) {
+        double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
+        double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
+        double hRMS  = hcharge.getRMS(); //ns
+        fcharge.setRange(0.5*hMean, 1.5* hMean);
+        fcharge.setParameter(0, hAmp);
+        fcharge.setParLimits(0, 0.8*hAmp, 1.2*hAmp);
+        fcharge.setParameter(1, hMean);
+        fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+        fcharge.setParameter(2, 1.);//Changed from 2
+        fcharge.setParLimits(2, 0.1, 2);//Changed from 0.5-10
+        fcharge.setParameter(3, 0.);
 }
