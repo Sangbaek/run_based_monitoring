@@ -97,7 +97,7 @@ private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         fcharge.setParLimits(0, 0.8*hAmp, 1.2*hAmp);
         fcharge.setParameter(1, hMean);
         fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
-        fcharge.setParameter(2, 1.);//Changed from 2
+        fcharge.setParameter(2, 1.0);//Changed from 2
         fcharge.setParLimits(2, 0.1, 2);//Changed from 0.5-10
-        fcharge.setParameter(3, 0.);
+        fcharge.setParameter(3, 0.0);
 }
