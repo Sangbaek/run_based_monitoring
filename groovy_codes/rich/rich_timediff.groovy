@@ -25,7 +25,7 @@ for(arg in args) {
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
   grtl.setTitle("RICH T_meas-T_calc Photons")
-  grtl.setTitleY("peak "+name+" (MeV)")
+  grtl.setTitleY("peak "+name+" (ns)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()
