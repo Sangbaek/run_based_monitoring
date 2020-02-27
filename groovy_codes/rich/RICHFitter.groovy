@@ -12,7 +12,7 @@ class RICHFitter {
     f1.setParameter(1, hMean)
     f1.setParLimits(1, hMean-2*hRMS, hMean+2*hRMS)
     f1.setParameter(2, hRMS)
-    f1.setParLimits(2, 0, 5)
+    f1.setParLimits(2, 0, 1)
     f1.setParameter(3, 0)
     f1.setParLimits(3, 0, h1.getMax()*0.5)
     f1.setRange(hMean-25,hMean+25)
