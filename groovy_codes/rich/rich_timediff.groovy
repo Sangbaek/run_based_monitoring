@@ -41,6 +41,6 @@ for(arg in args) {
   out.mkdir('/timelines')
   out.cd('/timelines')
   out.addDataSet(grtl)
-  out.writeFile('RICH_time_'+name+'.hipo')
+  out.writeFile('rich_time_'+name+'.hipo')
 }
 
