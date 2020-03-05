@@ -24,7 +24,7 @@ for(arg in args) {
   dir.readFile(arg)
 
   def name = arg.split('/')[-1]
-  def m = name =~ /\d\d\d\d/
+  def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
   def h2 = dir.getObject('/ctof/H_CTOF_vt_pim')
   def h1 = h2.projectionX()

@@ -1,11 +1,11 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
 import org.jlab.groot.group.DataGroup;
+import org.jlab.groot.data.H1F
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
-import CTOFFitter;
+import RFFitter;
 
 def data = []
 
@@ -17,18 +17,20 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/ctof/H_CTOF_neg_mass')
-  def f1 = CTOFFitter.fit(h1)
+  def h1 = dir.getObject('/RF/H_RFtimediff_corrected')
 
-  data.add([run:run, peak:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  f1 = RFFitter.fit(h1)
+
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
 
-['peak', 'sigma'].each{name ->
+
+['mean', 'sigma'].each{name ->
   TDirectory out = new TDirectory()
 
-  def grtl = new GraphErrors(name)
-  grtl.setTitle("CTOF mass^2 "+name+", #pi^-")
-  grtl.setTitleY("CTOF mass^2 "+name+", #pi^- (GeV^2)")
+  def grtl = new GraphErrors('RFtime_diff_'+name)
+  grtl.setTitle("Average rftime difference ("+name+")")
+  grtl.setTitleY("Average rftime difference (ns)")
   grtl.setTitleX("run number")
 
   data.each{
@@ -41,6 +43,6 @@ for(arg in args) {
 
   out.mkdir('/timelines')
   out.cd('/timelines')
-  out.addDataSet(grtl)
-  out.writeFile('ctof_m2_pim_'+name+'.hipo')
+  grtl.each{ out.addDataSet(it) }
+  out.writeFile('rftime_12_diff_corrected_'+name+'.hipo')
 }

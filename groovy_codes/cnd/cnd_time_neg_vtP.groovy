@@ -31,7 +31,7 @@ for(arg in args) {
   dir.readFile(arg)
 
   def name = arg.split('/')[-1]
-  def m = name =~ /\d\d\d\d/
+  def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
   out.mkdir('/'+run)
@@ -54,8 +54,8 @@ for(arg in args) {
     double maxt = h1.getBinContent(h1.getMaximumBin());
     double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
     f1.setParameter(1,hMean);
-    f1.setParLimits(1,hMean-1,hMean+1);
-    f1.setRange(hMean-1,hMean+1);
+    f1.setParLimits(1,hMean-0.5,hMean+1);
+    f1.setRange(hMean-0.5,hMean+0.5);
     f1.setParameter(0,maxt);
     f1.setParLimits(0,maxt*0.95,maxt*1.1);
     f1.setParameter(2,0.2);
