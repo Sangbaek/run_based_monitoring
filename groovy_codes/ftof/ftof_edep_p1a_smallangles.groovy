@@ -30,20 +30,11 @@ for(arg in args) {
   (0..<6).each{
     def h1 = dir.getObject('/tof/p1a_edep_smallangles_S'+(it+1))
     def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
-    f1.setParameter(0,0.0);
-    f1.setParameter(1,0.0);
-    f1.setParameter(2,1.0);
-    f1.setParameter(3,0.0);
-    f1.setParameter(4,0.0);
-    f1.setOptStat(1111111);
-    f1.setLineWidth(2);
 
     initLandauFitPar(h1, f1);
     DataFitter.fit(f1,h1,"LRQ");
 
-    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f1)
   }
@@ -59,7 +50,7 @@ private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
         double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
         double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(fcharge.getRange().getMin(), hMean*2.0);
+        fcharge.setRange(7, hMean*2.0);
         fcharge.setParameter(0, hAmp);
         fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
         fcharge.setParameter(1, hMean);
