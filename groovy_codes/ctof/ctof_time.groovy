@@ -24,7 +24,7 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("RICH T_meas-T_calc Photons")
+  grtl.setTitle("Vertex-time difference CTOF_vtime-STT for negative tracks")
   grtl.setTitleY("Vertex-time difference CTOF_vtime-STT for negative tracks ("+name+") (ns)")
   grtl.setTitleX("run number")
 
