@@ -3,7 +3,7 @@ import org.jlab.groot.data.H1F
 import org.jlab.groot.math.F1D
 
 
-class CTOFFitter {
+class CTOFFitter_mass {
   static F1D fit(H1F h1) {
     double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin())
     double xmin = hMean-0.2
