@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..2).collect{
   def gr = new GraphErrors('Comb'+it)
   gr.setTitle("BAND mean time tdc sector combination")
-  gr.setTitleY("meantimeTDC – sqrt(x^2+y^2+z^2)/c (ns)")
+  gr.setTitleY("maximum of meantimeTDC – sqrt(x^2+y^2+z^2)/c (ns)")
   gr.setTitleX("run number")
   return gr
 }
@@ -25,8 +25,8 @@ for(arg in args) {
     def h1 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination1')
     def h2 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination2')
 
-    grtl[0].addPoint(run, h1.getMean(), 0, 0)
-    grtl[1].addPoint(run, h2.getMean(), 0, 0)
+    grtl[0].addPoint(run, h1.getAxis().getBinCenter(h1.getMaximumBin()), 0, 0)
+    grtl[1].addPoint(run, h2.getAxis().getBinCenter(h2.getMaximumBin()), 0, 0)
     // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.mkdir('/'+run)
     out.cd('/'+run)
