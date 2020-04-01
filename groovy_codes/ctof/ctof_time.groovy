@@ -15,7 +15,7 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/ctof/H_CVT_t_p50')
+  def h1 = dir.getObject('/ctof/H_CVT_t_neg')
   def f1 = CTOFFitter.timefit(h1)
 
   data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()])
@@ -24,8 +24,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("CTOF_vtime-STT for negative tracks, all pads")
-  grtl.setTitleY("CTOF_vtime-STT for negative tracks, all pads ("+name+") (ns)")
+  grtl.setTitle("Corrected CTOF_vtime-STT for negative tracks, all pads")
+  grtl.setTitleY("Corrected CTOF_vtime-STT for negative tracks, all pads ("+name+") (ns)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()
