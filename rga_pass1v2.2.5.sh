@@ -58,7 +58,7 @@ out_FT=(ft/ftc_pi0_mass ft/ftc_time_charged ft/ftc_time_neutral ft/fth_MIPS_ener
 dst_mon=(particle_mass_ctof_and_ftof/ftof_m2_p1a_pim particle_mass_ctof_and_ftof/ftof_m2_p1a_pip particle_mass_ctof_and_ftof/ftof_m2_p1a_prot particle_mass_ctof_and_ftof/ftof_m2_p1b_pim particle_mass_ctof_and_ftof/ftof_m2_p1b_pip particle_mass_ctof_and_ftof/ftof_m2_p1b_prot)
 out_HTCC=(htcc/htcc_nphe_ring_sector htcc/htcc_vtimediff)
 out_LTCC=(ltcc/ltcc_had_nphe_sector)
-out_BAND=(band/band_adccor band/band_meantimeadc band/band_meantimetdc)
+#out_BAND=(band/band_adccor band/band_meantimeadc band/band_meantimetdc)
 out_TOF=(ftof/ftof_edep_p1a_smallangles ftof/ftof_edep_p1a_midangles ftof/ftof_edep_p1a_largeangles ftof/ftof_edep_p1b_smallangles ftof/ftof_edep_p1b_midangles ftof/ftof_edep_p1b_largeangles ftof/ftof_edep_p2 \
 ftof/ftof_time_p1a ftof/ftof_time_p1b ftof/ftof_time_p2 \
 ftof/ftof_tdcadc_p1a ftof/ftof_tdcadc_p1b ftof/ftof_tdcadc_p2 \
@@ -66,7 +66,7 @@ dc/dc_residuals_sec dc/dc_residuals_sec_sl dc/dc_t0_sec_sl  dc/dc_tmax_sec_sl)
 out_RICH=(rich/rich_timediff)
 
 # use following line to process all histograms
-#for name in out_RICH out_monitor out_CND out_TOF out_CTOF out_FT out_HTCC out_LTCC dst_mon out_BAND
+for name in out_RICH out_monitor out_CND out_TOF out_CTOF out_FT out_HTCC out_LTCC dst_mon #out_BAND
 
 
 # otherwise, select some files and process histograms only from such files
@@ -75,23 +75,23 @@ out_RICH=(rich/rich_timediff)
 #out_TOF=(ftof/ftof_tdcadc_p1a ftof/ftof_tdcadc_p1b ftof/ftof_tdcadc_p2)
 #out_TOF=(dc/dc_residuals_sec dc/dc_residuals_sec_sl dc/dc_tmax_sec_sl)
 
-out_TOF=(ftof/ftof_edep_p1a_smallangles ftof/ftof_edep_p1a_midangles ftof/ftof_edep_p1a_largeangles ftof/ftof_edep_p1b_smallangles ftof/ftof_edep_p1b_midangles ftof/ftof_edep_p1b_largeangles ftof/ftof_edep_p2 \
-ftof/ftof_time_p1a ftof/ftof_time_p1b ftof/ftof_time_p2 \
-ftof/ftof_tdcadc_p1a ftof/ftof_tdcadc_p1b ftof/ftof_tdcadc_p2)
+#out_TOF=(ftof/ftof_edep_p1a_smallangles ftof/ftof_edep_p1a_midangles ftof/ftof_edep_p1a_largeangles ftof/ftof_edep_p1b_smallangles ftof/ftof_edep_p1b_midangles ftof/ftof_edep_p1b_largeangles ftof/ftof_edep_p2 \
+#ftof/ftof_time_p1a ftof/ftof_time_p1b ftof/ftof_time_p2 \
+#ftof/ftof_tdcadc_p1a ftof/ftof_tdcadc_p1b ftof/ftof_tdcadc_p2)
 #out_monitor=(rf/rftime_diff rf/rftime_pim_FD rf/rftime_pim_CD rf/rftime_pip_FD rf/rftime_pip_CD \
 #out_monitor=(rf/rftime_elec_FD rf/rftime_elec_CD rf/rftime_prot_FD rf/rftime_prot_CD)
 #out_FT=(ft/ftc_pi0_mass)
 #out_monitor=(rf/rftime_prot_CD)
 #dst_mon=(particle_mass_ctof_and_ftof/ftof_m2_p1a_prot)
 #for name in out_RICH out_monitor out_CND out_TOF out_CTOF out_FT out_HTCC out_LTCC dst_mon out_BAND
-out_TOF=(ftof/ftof_time_p2 ftof/ftof_edep_p2)
+#out_TOF=(ftof/ftof_time_p2 ftof/ftof_edep_p2)
 #out_monitor=(forward/forward_Tracking_PosVz)
 #out_CND=(cnd/cnd_MIPS_dE_dz)
-out_CTOF=(ctof/ctof_time)
+#out_CTOF=(ctof/ctof_time)
 #out_CTOF=(ctof/ctof_time ctof/ctof_tdcadc)
 #out_CTOF=(particle_mass_ctof_and_ftof/ctof_m2_pim particle_mass_ctof_and_ftof/ctof_m2_pip)
 #out_CTOF=(ctof/ctof_edep)
-for name in out_TOF out_CTOF
+#for name in out_TOF out_CTOF
 #for name in out_TOF
 #for name in dst_mon
 do 
