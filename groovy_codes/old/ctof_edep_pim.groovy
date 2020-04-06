@@ -34,7 +34,7 @@ for(arg in args) {
   DataFitter.fit(f1,h1,"LRQ");
 
   //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl.addPoint(run, f1.getParameter(1), 0, f1.getParameter(2))
+  grtl.addPoint(run, f1.getParameter(1), 0, 0)
   // grtl[it].addPoint(run, h1.getMean(), 0, 0)
   out.mkdir('/'+run)
   out.cd('/'+run)
