@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..2).collect{
   def gr = new GraphErrors('Comb'+it)
   gr.setTitle("BAND adc LR Sector Combination")
-  gr.setTitleY("sqrt( adcLcorr * adcRcorr )")
+  gr.setTitleY("maximum value of sqrt( adcLcorr * adcRcorr )")
   gr.setTitleX("run number")
   return gr
 }

@@ -5,7 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
-import CTOFFitter;
+import CTOFFitter_mass;
 
 def data = []
 
@@ -18,7 +18,7 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/ctof/H_CTOF_neg_mass')
-  def f1 = CTOFFitter.fit(h1)
+  def f1 = CTOFFitter_mass.fit(h1)
 
   data.add([run:run, peak:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
