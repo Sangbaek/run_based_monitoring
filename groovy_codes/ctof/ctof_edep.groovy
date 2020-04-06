@@ -20,7 +20,12 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
-  def h1 = dir.getObject('/ctof/PathLCorrected Edep')
+  def h1 = dir.getObject('/ctof/PathLCorrected Edep_p5')
+  (6..10).each{
+       def h2  = dir.getObject(String.format("/ctof/PathLCorrected Edep_p%d",it))
+       h1.add(h2)
+  }
+  h1.setTitle(h1.getTitle()+"_10")
   def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 30.0);
 
   initLandauFitPar(h1, f1);
@@ -45,7 +50,7 @@ private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
         double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
         double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(hMean*0.85, hMean*2);
+        fcharge.setRange(hMean*0.55, hMean*2);
         fcharge.setParameter(0, hAmp);
         fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
         fcharge.setParameter(1, hMean);
