@@ -69,11 +69,11 @@ out2.writeFile('ftof_time_p2_sigma.hipo')
 
 private void initTimeGaussFitPar(F1D f1, H1F h1) {
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = 0.0; //h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = 0.3;//h1.getRMS(); //ns
-        double rangeMin = (hMean - (1.5*hRMS));
-        double rangeMax = (hMean + (1.5*hRMS));
-        f1.setRange(-rangeMin, rangeMax);
+        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
+        double hRMS  = 0.35;//h1.getRMS(); //ns
+        double rangeMin = (hMean - 2.5*hRMS);
+        double rangeMax = (hMean + 2.5*hRMS);
+        f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, hAmp);
         //f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
         f1.setParameter(1, hMean);
@@ -84,14 +84,14 @@ private void initTimeGaussFitPar(F1D f1, H1F h1) {
 }
 
 private void recursive_Gaussian_fitting(F1D f1, H1F h1){
-        double rangeMin = -f1.getParameter(1)-1.5*f1.getParameter(2)
+        double rangeMin = f1.getParameter(1)-1.5*f1.getParameter(2)
         double rangeMax = f1.getParameter(1)+1.5*f1.getParameter(2)
         // limit fitting range as 2 sigma
         def f2 = new F1D("temp", "[amp]*gaus(x,[mean],[sigma])+[const]", -0.45, 0.45);
         f2=f1
         f2.setRange(rangeMin,rangeMax)
         f2.setParameter(0, f1.getParameter(0));
-	DataFitter.fit(f1,h1,"LQ");
+	DataFitter.fit(f2,h1,"LQ");
         if (f1.getChiSquare()>f2.getChiSquare()){
           println("Replacing fitting function")
           f1=f2
