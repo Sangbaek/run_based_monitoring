@@ -50,7 +50,7 @@ private void initLandauFitPar(H1F hcharge, F1D fcharge) {
         double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
         double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
         double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(hMean*0.55, hMean*2);
+        fcharge.setRange(hMean*0.65, hMean*2);
         fcharge.setParameter(0, hAmp);
         fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
         fcharge.setParameter(1, hMean);
