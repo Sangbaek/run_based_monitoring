@@ -90,7 +90,7 @@ private void recursive_Gaussian_fitting(F1D f1, H1F h1){
         def f2 = new F1D("temp", "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
         f2=f1
         f2.setRange(rangeMin,rangeMax)
-        DataFitter.fit(f1,h1,"LQ");
+        DataFitter.fit(f2,h1,"LQ");
         if (f1.getChiSquare()>f2.getChiSquare()){
           System.out.println("Replacing fitting function")
           f1=f2
