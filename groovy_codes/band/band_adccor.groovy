@@ -5,7 +5,7 @@ import org.jlab.groot.data.GraphErrors
 def grtl = (1..2).collect{
   def gr = new GraphErrors('Comb'+it)
   gr.setTitle("BAND adc LR Sector Combination")
-  gr.setTitleY("maximum value of sqrt( adcLcorr * adcRcorr )")
+  gr.setTitleY("Mean Value of sqrt( adcLcorr * adcRcorr )")
   gr.setTitleX("run number")
   return gr
 }
@@ -39,4 +39,4 @@ for(arg in args) {
 out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
-out.writeFile('band_adcCor.hipo')
+out.writeFile('band_adcCorr.hipo')
