@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.CNDFitter
 
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+it + ' Mean')
@@ -47,19 +48,7 @@ for(arg in args) {
     h1.setTitle("CND vtP")
     h1.setTitleX("CND vtP (ns)")
 
-    def f1 =new F1D("fit:"+h1.getName(),"[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
-    f1.setLineColor(33);
-    f1.setLineWidth(10);
-    f1.setOptStat("1111");
-    double maxt = h1.getBinContent(h1.getMaximumBin());
-    double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-    f1.setParameter(1,hMean);
-    f1.setParLimits(1,hMean-0.5,hMean+1);
-    f1.setRange(hMean-0.5,hMean+0.5);
-    f1.setParameter(0,maxt);
-    f1.setParLimits(0,maxt*0.95,maxt*1.1);
-    f1.setParameter(2,0.2);
-    DataFitter.fit(f1, h1, "");
+    def f1 = CNDFitter.timefit(h1)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)

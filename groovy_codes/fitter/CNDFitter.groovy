@@ -19,19 +19,19 @@ class CNDFitter{
 	    f1.setParameter(3,0.0);
 	    DataFitter.fit(f1,h1,"LQ")
 
+		def makefit = {func->
+			hMean = func.getParameter(1)
+			hRMS = func.getParameter(2).abs()
+			func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
+			DataFitter.fit(func,h1,"Q")
+			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
+		}
 
-		// def makefit = {func->
-		// 	hMean = func.getParameter(1)
-		// 	hRMS = func.getParameter(2).abs()
-		// 	func.setRange(hMean-1.5*hRMS,hMean+1.5*hRMS)
-		// 	DataFitter.fit(func,h1,"Q")
-		// 	return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
-		// }
+		def fits1 = (0..20).collect{makefit(f1)}
+		def bestfit = fits1.sort()[0]
+		f1.setParameters(*bestfit[1])
+		//makefit(f1)
 
-		// def fits1 = (0..20).collect{makefit(f1)}
-		// def bestfit = fits1.sort()[0]
-		// f1.setParameters(*bestfit[1])
-		// //makefit(f1)
 		return f1
  	}
 
@@ -50,6 +50,19 @@ class CNDFitter{
 		f1.setParameter(2,0.2);
 		DataFitter.fit(f1, h1, "");
 
+		def makefit = {func->
+			hMean = func.getParameter(1)
+			hRMS = func.getParameter(2).abs()
+			func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
+			DataFitter.fit(func,h1,"Q")
+			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
+		}
+
+		def fits1 = (0..20).collect{makefit(f1)}
+		def bestfit = fits1.sort()[0]
+		f1.setParameters(*bestfit[1])
+		//makefit(f1)
+
 		return f1
 	}
 
@@ -65,10 +78,11 @@ class CNDFitter{
 		f1.setParLimits(0,maxz*0.9,maxz*1.1);
 		f1.setParameter(2,3.0);
 		DataFitter.fit(f1, h1, "");
+
 		def makefit = {func->
 			hMean = func.getParameter(1)
 			hRMS = func.getParameter(2).abs()
-			func.setRange(hMean-1.5*hRMS,hMean+1.5*hRMS)
+			func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
 			DataFitter.fit(func,h1,"Q")
 			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
 		}

@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.CNDFitter
 
 def grtl = (1..3).collect{
   def gr = new GraphErrors('layer'+it+' Mean')
@@ -51,21 +52,9 @@ for(arg in args) {
         }
     h1.setName("layer"+(it+1));
     h1.setTitle("dE/dz (GeV/cm)")
-    double maxE = h1.getBinContent(h1.getMaximumBin());
-    f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.5, 3.5);
-    // initLandauFitPar(h1, f1)
-    // f1.setLineColor(33);
-    // f1.setLineWidth(10);
-    // f1.setRange(1.5,5);
-    f1.setParameter(1,2.0);
-    f1.setParameter(0,maxE);
-    f1.setParLimits(0,maxE*0.9,maxE*1.1);
-    f1.setParameter(2,1.0);
-    f1.setParameter(3,0.0);
-    DataFitter.fit(f1,h1,"LQ")
+    f1 = CNDFitter.MIPSfit(h1)
     // recursive_Gaussian_fitting(f1,h1)
 
-    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
 
@@ -87,17 +76,3 @@ out2.mkdir('/timelines')
 out2.cd('/timelines')
 grtl2.each{ out2.addDataSet(it) }
 out2.writeFile('cnd_dEdz_sigma.hipo')
-
-private void initLandauFitPar(H1F hcharge, F1D fcharge) {
-        double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
-        double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
-        double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(0.5*hMean, 1.5* hMean);
-        fcharge.setParameter(0, hAmp);
-        fcharge.setParLimits(0, 0.8*hAmp, 1.2*hAmp);
-        fcharge.setParameter(1, hMean);
-        fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
-        fcharge.setParameter(2, 1.0);//Changed from 2
-        fcharge.setParLimits(2, 0.1, 2);//Changed from 0.5-10
-        fcharge.setParameter(3, 0.0);
-}
