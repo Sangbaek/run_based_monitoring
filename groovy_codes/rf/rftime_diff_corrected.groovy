@@ -5,7 +5,7 @@ import org.jlab.groot.data.H1F
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
-import RFFitter;
+import fitter.RFFitter;
 
 def data = []
 
