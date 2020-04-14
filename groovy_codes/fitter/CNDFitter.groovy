@@ -1,5 +1,3 @@
-package fitter
-
 /**
 *
 * Fitter package for CND
@@ -7,17 +5,25 @@ package fitter
 * Writer: Sangbaek Lee, Andrey Kim
 *
 **/
+package fitter
+
+import org.jlab.groot.fitter.DataFitter
+import org.jlab.groot.data.H1F
+import org.jlab.groot.math.F1D
+
 
 class CNDFitter{
 	static F1D MIPSfit(H1F h1) {
 		double maxE = h1.getBinContent(h1.getMaximumBin());
-	    f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.5, 3.5);
+	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.5, 3.5);
 	    f1.setParameter(1,2.0);
 	    f1.setParameter(0,maxE);
 	    f1.setParLimits(0,maxE*0.9,maxE*1.1);
 	    f1.setParameter(2,1.0);
 	    f1.setParameter(3,0.0);
 	    DataFitter.fit(f1,h1,"LQ")
+
+	    double hMean, hRMS
 
 		def makefit = {func->
 			hMean = func.getParameter(1)
@@ -42,6 +48,7 @@ class CNDFitter{
 		f1.setOptStat("1111");
 		double maxt = h1.getBinContent(h1.getMaximumBin());
 		double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
+		double hRMS = h1.getRMS()
 		f1.setParameter(1,hMean);
 		f1.setParLimits(1,hMean-0.5,hMean+1);
 		f1.setRange(hMean-0.5,hMean+0.5);
@@ -77,6 +84,9 @@ class CNDFitter{
 		f1.setParameter(0,maxz);
 		f1.setParLimits(0,maxz*0.9,maxz*1.1);
 		f1.setParameter(2,3.0);
+
+		double hMean, hRMS
+
 		DataFitter.fit(f1, h1, "");
 
 		def makefit = {func->
