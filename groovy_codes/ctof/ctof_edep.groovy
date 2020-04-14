@@ -1,17 +1,11 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
 import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.CTOFFitter;
 
-def grtl = new GraphErrors('Edep')
-grtl.setTitle("Path-length corrected edep for negative tracks")
-grtl.setTitleY("Path-length corrected edep for negative tracks (MeV)")
-grtl.setTitleX("run number")
 
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -20,43 +14,30 @@ for(arg in args) {
   def name = arg.split('/')[-1]
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
-  def h1 = dir.getObject('/ctof/PathLCorrected Edep_p5')
-  (6..10).each{
-       def h2  = dir.getObject(String.format("/ctof/PathLCorrected Edep_p%d",it))
-       h1.add(h2)
-  }
-  h1.setTitle(h1.getTitle()+"_10")
-  def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 30.0);
 
-  initLandauFitPar(h1, f1);
-  DataFitter.fit(f1,h1,"LRQ");
+  def h1 = dir.getObject('/ctof/CTOF TDC-ADC Time Difference')
+  def f1 = CTOFFitter.edepfit(h1)
 
-  //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-  grtl.addPoint(run, f1.getParameter(1), 0, 0)
-  // grtl[it].addPoint(run, h1.getMean(), 0, 0)
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-  out.addDataSet(h1)
-  out.addDataSet(f1)
+  data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), chi2:f1.getChiSquare()])
 }
 
+
+def grtl = new GraphErrors('Edep')
+grtl.setTitle("Path-length corrected edep for negative tracks")
+grtl.setTitleY("Path-length corrected edep for negative tracks (MeV)")
+grtl.setTitleX("run number")
+
+TDirectory out = new TDirectory()
+
+data.each{
+  out.mkdir('/'+it.run)
+  out.cd('/'+it.run)
+  out.addDataSet(it.h1)
+  out.addDataSet(it.f1)
+  grtl.addPoint(it.run, it.mean, 0, 0)
+}
 
 out.mkdir('/timelines')
 out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+out.addDataSet(grtl)
 out.writeFile('ctof_edep.hipo')
-
-private void initLandauFitPar(H1F hcharge, F1D fcharge) {
-        double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
-        double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
-        double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(hMean*0.65, hMean*2);
-        fcharge.setParameter(0, hAmp);
-        fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
-        fcharge.setParameter(1, hMean);
-        fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
-        fcharge.setParameter(2, 0.3);//Changed from 2
-        fcharge.setParLimits(2, 0.1, 1);//Changed from 0.5-10
-        fcharge.setParLimits(3,0, hAmp);
-        fcharge.setParLimits(4,0,100);
-}
