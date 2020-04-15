@@ -1,31 +1,11 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
 import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
+import org.jlab.groot.data.H1F
 import fitter.CNDFitter
 
-def grtl = (1..3).collect{
-  def gr = new GraphErrors('layer'+it+' Mean')
-  gr.setTitle("MIPS dE/dz")
-  gr.setTitleY("MIPS dE/dz (GeV/cm)")
-  gr.setTitleX("run number")
-  return gr
-}
-
-def grtl2 = (1..3).collect{
-  def gr2 = new GraphErrors('layer'+it+' Sigma')
-  gr2.setTitle("MIPS dE/dz")
-  gr2.setTitleY("MIPS dE/dz (GeV/cm)")
-  gr2.setTitleX("run number")
-  return gr2
-}
-
-
-TDirectory out = new TDirectory()
-TDirectory out2 = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -35,44 +15,49 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-  out2.mkdir('/'+run)
-  out2.cd('/'+run)
+  def funclist = []
+  def meanlist = []
+  def sigmalist = []
+  def chi2list = []
 
-  (0..<3).each{
-      def h1 = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",it+1,0+1,0+1))
-      for(int sector=0;sector<24;sector++){
-        for(int comp=0;comp<2;comp++){
-               if(sector!=0||comp!=0){
-                 def h2 = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",it+1,sector+1,comp+1))
-                 h1.add(h2)
-               }
-            }
-        }
-    h1.setName("layer"+(it+1));
-    h1.setTitle("dE/dz (GeV/cm)")
-    f1 = CNDFitter.MIPSfit(h1)
-    // recursive_Gaussian_fitting(f1,h1)
-
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    grtl2[it].addPoint(run, f1.getParameter(2), 0, 0)
-
-    out.addDataSet(h1)
-    out.addDataSet(f1)
-    out2.addDataSet(h1)
-    out2.addDataSet(f1)
-
-
+  def histlist = [def h1, def h2, def h3].withIndex().collect{hist, lindex ->
+    for(int sector=0;sector<24;sector++){
+      for(int comp=0;comp<2;comp++){
+        if (!hist) hist = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",lindex+1,sector+1,comp+1))
+        else hist.add(dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",lindex+1,sector+1,comp+1)))
+      }
+    }
+    hist.setName("layer"+(lindex+1))
+    hist.setTitle("dE/dz (GeV/cm)")
+    funclist.add(CNDFitter.MIPSfit(hist))
+    meanlist.add(funclist[lindex].getParameter(1))
+    sigmalist.add(funclist[lindex].getParameter(2))
+    chi2list.add(funclist[lindex].getChiSquare())
+    hist
   }
+
+  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
 }
 
 
-out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
-out.writeFile('cnd_dEdz_mean.hipo')
-out2.mkdir('/timelines')
-out2.cd('/timelines')
-grtl2.each{ out2.addDataSet(it) }
-out2.writeFile('cnd_dEdz_sigma.hipo')
+['mean','sigma'].each{name ->
+  TDirectory out = new TDirectory()
+  out.mkdir('/timelines')
+  ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
+    def grtl = new GraphErrors(layer+' '+name)
+    grtl.setTitle("MIPS dE/dz")
+    grtl.setTitleY("MIPS dE/dz (GeV/cm)")
+    grtl.setTitleX("run number")
+
+    data.each{
+      out.mkdir('/'+it.run)
+      out.cd('/'+it.run)
+
+      out.addDataSet(it.hlist[lindex])
+      grtl.addPoint(it.run, it[name][lindex], 0, 0)
+    }
+    out.cd('/timelines')
+    out.addDataSet(grtl)
+  }
+  out.writeFile('cnd_dEdz_'+name+'.hipo')
+}
