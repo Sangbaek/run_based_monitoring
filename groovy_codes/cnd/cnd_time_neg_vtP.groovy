@@ -56,6 +56,7 @@ for(arg in args) {
       out.cd('/'+it.run)
 
       out.addDataSet(it.hlist[lindex])
+      out.addDataSet(it.flist[lindex])
       grtl.addPoint(it.run, it[name][lindex], 0, 0)
     }
     out.cd('/timelines')
