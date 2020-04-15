@@ -30,7 +30,7 @@ for(arg in args) {
   data.each{
     out.cd('/'+it.run)
     out.addDataSet(it[name])
-    gr.addPoint(it.run, it[name].getAxis().getBinCenter(h1.getMaximumBin()), 0, 0)
+    gr.addPoint(it.run, it[name].getAxis().getBinCenter(it[name].getMaximumBin()), 0, 0)
   }
   out.cd('/timelines')
   out.addDataSet(gr)
