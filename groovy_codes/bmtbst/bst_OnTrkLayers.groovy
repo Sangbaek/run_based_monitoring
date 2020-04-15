@@ -1,14 +1,7 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-// import ROOTFitter
 
-def grtl = new GraphErrors('BST layers per track')
-grtl.setTitle("BST layers per track")
-grtl.setTitleY("BST layers per track")
-grtl.setTitleX("run number")
-
-
-TDirectory out = new TDirectory()
+def data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -18,21 +11,26 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
+  def h1 = dir.getObject('/cvt/hbstOnTrkLayers')
+  h1.setTitle("BST Layers per Track");
+  h1.setTitleX("BST Layers per Track");
 
-    // def h2 = dir.getObject('/elec/H_trig_vz_mom_S'+(it+1))
-    // def h1 = h2.projectionY()
-    def h1 = dir.getObject('/cvt/hbstOnTrkLayers')
-    h1.setTitle("BST Layers per Track");
-		h1.setTitleX("BST Layers per Track");
-
-    grtl.addPoint(run, h1.getMean(), 0, 0)
-    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    out.mkdir('/'+run)
-    out.cd('/'+run)
-    out.addDataSet(h1)
-    // out.addDataSet(f1)
+  data.add([run:run, h1:h1])
 }
 
+TDirectory out = new TDirectory()
+
+def grtl = new GraphErrors('BST layers per track')
+grtl.setTitle("BST layers per track")
+grtl.setTitleY("BST layers per track")
+grtl.setTitleX("run number")
+
+data.each{
+  out.mkdir('/'+it.run)
+  out.cd('/'+it.run)
+  out.addDataSet(it.h1)
+  grtl.addPoint(it.run, it.h1.getMean(), 0, 0)
+}
 
 out.mkdir('/timelines')
 out.cd('/timelines')
