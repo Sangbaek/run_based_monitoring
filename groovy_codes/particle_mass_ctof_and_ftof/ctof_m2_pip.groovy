@@ -20,10 +20,10 @@ for(arg in args) {
   def h1 = dir.getObject('/ctof/H_CTOF_pos_mass')
   def f1 = CTOFFitter_mass.fit(h1)
 
-  data.add([run:run, peak:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
 
-['peak', 'sigma'].each{name ->
+['mean', 'sigma'].each{name ->
   TDirectory out = new TDirectory()
 
   def grtl = new GraphErrors(name)
