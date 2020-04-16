@@ -83,7 +83,19 @@ class CTOFFitter {
     f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
     f1.setParLimits(3,0, hAmp);
     f1.setParLimits(4,0,100);
-    DataFitter.fit(f1,h1,"LRQ");   
+
+    def makefit = {func->
+      hMean = func.getParameter(1)
+      hRMS = func.getParameter(2).abs()
+      func.setRange(hMean*0.65, hMean*2)
+      DataFitter.fit(func,h1,"Q")
+      return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
+    }
+
+    def fits1 = (0..20).collect{makefit(f1)}
+    def bestfit = fits1.sort()[0]
+    f1.setParameters(*bestfit[1])
+    //makefit(f1)
     return f1
   }
 }

@@ -13,7 +13,12 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/ctof/CTOF TDC-ADC Time Difference')
+  def h1 = dir.getObject('/ctof/PathLCorrected Edep_p5')
+  (6..10).each{
+       def h2  = dir.getObject(String.format("/ctof/PathLCorrected Edep_p%d",it))
+       h1.add(h2)
+  }
+  h1.setTitle(h1.getTitle()+"_10")
   def f1 = CTOFFitter.edepfit(h1)
 
   data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), chi2:f1.getChiSquare()])
