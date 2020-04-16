@@ -24,7 +24,7 @@ for(arg in args) {
       def f1 = DCFitter.fit(h1)
       funclist[sec].add(f1)
       meanlist[sec].add(f1.getParameter(1))
-      sigmalist[sec].add(f1.getParameter(2))
+      sigmalist[sec].add(f1.getParameter(2).abs())
       chi2list[sec].add(f1.getChiSquare())
       return h1
     }

@@ -27,7 +27,7 @@ for(arg in args) {
     def f1 = CNDFitter.zdifffit(h1)
     funclist.add(f1)
     meanlist.add(f1.getParameter(1))
-    sigmalist.add(f1.getParameter(2))
+    sigmalist.add(f1.getParameter(2).abs())
     chi2list.add(f1.getChiSquare())
     return h1
   }

@@ -30,7 +30,7 @@ for(arg in args) {
     h1.setTitleX("CND vtP (ns)")
     funclist.add(f1)
     meanlist.add(f1.getParameter(1))
-    sigmalist.add(f1.getParameter(2))
+    sigmalist.add(f1.getParameter(2).abs())
     chi2list.add(f1.getChiSquare())
     return h1
   }

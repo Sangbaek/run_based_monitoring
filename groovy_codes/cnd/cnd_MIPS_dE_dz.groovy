@@ -28,7 +28,7 @@ for(arg in args) {
     hist.setTitle("dE/dz (GeV/cm)")
     funclist.add(CNDFitter.edepfit(hist))
     meanlist.add(funclist[lindex].getParameter(1))
-    sigmalist.add(funclist[lindex].getParameter(2))
+    sigmalist.add(funclist[lindex].getParameter(2).abs())
     chi2list.add(funclist[lindex].getChiSquare())
     hist
   }
