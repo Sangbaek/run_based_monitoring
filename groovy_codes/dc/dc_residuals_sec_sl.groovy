@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.DCFitter
 
 def grtl1 = (1..6).collect{
   sec_num = it
@@ -154,53 +155,12 @@ for(arg in args) {
     h16.setTitleX("DC residuals per sector per superlayer (cm)")
 
     // def f1 = ROOTFitter.fit(h1)
-    def f11 = new F1D("f11", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f11.setName("fit:"+h11.getName())
-    f11.setLineWidth(2);
-    f11.setOptStat("1111");
-    initTimeGaussFitPar(f11,h11);
-    DataFitter.fit(f11,h11,"LQ");
-    recursive_Gaussian_fitting(f11,h11)
-
-    def f12 = new F1D("f12", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f12.setName("fit:"+h12.getName())
-    f12.setLineWidth(2);
-    f12.setOptStat("1111");
-    initTimeGaussFitPar(f12,h12);
-    DataFitter.fit(f12,h12,"LQ");
-    recursive_Gaussian_fitting(f12,h12)
-
-    def f13 = new F1D("f13", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f13.setName("fit:"+h13.getName())
-    f13.setLineWidth(3);
-    f13.setOptStat("1111");
-    initTimeGaussFitPar(f13,h13);
-    DataFitter.fit(f13,h13,"LQ");
-    recursive_Gaussian_fitting(f13,h13)
-
-    def f14 = new F1D("f14", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f14.setName("fit:"+h14.getName())
-    f14.setLineWidth(3);
-    f14.setOptStat("1111");
-    initTimeGaussFitPar(f14,h14);
-    DataFitter.fit(f14,h14,"LQ");
-    recursive_Gaussian_fitting(f14,h14)
-
-    def f15 = new F1D("f15", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f15.setName("fit:"+h15.getName())
-    f15.setLineWidth(3);
-    f15.setOptStat("1111");
-    initTimeGaussFitPar(f15,h15);
-    DataFitter.fit(f15,h15,"LQ");
-    recursive_Gaussian_fitting(f15,h15)
-
-    def f16 = new F1D("f16", "[amp]*gaus(x,[mean],[sigma])+[const]",-0.5,0.5);
-    f16.setName("fit:"+h16.getName())
-    f16.setLineWidth(3);
-    f16.setOptStat("1111");
-    initTimeGaussFitPar(f16,h16);
-    DataFitter.fit(f16,h16,"LQ");
-    recursive_Gaussian_fitting(f16,h16)
+    def f11 = DCFitter.fit(h11)
+    def f12 = DCFitter.fit(h12)
+    def f13 = DCFitter.fit(h13)
+    def f14 = DCFitter.fit(h14)
+    def f15 = DCFitter.fit(h15)
+    def f16 = DCFitter.fit(h16)
 
     //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
     grtl1[it].addPoint(run, f11.getParameter(1), 0, 0)

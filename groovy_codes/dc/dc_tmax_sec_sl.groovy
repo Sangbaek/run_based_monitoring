@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.DCFitter
 
 def grtl1 = (1..6).collect{
   sec_num = it
@@ -84,48 +85,13 @@ for(arg in args) {
     h14.setName("sec"+sec_num+"sl"+4)
     h15.setName("sec"+sec_num+"sl"+5)
     h16.setName("sec"+sec_num+"sl"+6)
-    // def f1 = ROOTFitter.fit(h1)
-    def f11 = new F1D(String.format("Inverted_S_%d_%d",sec_num,0+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f11.setName("fit:"+h11.getName())
-    f11.setLineWidth(2);
-    f11.setOptStat("111111");
-    initInvertedSFitPar(1,f11,h11);
-    DataFitter.fit(f11,h11,"LQ");
 
-    def f12 = new F1D(String.format("Inverted_S_%d_%d",sec_num,1+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f12.setName("fit:"+h12.getName())
-    f12.setLineWidth(2);
-    f12.setOptStat("111111");
-    initInvertedSFitPar(2,f12,h12);
-    DataFitter.fit(f12,h12,"LQ");
-
-    def f13 = new F1D(String.format("Inverted_S_%d_%d",sec_num,2+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f13.setName("fit:"+h13.getName())
-    f13.setLineWidth(3);
-    f13.setOptStat("111111");
-    initInvertedSFitPar(3,f13,h13);
-    DataFitter.fit(f13,h13,"LQ");
-
-    def f14 = new F1D(String.format("Inverted_S_%d_%d",sec_num,3+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f14.setName("fit:"+h14.getName())
-    f14.setLineWidth(3);
-    f14.setOptStat("111111");
-    initInvertedSFitPar(4,f14,h14);
-    DataFitter.fit(f14,h14,"LQ");
-
-    def f15 = new F1D(String.format("Inverted_S_%d_%d",sec_num,4+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f15.setName("fit:"+h15.getName())
-    f15.setLineWidth(3);
-    f15.setOptStat("111111");
-    initInvertedSFitPar(5,f15,h15);
-    DataFitter.fit(f15,h15,"LQ");
-
-    def f16 = new F1D(String.format("Inverted_S_%d_%d",sec_num,5+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f16.setName("fit:"+h16.getName())
-    f16.setLineWidth(3);
-    f16.setOptStat("111111");
-    initInvertedSFitPar(6,f16,h16);
-    DataFitter.fit(f16,h16,"LQ");
+    def f11 = DCFitter.tmaxfit(h11, 1)
+    def f12 = DCFitter.tmaxfit(h12, 2)
+    def f13 = DCFitter.tmaxfit(h13, 3)
+    def f14 = DCFitter.tmaxfit(h14, 4)
+    def f15 = DCFitter.tmaxfit(h15, 5)
+    def f16 = DCFitter.tmaxfit(h16, 6)
 
     //t_max = p2-(2/p1)
     grtl1[it].addPoint(run, f11.getParameter(2)-(2/f11.getParameter(1)), 0, 0)
@@ -160,60 +126,3 @@ grtl4.each{ out.addDataSet(it) }
 grtl5.each{ out.addDataSet(it) }
 grtl6.each{ out.addDataSet(it) }
 out.writeFile('dc_tmax_sec_sl.hipo')
-
-public void initInvertedSFitPar(int slayer, F1D function, H1F histo) {
-  double min = 100.0;
-  double max = 220.0;
-  cut=0.1*histo.getMax()
-  for(int bin = histo.getXaxis().getNBins(); bin >0; bin--){
-      if (histo.getBinContent(bin)<cut && histo.getBinContent(bin-1)>cut){
-        T_cut=histo.getDataX(bin)-100
-        T10=histo.getDataX(bin)
-      }
-  }
-  bin_cut = histo.getXaxis().getBin(T_cut)
-  y_cut = histo.getBinContent(bin_cut)
-  y10 = cut
-  P0 = y_cut
-  P1= -4/(T10-T_cut)
-  P2 = (T10+T_cut)/2
-  if (slayer == 1) {
-    // min = 100.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut,T10);
-  }
-  if (slayer == 2) {
-    // min = 120.0; max = 240.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut,T10);
-  }
-  if (slayer == 3) {
-    // min = 200.0; max = 450.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1);function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
-  }
-  if (slayer == 4) {
-    // min = 200.0; max = 500.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
-  }
-  if (slayer == 5) {
-    // min = 400.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1);function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
-  }
-  if (slayer == 6) {
-    // min = 480.0; max = 700.0;
-    function.setParameter(0,P0); function.setParLimits(1,2*y10,2*y_cut);
-    function.setParameter(1,P1); function.setParLimits(1,P1*0.1,P1*2);
-    function.setParameter(2,P2); function.setParLimits(2,T_cut-50,T10+50);
-  }
-  function.setRange(T_cut,T10);
-  function.setLineColor(2);
-  function.setLineWidth(4);
-}

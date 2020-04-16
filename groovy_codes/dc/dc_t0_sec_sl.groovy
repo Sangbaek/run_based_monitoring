@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.DCFitter
 
 def grtl1 = (1..6).collect{
   sec_num = it
@@ -84,48 +85,13 @@ for(arg in args) {
     h14.setName("sec"+sec_num+"sl"+4)
     h15.setName("sec"+sec_num+"sl"+5)
     h16.setName("sec"+sec_num+"sl"+6)
-    // def f1 = ROOTFitter.fit(h1)
-    def f11 = new F1D(String.format("Inverted_S_%d_%d",sec_num,0+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f11.setName("fit:"+h11.getName())
-    f11.setLineWidth(2);
-    f11.setOptStat("111111");
-    initInvertedSFitPar(1,f11,h11);
-    DataFitter.fit(f11,h11,"LQ");
 
-    def f12 = new F1D(String.format("Inverted_S_%d_%d",sec_num,1+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f12.setName("fit:"+h12.getName())
-    f12.setLineWidth(2);
-    f12.setOptStat("111111");
-    initInvertedSFitPar(2,f12,h12);
-    DataFitter.fit(f12,h12,"LQ");
-
-    def f13 = new F1D(String.format("Inverted_S_%d_%d",sec_num,2+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f13.setName("fit:"+h13.getName())
-    f13.setLineWidth(3);
-    f13.setOptStat("111111");
-    initInvertedSFitPar(3,f13,h13);
-    DataFitter.fit(f13,h13,"LQ");
-
-    def f14 = new F1D(String.format("Inverted_S_%d_%d",sec_num,3+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f14.setName("fit:"+h14.getName())
-    f14.setLineWidth(3);
-    f14.setOptStat("111111");
-    initInvertedSFitPar(4,f14,h14);
-    DataFitter.fit(f14,h14,"LQ");
-
-    def f15 = new F1D(String.format("Inverted_S_%d_%d",sec_num,4+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f15.setName("fit:"+h15.getName())
-    f15.setLineWidth(3);
-    f15.setOptStat("111111");
-    initInvertedSFitPar(5,f15,h15);
-    DataFitter.fit(f15,h15,"LQ");
-
-    def f16 = new F1D(String.format("Inverted_S_%d_%d",sec_num,5+1),"[p0]/(1+exp(-[p1]*(x-[p2])))",-100,1000);
-    f16.setName("fit:"+h16.getName())
-    f16.setLineWidth(3);
-    f16.setOptStat("111111");
-    initInvertedSFitPar(6,f16,h16);
-    DataFitter.fit(f16,h16,"LQ");
+    def f11 = DCFitter.t0fit(h11, 1)
+    def f12 = DCFitter.t0fit(h12, 2)
+    def f13 = DCFitter.t0fit(h13, 3)
+    def f14 = DCFitter.t0fit(h14, 4)
+    def f15 = DCFitter.t0fit(h15, 5)
+    def f16 = DCFitter.t0fit(h16, 6)
 
     //t_max = p2-(2/p1)
     grtl1[it].addPoint(run, f11.getParameter(2)-(2/f11.getParameter(1)), 0, 0)
