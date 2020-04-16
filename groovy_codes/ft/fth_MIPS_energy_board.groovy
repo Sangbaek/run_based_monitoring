@@ -5,6 +5,7 @@ import org.jlab.groot.group.DataGroup;
 import org.jlab.groot.math.F1D;
 import org.jlab.groot.fitter.DataFitter;
 import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.FTFitter
 
 def grtl = (1..30).collect{
   board=(it-1)%15+1
@@ -35,27 +36,8 @@ for (l = 0; l <2; l++) {
     layer = l+1
     board = b+1
     def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(layer)+'_b'+(board))
-    def f_charge_landau = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 0.5*(l+1), 10.0);
-    f_charge_landau.setParameter(0,0.0);
-    f_charge_landau.setParameter(1,0.0);
-    f_charge_landau.setParameter(2,1.0);
-    f_charge_landau.setParameter(3,0.0);
-    f_charge_landau.setParameter(4,0.0);
-    f_charge_landau.setOptStat(1111111);
-    f_charge_landau.setLineWidth(2);
-
-    initLandauFitPar(h1, f_charge_landau);
-    DataFitter.fit(f_charge_landau,h1,"LRQ");
-   // def h1 = h2.projectionY()
-    // h1.setName("layer"+(it+1))
-    // h1.setTitle("FTH_MIPS_energy")
-    // h1.setTitleX("E (MeV)")
-
-    // def f1 = ROOTFitter.fit(h1)
-
-    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
+    def f_charge_landau = FTFitter.fthedepfit(h1, l)
     grtl[counter].addPoint(run, f_charge_landau.getParameter(1), 0, 0)
-    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
     out.addDataSet(h1)
     out.addDataSet(f_charge_landau)
   }
