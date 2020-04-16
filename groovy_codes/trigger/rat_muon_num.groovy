@@ -11,7 +11,7 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  def h1 = dir.getObject('/trig/H_trig_sector_prot_rat')
+  def h1 = dir.getObject('/trig/H_trig_sector_muon_rat')
   data.add([run:run, h1:h1])
 }
 
@@ -19,10 +19,10 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 out.mkdir('/timelines')
 
-(0..<6).each{ sec->
-  def grtl = new GraphErrors('sec'+(sec+1))
-  grtl.setTitle("Muons per trigger per sector")
-  grtl.setTitleY("Muons per trigger per sector")
+(0..<3).each{ sec->
+  def grtl = new GraphErrors('sector-pair '+(sec+1))
+  grtl.setTitle("Muons per trigger per sector-pair number")
+  grtl.setTitleY("Muons per trigger per sector-pair number")
   grtl.setTitleX("run number")
 
   data.each{
