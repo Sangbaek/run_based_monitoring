@@ -26,7 +26,7 @@ for(arg in args) {
     }
     hist.setName("layer"+(lindex+1))
     hist.setTitle("dE/dz (GeV/cm)")
-    funclist.add(CNDFitter.MIPSfit(hist))
+    funclist.add(CNDFitter.edepfit(hist))
     meanlist.add(funclist[lindex].getParameter(1))
     sigmalist.add(funclist[lindex].getParameter(2))
     chi2list.add(funclist[lindex].getChiSquare())

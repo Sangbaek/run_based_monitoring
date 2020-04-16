@@ -13,7 +13,7 @@ import org.jlab.groot.math.F1D
 
 
 class CNDFitter{
-	static F1D MIPSfit(H1F h1) {
+	static F1D edepfit(H1F h1) {
 		double maxE = h1.getBinContent(h1.getMaximumBin());
 	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.5, 3.5);
 	    f1.setParameter(1,2.0);
