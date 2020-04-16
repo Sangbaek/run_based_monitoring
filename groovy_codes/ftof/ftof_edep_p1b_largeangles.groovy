@@ -1,10 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
+import fitter.FTOFFitter
 
 def grtl = (1..6).collect{
   def gr = new GraphErrors('sec'+it)
@@ -29,10 +25,7 @@ for(arg in args) {
 
   (0..<6).each{
     def h1 = dir.getObject('/tof/p1b_edep_largeangles_S'+(it+1))
-    def f1 = new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]*exp(-[p1]*x)", 0, 50.0);
-
-    initLandauFitPar(h1, f1);
-    DataFitter.fit(f1,h1,"LRQ");
+    def f1 = FTOFFitter.edepfit(h1)
 
     grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
     out.addDataSet(h1)
@@ -45,18 +38,3 @@ out.mkdir('/timelines')
 out.cd('/timelines')
 grtl.each{ out.addDataSet(it) }
 out.writeFile('ftof_edep_p1b_largeangles.hipo')
-
-private void initLandauFitPar(H1F hcharge, F1D fcharge) {
-        double hAmp  = hcharge.getBinContent(hcharge.getMaximumBin());
-        double hMean = hcharge.getAxis().getBinCenter(hcharge.getMaximumBin());
-        double hRMS  = hcharge.getRMS(); //ns
-        fcharge.setRange(7, hMean*2.0);
-        fcharge.setParameter(0, hAmp);
-        fcharge.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
-        fcharge.setParameter(1, hMean);
-        fcharge.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
-        fcharge.setParameter(2, 0.3);//Changed from 2
-        fcharge.setParLimits(2, 0.1, 1);//Changed from 0.5-10
-        fcharge.setParLimits(3,0, hAmp);
-        fcharge.setParLimits(4,0,100);
-}
