@@ -2,18 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.ECFitter
 
-def grtl = new GraphErrors('Mean')
-grtl.setTitle("#gamma #gamma invariant mass ECAL")
-grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
-grtl.setTitleX("run number")
-
-def grtl2 = new GraphErrors('Sigma')
-grtl.setTitle("#gamma #gamma invariant mass ECAL")
-grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
-grtl.setTitleX("run number")
-
-TDirectory out = new TDirectory()
-TDirectory out2 = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -24,30 +13,30 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/gg/H_gg_m')
-  // def f1 = ROOTFitter.fit(h1)
   def f1 = ECFitter.ggmfit(h1)
-  grtl.addPoint(run, f1.getParameter(1), 0, 0)
-  grtl2.addPoint(run, f1.getParameter(2), 0, 0)
 
-  // grtl.addPoint(run, h1.getRMS(), 0, 0)
-
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-  out.addDataSet(h1)
-  out.addDataSet(f1)
-  out2.mkdir('/'+run)
-  out2.cd('/'+run)
-  out2.addDataSet(h1)
-  out2.addDataSet(f1)
-
+  data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()])
 }
 
 
-out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
-out.writeFile('ec_gg_m_mean.hipo')
-out2.mkdir('/timelines')
-out2.cd('/timelines')
-grtl2.each{ out2.addDataSet(it) }
-out2.writeFile('ec_gg_m_sigma.hipo')
+['mean', 'sigma'].each{name->
+  def grtl = new GraphErrors(name)
+  grtl.setTitle("#gamma #gamma invariant mass ECAL")
+  grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
+  grtl.setTitleX("run number")
+
+  TDirectory out = new TDirectory()
+
+  data.each{
+    out.mkdir('/'+it.run)
+    out.cd('/'+it.run)
+    out.addDataSet(it.h1)
+    out.addDataSet(it.f1)
+    grtl.addPoint(it.run, it[name], 0, 0)
+  }
+
+  out.mkdir('/timelines')
+  out.cd('/timelines')
+  out.addDataSet(grtl)
+  out.writeFile('ec_gg_m_'+name+'.hipo')
+}

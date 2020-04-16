@@ -2,15 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.ECFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("ECAL Sampling Fraction per sector")
-  gr.setTitleY("ECAL Sampling Fraction per sector")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -20,26 +12,45 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-
-  (0..<6).each{
-    def h2 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1))
-    def h1 = h2.projectionY()
+  def funclist = []
+  def meanlist = []
+  def sigmalist = []
+  def chi2list = []
+  def histlist =   (0..<6).collect{
+    def h1 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1)).projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle("ECAL Sampling Fraction")
     h1.setTitleX("ECAL Sampling Fraction")
-
     def f1 = ECFitter.samplfit(h1)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
-    out.addDataSet(h1)
-    out.addDataSet(f1)
+    funclist.add(f1)
+    meanlist.add(f1.getParameter(1))
+    sigmalist.add(f1.getParameter(2).abs())
+    chi2list.add(f1.getChiSquare())
+    return h1
   }
+  data.add([run:run, hlist:histlist, flist:funclist, Sampling:meanlist, sigma:sigmalist, clist:chi2list])
 }
 
 
+TDirectory out = new TDirectory()
 out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+(0..<6).each{ sec->
+  def grtl = new GraphErrors('sec'+(sec+1))
+  grtl.setTitle("ECAL Sampling Fraction per sector")
+  grtl.setTitleY("ECAL Sampling Fraction per sector")
+  grtl.setTitleX("run number")
+  
+  data.each{
+    if (sec==0){
+      out.mkdir('/'+it.run)
+    }
+    out.cd('/'+it.run) 
+    out.addDataSet(it.hlist[sec])
+    out.addDataSet(it.flist[sec])
+    grtl.addPoint(it.run, it.Sampling[sec], 0, 0)
+  }
+  out.cd('/timelines')
+  out.addDataSet(grtl)
+}
+
 out.writeFile('ec_Sampling.hipo')
