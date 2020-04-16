@@ -3,15 +3,15 @@ import org.jlab.groot.data.GraphErrors
 import fitter.FTFitter
 
 
-  def grtl = new GraphErrors('Mean')
-  grtl.setTitle("FTC time - start time, charged (peak value)")
-  grtl.setTitleY("FTC time - start time, charged (peak value) (ns)")
-  grtl.setTitleX("run number")
+def grtl = new GraphErrors('Mean')
+grtl.setTitle("FTC time - start time, charged (peak value)")
+grtl.setTitleY("FTC time - start time, charged (peak value) (ns)")
+grtl.setTitleX("run number")
 
-  def grtl2 = new GraphErrors('Sigma')
-  grtl2.setTitle("FTC time - start time, charged (sigma)")
-  grtl2.setTitleY("FTC time - start time, charged (sigma) (ns)")
-  grtl2.setTitleX("run number")
+def grtl2 = new GraphErrors('Sigma')
+grtl2.setTitle("FTC time - start time, charged (sigma)")
+grtl2.setTitleY("FTC time - start time, charged (sigma) (ns)")
+grtl2.setTitleX("run number")
 
 
 TDirectory out = new TDirectory()

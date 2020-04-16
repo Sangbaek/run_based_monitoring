@@ -1,7 +1,5 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
 import fitter.CTOFFitter;
 
 
