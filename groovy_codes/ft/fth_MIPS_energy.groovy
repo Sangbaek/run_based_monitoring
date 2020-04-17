@@ -2,15 +2,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTFitter
 
-def grtl = (1..2).collect{
-  def gr = new GraphErrors('layer'+it)
-  gr.setTitle("FTH MIPS energy per layer (peak value)")
-  gr.setTitleY("FTH MIPS energy per layer (peak value) (MeV)")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -20,20 +12,41 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
+  def funclist = []
+  def meanlist = []
+  def sigmalist = []
+  def chi2list = []
 
-  (0..<2).each{
-    def h1 = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
-    def f_charge_landau = FTFitter.fthedepfit(h1, it)
-    grtl[it].addPoint(run, f_charge_landau.getParameter(1), 0, 0)
-    out.addDataSet(h1)
-    out.addDataSet(f_charge_landau)
+  def histlist = [def h1, def h2].withIndex().collect{hist, it ->
+    hist = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
+    funclist.add(FTFitter.fthedepfit(hist, it))
+    meanlist.add(funclist[it].getParameter(1))
+    sigmalist.add(funclist[it].getParameter(2).abs())
+    chi2list.add(funclist[it].getChiSquare())
+    hist
   }
+
+  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
 }
 
 
+TDirectory out = new TDirectory()
 out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+['layer1','layer2'].eachWithIndex{layer, lindex ->
+  def grtl = new GraphErrors(layer)
+  grtl.setTitle("FTH MIPS energy per layer (mean value)")
+  grtl.setTitleY("FTH MIPS energy per layer (mean value) (MeV)")
+  grtl.setTitleX("run number")
+
+  data.each{
+    out.mkdir('/'+it.run)
+    out.cd('/'+it.run)
+
+    out.addDataSet(it.hlist[lindex])
+    out.addDataSet(it.flist[lindex])
+    grtl.addPoint(it.run, it.mean[lindex], 0, 0)
+  }
+  out.cd('/timelines')
+  out.addDataSet(grtl)
+}
 out.writeFile('fth_MIPS_energy.hipo')
