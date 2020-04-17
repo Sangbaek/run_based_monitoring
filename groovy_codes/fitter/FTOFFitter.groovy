@@ -7,21 +7,19 @@ import org.jlab.groot.math.F1D
 
 class FTOFFitter {
 	static F1D timefit_p1(H1F h1) {
-		def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[const]", -1.0, 1.0);
+		def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -1.0, 1.0);
 		double hAmp  = h1.getBinContent(h1.getMaximumBin());
 		double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
 		double hRMS  = h1.getRMS(); //ns
-		f1.setRange(hMean-2, hMean+2);
+		f1.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS);
 		f1.setParameter(0, hAmp);
 		f1.setParameter(1, hMean);
-		f1.setParLimits(1, hMean-1, hMean+1);
 		f1.setParameter(2, hRMS);
-		f1.setParameter(3,0);
 
 		def makefit = {func->
 		  hMean = func.getParameter(1)
 		  hRMS = func.getParameter(2).abs()
-		  func.setRange(hMean-1.5*hRMS,hMean+1.5*hRMS)
+		  func.setRange(hMean-2*hRMS,hMean+2*hRMS)
 		  DataFitter.fit(func,h1,"Q")
 		  return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
 		}
@@ -42,12 +40,8 @@ class FTOFFitter {
         double rangeMax = (hMean + 2.5*hRMS);
         f1.setRange(rangeMin, rangeMax);
         f1.setParameter(0, hAmp);
-        //f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
         f1.setParameter(1, hMean);
-        //f1.setParLimits(1, hMean-1, hMean+1);
         f1.setParameter(2, hRMS);
-        //f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
-        //f1.setParameter(3,0);
 
 		def makefit = {func->
 		  hMean = func.getParameter(1)
