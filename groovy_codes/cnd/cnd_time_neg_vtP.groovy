@@ -44,8 +44,8 @@ for(arg in args) {
   out.mkdir('/timelines')
   ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
     def grtl = new GraphErrors(layer+' '+name)
-    grtl.setTitle("CND time per layer")
-    grtl.setTitleY("CND time per layer (ns)")
+    grtl.setTitle("CND time per layer, " + name)
+    grtl.setTitleY("CND time per layer, " + name + " (ns)")
     grtl.setTitleX("run number")
 
     data.each{

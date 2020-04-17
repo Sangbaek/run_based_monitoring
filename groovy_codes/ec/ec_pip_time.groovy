@@ -21,8 +21,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("#pi^+ time - start time")
-  grtl.setTitleY("#pi^+ time - start time (ns)")
+  grtl.setTitle("#pi^+ time - start time, " + name)
+  grtl.setTitleY("#pi^+ time - start time, " + name + " (ns)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()

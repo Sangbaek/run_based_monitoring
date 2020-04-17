@@ -21,8 +21,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("#gamma #gamma invariant mass ECAL")
-  grtl.setTitleY("#gamma #gamma invariant mass ECAL (GeV)")
+  grtl.setTitle("#gamma #gamma invariant mass ECAL, " + name)
+  grtl.setTitleY("#gamma #gamma invariant mass ECAL, " + name + " (GeV)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()

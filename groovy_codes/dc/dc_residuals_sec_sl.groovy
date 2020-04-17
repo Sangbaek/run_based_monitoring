@@ -39,8 +39,8 @@ for(arg in args) {
   (0..<6).each{ sec->
     (0..<6).each{sl->
       def grtl = new GraphErrors('sec'+(sec+1)+' sl'+(sl+1))
-      grtl.setTitle("DC residuals (" + name + " value) per sector per superlayer")
-      grtl.setTitleY("DC residuals (" + name + " value) per sector per superlayer (cm)")
+      grtl.setTitle("DC residuals (" + name + ") per sector per superlayer")
+      grtl.setTitleY("DC residuals (" + name + ") per sector per superlayer (cm)")
       grtl.setTitleX("run number")
       
       data.each{

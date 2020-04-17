@@ -40,8 +40,8 @@ for(arg in args) {
   out.mkdir('/timelines')
   (0..<6).each{ sec->
       def grtl = new GraphErrors('sec'+(sec+1))
-      grtl.setTitle("DC residuals (peak value) per sector per superlayer")
-      grtl.setTitleY("DC residuals (peak value) per sector per superlayer (cm)")
+      grtl.setTitle("DC residuals (" + name + ") per sector per superlayer")
+      grtl.setTitleY("DC residuals (" + name + ") per sector per superlayer (cm)")
       grtl.setTitleX("run number")
       
       data.each{
