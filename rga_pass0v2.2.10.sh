@@ -94,13 +94,6 @@ do
 	done
 done
 
-out_dir=(band bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger particle_mass_ctof_and_ftof)
-dir_array=out_dir[@]
-for dir in ${!dir_array}
-do
-	mkdir -p "$dir"
-done
-
 mv bmt_*.hipo bmtbst/
 mv bst_*.hipo bmtbst/
 mv cen_*.hipo central/
