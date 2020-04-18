@@ -25,7 +25,7 @@ for(arg in args) {
   out.mkdir('/timelines')
   [3,5].each{ sec->
     def grtl = new GraphErrors('sec'+sec)
-    grtl.setTitle("LTCC Number of Photoelectrons for " + name)
+    grtl.setTitle("LTCC Number of Photoelectrons for " + name + " per sector")
     grtl.setTitleY("LTCC Number of Photoelectrons for " + name + " per sector")
     grtl.setTitleX("run number")
 

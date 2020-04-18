@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('CVT momentum')
-grtl.setTitle("CVT momentum")
-grtl.setTitleY("CVT momentum (GeV/c)")
+grtl.setTitle("Average CVT momentum")
+grtl.setTitleY("Average CVT momentum (GeV/c)")
 grtl.setTitleX("run number")
 
 data.each{

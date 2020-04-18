@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('CVT Track Multiplicity')
-grtl.setTitle("CVT Track Multiplicity")
-grtl.setTitleY("CVT Track Multiplicity")
+grtl.setTitle("Average CVT Track Multiplicity")
+grtl.setTitleY("Average CVT Track Multiplicity")
 grtl.setTitleX("run number")
 
 data.each{

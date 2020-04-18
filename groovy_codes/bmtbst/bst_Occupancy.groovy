@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('BST Occupancy')
-grtl.setTitle("BST Occupancy")
-grtl.setTitleY("BST Occupancy (%)")
+grtl.setTitle("Average BST Occupancy")
+grtl.setTitleY("Average BST Occupancy (%)")
 grtl.setTitleX("run number")
 
 data.each{

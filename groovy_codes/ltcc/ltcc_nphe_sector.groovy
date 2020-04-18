@@ -14,8 +14,8 @@ for(arg in args) {
   def hlist = [3,5].collect{
     def hist = dir.getObject('/elec/H_trig_LTCCn_theta_S'+it).projectionY()
     hist.setName("sec"+(it))
-    hist.setTitle("LTCC Number of Photoelectrons from electrons")
-    hist.setTitleX("LTCC Number of Photoelectrons from electrons")
+    hist.setTitle("LTCC Number of Photoelectrons for electrons")
+    hist.setTitleX("LTCC Number of Photoelectrons for electrons")
     hist
   }
   data.add([run:run, h3:hlist[0], h5:hlist[1]])
@@ -27,8 +27,8 @@ out.mkdir('/timelines')
 
 [3,5].each{ sec->
   def grtl = new GraphErrors('sec'+sec)
-  grtl.setTitle("LTCC Number of Photoelectrons from electrons")
-  grtl.setTitleY("LTCC Number of Photoelectrons from electrons per sector")
+  grtl.setTitle("LTCC Number of Photoelectrons for electrons per sector")
+  grtl.setTitleY("LTCC Number of Photoelectrons for electrons per sector")
   grtl.setTitleX("run number")
 
   data.each{

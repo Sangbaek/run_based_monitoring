@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('BMT layers per track')
-grtl.setTitle("BMT layers per track")
-grtl.setTitleY("BMT layers per track")
+grtl.setTitle("Average BMT layers per track")
+grtl.setTitleY("Average BMT layers per track")
 grtl.setTitleX("run number")
 
 data.each{

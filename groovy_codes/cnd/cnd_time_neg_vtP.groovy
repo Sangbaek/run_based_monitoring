@@ -25,9 +25,6 @@ for(arg in args) {
     h1.setTitleX("CND vtP (ns)")
 
     def f1 = CNDFitter.timefit(h1)
-    h1.setName("negative, layer"+iL)
-    h1.setTitle("CND vtP")
-    h1.setTitleX("CND vtP (ns)")
     funclist.add(f1)
     meanlist.add(f1.getParameter(1))
     sigmalist.add(f1.getParameter(2).abs())

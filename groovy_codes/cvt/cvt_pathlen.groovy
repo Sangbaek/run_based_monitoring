@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('CVT pathlength')
-grtl.setTitle("CVT pathlength")
-grtl.setTitleY("CVT pathlength (cm)")
+grtl.setTitle("Average CVT pathlength")
+grtl.setTitleY("Average CVT pathlength (cm)")
 grtl.setTitleX("run number")
 
 data.each{

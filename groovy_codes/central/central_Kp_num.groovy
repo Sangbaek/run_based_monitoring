@@ -19,8 +19,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl =  new GraphErrors("K plus per trigger")
-grtl.setTitle("#K^+ per trigger")
-grtl.setTitleY("#K^+ per trigger")
+grtl.setTitle("K^+ per trigger")
+grtl.setTitleY("K^+ per trigger")
 grtl.setTitleX("run number")
 
 data.each{

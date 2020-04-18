@@ -21,8 +21,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('CVT positive tracks per trigger')
-grtl.setTitle("CVT positive track multiplicity per trigger")
-grtl.setTitleY("CVT positive track multiplicity per trigger")
+grtl.setTitle("Average CVT positive track multiplicity per trigger")
+grtl.setTitleY("Average CVT positive track multiplicity per trigger")
 grtl.setTitleX("run number")
 
 data.each{

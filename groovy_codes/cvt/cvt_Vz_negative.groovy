@@ -19,8 +19,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('cvt_z_neg')
-grtl.setTitle("VZ (Average), negatives")
-grtl.setTitleY("VZ (Average), negatives (cm)")
+grtl.setTitle("Average VZ for negatives")
+grtl.setTitleY("Average VZ for negatives (cm)")
 grtl.setTitleX("run number")
 
 data.each{
