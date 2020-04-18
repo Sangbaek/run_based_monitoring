@@ -15,7 +15,7 @@ import org.jlab.groot.math.F1D
 class CNDFitter{
 	static F1D edepfit(H1F h1) {
 		double maxE = h1.getBinContent(h1.getMaximumBin());
-	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.5, 3.5);
+	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.0, 4.0);
 	    f1.setParameter(1,2.0);
 	    f1.setParameter(0,maxE);
 	    f1.setParLimits(0,maxE*0.9,maxE*1.1);
@@ -28,7 +28,7 @@ class CNDFitter{
 		def makefit = {func->
 			hMean = func.getParameter(1)
 			hRMS = func.getParameter(2).abs()
-			func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
+			func.setRange(hMean*0.78, hMean*1.5)
 			DataFitter.fit(func,h1,"Q")
 			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
 		}
