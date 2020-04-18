@@ -88,7 +88,7 @@ do
 		#	echo $script
 		#	JYPATH=$JYPATH $groovy ../groovy_codes/$script.groovy `find /volatile/clas12/rg-b/offline_monitoring/pass0/v21.3.1/plots* -name "$name*" ! -name "*6265*" ! -name "*11415*"`
 		#else
-		JYPATH=$JYPATH $groovy ../groovy_codes/$script.groovy `find /w/hallb-scifs17exp/clas12/rg-a/software/clas12_monitoring/plots* -name "$name*"`
+		JYPATH=$JYPATH $groovy ../groovy_codes/$script.groovy `find /w/hallb-scifs17exp/clas12/rg-a/software/clas12_monitoring/plots* -name "*$name*"`
 
 		#fi
 	done
