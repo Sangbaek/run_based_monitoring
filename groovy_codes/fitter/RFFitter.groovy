@@ -11,13 +11,13 @@ class RFFitter {
     double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin())
     double xmin = h1.getXaxis().min()
     double xmax = h1.getXaxis().max()
-    double hRMS  = Math.max(h1.getRMS()/2, (xmax-xmin)/10)
+    double hRMS  = Math.min(h1.getRMS()/2, 0.2)
 
     f1.setParameter(1, hMean)
     f1.setParameter(2, hRMS)
-    f1.setParLimits(2, 0, (xmax-xmin)/4)
+    // f1.setParLimits(2, 0, (xmax-xmin)/4)
     f1.setParameter(3, 0)
-    f1.setParLimits(3, 0, h1.getMax()*0.2)
+    // f1.setParLimits(3, 0, h1.getMax()*0.2)
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()

@@ -11,8 +11,8 @@ class CTOFFitter {
     double hAmp  = h1.getBinContent(h1.getMaximumBin());
     double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin())
     double hRMS  = h1.getRMS();
-    double rangeMin = (hMean - 1.5*hRMS);
-    double rangeMax = (hMean + 1.5*hRMS);
+    double rangeMin = (hMean - 2.5*hRMS);
+    double rangeMax = (hMean + 2.5*hRMS);
     f1.setRange(rangeMin, rangeMax);
     f1.setParameter(0, hAmp);
     // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
@@ -25,7 +25,7 @@ class CTOFFitter {
     def makefit = {func->
       hMean = func.getParameter(1)
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-1.5*hRMS,hMean+1.5*hRMS)
+      func.setRange(hMean-2*hRMS,hMean+2*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
