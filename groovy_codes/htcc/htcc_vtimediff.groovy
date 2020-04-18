@@ -1,20 +1,7 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-// import ROOTFitter
 
-def grtl = (1..48).collect{
-  sec_num=(it-1).intdiv(8)+1
-  remainder=(it-1)%8
-  ring_num = (remainder)%4+1
-  side_num = (remainder).intdiv(4)+1
-  def gr = new GraphErrors('sec'+sec_num+' ring'+ring_num+' side'+side_num)
-  gr.setTitle("HTCC vtime - STT, electrons")
-  gr.setTitleY("HTCC vtime - STT, electrons, per PMTs (ns)")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -24,29 +11,38 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
+  def histlist =   (0..<6).collect{s->
+    (0..<4).collect{r->
+      (0..<2).collect{side->
+          dir.getObject(String.format("/HTCC/H_HTCC_vtime_s%d_r%d_side%d",s+1,r+1,side+1))
+      }
+    }
+  }
+  data.add([run:run, hlist:histlist])
+}
 
-for (s = 0; s <6; s++) {
-  for (r = 0; r <4; r++) {
-    for (side=0; side<2; side++){
-      int counter = r + 4*( side + 2*s );
-      def h1 = dir.getObject(String.format("/HTCC/H_HTCC_vtime_s%d_r%d_side%d",s+1,r+1,side+1))//left
-      h1.setName("sec"+(s+1) +"ring"+(r+1)+"side"+(side+1))
-
-      // def f1 = ROOTFitter.fit(h1)
-
-      // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-      // grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
-      grtl[counter].addPoint(run, h1.getMean(), 0, 0)
-      out.addDataSet(h1)
-      // out.addDataSet(f1)
+TDirectory out = new TDirectory()
+out.mkdir('/timelines')
+(0..<6).each{ sec->
+  (0..<4).each{ ring ->
+    (0..<2).each{ side ->
+      def grtl = new GraphErrors('sec'+(sec+1)+' ring'+(ring+1)+' side'+(side+1))
+      grtl.setTitle("HTCC vtime - STT, electrons")
+      grtl.setTitleY("HTCC vtime - STT, electrons, per PMTs (ns)")
+      grtl.setTitleX("run number")
+      
+      data.each{
+        if (sec==0 && ring==0 && side==0){
+          out.mkdir('/'+it.run)
+        }
+        out.cd('/'+it.run) 
+        out.addDataSet(it.hlist[sec][ring][side])
+        grtl.addPoint(it.run, it.hlist[sec][ring][side].getMean(), 0, 0)
+      }
+      out.cd('/timelines')
+      out.addDataSet(grtl)
     }
   }
 }
-}
 
-out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
 out.writeFile('htcc_vtimediff.hipo')

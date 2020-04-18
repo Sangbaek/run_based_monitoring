@@ -1,18 +1,7 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-// import ROOTFitter
 
-def grtl = (1..24).collect{
-  sec_num=(it-1).intdiv(4)+1
-  ring_num=(it-1)%4 +1
-  def gr = new GraphErrors('sec'+sec_num+' ring'+ring_num)
-  gr.setTitle("HTCC Number of Photoelectrons")
-  gr.setTitleY("HTCC Number of Photoelectrons per sector per ring")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -22,32 +11,40 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
+  def histlist =   (0..<6).collect{s->
+    (0..<4).collect{r->
+      def h1 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side1',s+1,r+1)) //left
+      def h2 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side2',s+1,r+1)) //right
+      h1.add(h2)
+      h1.setName("sec"+(s+1) +"ring"+(r+1))
+      h1.setTitle("HTCC Number of Photoelectrons")
+      h1.setTitleX("HTCC Number of Photoelectrons")
+      return h1
+    }
+  }
+  data.add([run:run, hlist:histlist])
+}
 
-for (s = 0; s <6; s++) {
-  for (r = 0; r <4; r++) {
-
-    int counter = r + 4*s
-    def h1 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side1',s+1,r+1)) //left
-    def h2 = dir.getObject(String.format('/HTCC/H_HTCC_nphe_s%d_r%d_side2',s+1,r+1)) //right
-    h1.add(h2)
-    h1.setName("sec"+(s+1) +"ring"+(r+1))
-    h1.setTitle("HTCC Number of Photoelectrons")
-    h1.setTitleX("HTCC Number of Photoelectrons")
-
-    // def f1 = ROOTFitter.fit(h1)
-
-    // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    // grtl[counter].addPoint(run, f1.getParameter(1), 0, 0)
-    grtl[counter].addPoint(run, h1.getMean(), 0, 0)
-    out.addDataSet(h1)
-    // out.addDataSet(f1)
+TDirectory out = new TDirectory()
+out.mkdir('/timelines')
+(0..<6).each{ sec->
+  (0..<4).each{ ring ->
+    def grtl = new GraphErrors('sec'+(sec+1)+' ring'+(ring+1))
+    grtl.setTitle("Average HTCC Number of Photoelectrons per sector per ring")
+    grtl.setTitleY("Average HTCC Number of Photoelectrons per sector per ring")
+    grtl.setTitleX("run number")
+    
+    data.each{
+      if (sec==0 && ring ==0){
+        out.mkdir('/'+it.run)
+      }
+      out.cd('/'+it.run) 
+      out.addDataSet(it.hlist[sec][ring])
+      grtl.addPoint(it.run, it.hlist[sec][ring].getMean(), 0, 0)
+    }
+    out.cd('/timelines')
+    out.addDataSet(grtl)
   }
 }
-}
 
-out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
 out.writeFile('htcc_nphe_sec_ring.hipo')
