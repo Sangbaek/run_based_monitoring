@@ -22,8 +22,8 @@ for(arg in args) {
   TDirectory out = new TDirectory()
 
   def grtl = new GraphErrors(name)
-  grtl.setTitle("CTOF mass^2 "+name+", #pi^-")
-  grtl.setTitleY("CTOF mass^2 "+name+", #pi^- (GeV^2)")
+  grtl.setTitle("CTOF mass^2 for #pi^- ("+name+")")
+  grtl.setTitleY("CTOF mass^2 for #pi^- ("+name+") (GeV^2)")
   grtl.setTitleX("run number")
 
   data.each{

@@ -25,7 +25,7 @@ for(arg in args) {
 
   def grtl = new GraphErrors('RFtime_diff_'+name)
   grtl.setTitle("Average rftime difference ("+name+")")
-  grtl.setTitleY("Average rftime difference (ns)")
+  grtl.setTitleY("Average rftime difference ("+name+") (ns)")
   grtl.setTitleX("run number")
 
   data.each{

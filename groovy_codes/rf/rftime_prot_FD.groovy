@@ -30,8 +30,8 @@ for(arg in args) {
 
   def grtl = (1..6).collect{
     def gr = new GraphErrors('sec'+it)
-    gr.setTitle("Average proton rftime1 per sector, FD, "+name)
-    gr.setTitleY("Average proton rftime1 per sector, FD (ns)")
+    gr.setTitle("Average proton rftime1 per sector, FD ("+name+")")
+    gr.setTitleY("Average proton rftime1 per sector, FD ("+name+") (ns)")
     gr.setTitleX("run number")
     return gr
   }

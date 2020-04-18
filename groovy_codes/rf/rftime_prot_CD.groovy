@@ -24,7 +24,7 @@ for(arg in args) {
 
   def grtl = new GraphErrors('RFtime_proton_CD_'+name)
   grtl.setTitle("Average proton rftime1, CD ("+name+")")
-  grtl.setTitleY("Average proton rftime1, CD (ns)")
+  grtl.setTitleY("Average proton rftime1, CD ("+name+") (ns)")
   grtl.setTitleX("run number")
 
   data.each{

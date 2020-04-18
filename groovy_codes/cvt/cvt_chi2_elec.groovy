@@ -19,8 +19,8 @@ for(arg in args) {
 TDirectory out = new TDirectory()
 
 def grtl = new GraphErrors('cvt_chi2_elec')
-grtl.setTitle("Average CVT chi2, electrons")
-grtl.setTitleY("Average CVT chi2, electrons")
+grtl.setTitle("Average CVT chi2 for electrons")
+grtl.setTitleY("Average CVT chi2 for electrons")
 grtl.setTitleX("run number")
 
 data.each{

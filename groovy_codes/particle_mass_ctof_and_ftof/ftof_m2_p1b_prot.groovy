@@ -19,8 +19,8 @@ for(arg in args) {
   def histlist =   (0..<6).collect{
     def h1 = dir.getObject(String.format("/FTOF/H_FTOF_pos_mass_mom_pad1b_%d",it+1)).projectionY()
     h1.setName("sec"+(it+1))
-    h1.setTitle("FTOF p1b proton, mass^2")
-    h1.setTitleX("FTOF p1b proton, mass^2 (GeV^2)")
+    h1.setTitle("FTOF p1b mass^2 for protons")
+    h1.setTitleX("FTOF p1b mass^2 for protons (GeV^2)")
     def f1 = FTOFFitter_mass.fit(h1)
     funclist.add(f1)
     meanlist.add(f1.getParameter(1))
@@ -36,8 +36,8 @@ for(arg in args) {
   out.mkdir('/timelines')
   (0..<6).each{ sec->
     def grtl = new GraphErrors('sec'+(sec+1))
-    grtl.setTitle("FTOF p1b proton mass^2 " + name)
-    grtl.setTitleY("FTOF p1b proton mass^2 " + name + " (GeV^2)")
+    grtl.setTitle("FTOF p1b mass^2 for protons (" + name +")")
+    grtl.setTitleY("FTOF p1b mass^2 for protons (" + name +")" + " (GeV^2)")
     grtl.setTitleX("run number")
     
     data.each{
