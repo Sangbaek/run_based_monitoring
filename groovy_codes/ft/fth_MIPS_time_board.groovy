@@ -45,7 +45,7 @@ for(arg in args) {
       data.each{
         out.mkdir('/'+it.run)
         out.cd('/'+it.run)
-        grtl.addPoint(it.run, it.mean[lindex][board-1], 0, 0)
+        grtl.addPoint(it.run, it[name][lindex][board-1], 0, 0)
         out.addDataSet(it.hlist[lindex][board-1])
         out.addDataSet(it.flist[lindex][board-1])
       }
