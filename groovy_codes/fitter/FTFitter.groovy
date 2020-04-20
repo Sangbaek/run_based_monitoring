@@ -21,7 +21,7 @@ class FTFitter {
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-3*hRMS, hMean+3*hRMS)
+      func.setRange(hMean-3.2*hRMS, hMean+3*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
