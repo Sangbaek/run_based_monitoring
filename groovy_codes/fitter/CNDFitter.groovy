@@ -14,21 +14,25 @@ import org.jlab.groot.math.F1D
 
 class CNDFitter{
 	static F1D edepfit(H1F h1) {
-		double maxE = h1.getBinContent(h1.getMaximumBin());
-	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x", 1.0, 4.0);
-	    f1.setParameter(1,2.0);
-	    f1.setParameter(0,maxE);
-	    f1.setParLimits(0,maxE*0.9,maxE*1.1);
-	    f1.setParameter(2,1.0);
-	    f1.setParameter(3,0.0);
-	    DataFitter.fit(f1,h1,"LQ")
-
-	    double hMean, hRMS
+	    double hAmp  = h1.getBinContent(h1.getMaximumBin());
+	    double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
+	    double hRMS  = h1.getRMS()
+	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x+[p2]*x*x", 1.0, 4.0);
+	    f1.setRange(f1.getRange().getMin(), hMean*2.0);
+	    f1.setParameter(0, hAmp);
+	    f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
+	    f1.setParameter(1, hMean);
+	    f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+	    f1.setParameter(2, 0.3);//Changed from 2
+	    f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+	    f1.setParameter(3, 2000);
+	    f1.setParameter(4, -2000);//Changed from -0.2
+	    f1.setParameter(5, 500);//Changed from -0.2
 
 		def makefit = {func->
 			hMean = func.getParameter(1)
 			hRMS = func.getParameter(2).abs()
-			func.setRange(hMean*0.78, hMean*1.5)
+		    func.setRange(0.3*hMean,1.5*hMean)
 			DataFitter.fit(func,h1,"Q")
 			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
 		}
