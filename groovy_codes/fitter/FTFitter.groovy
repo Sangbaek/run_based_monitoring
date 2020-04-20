@@ -21,14 +21,15 @@ class FTFitter {
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-3.2*hRMS, hMean+3*hRMS)
+      func.setRange(hMean-3*hRMS, hMean+3*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
     def fits1 = (0..10).collect{makefits(f1)}
 
     def f2 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[p0]+[p1]*x+[p2]*x*x",-0.2,0.2);
-
+    f2.setParameter(4,0.001)
+    f2.setParameter(5,0.001)
     fits1.sort()[0][1].eachWithIndex{par,ipar->
       f2.setParameter(ipar, par)
     }
