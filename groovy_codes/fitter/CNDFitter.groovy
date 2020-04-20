@@ -23,11 +23,11 @@ class CNDFitter{
 	    f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
 	    f1.setParameter(1, hMean);
 	    f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
-	    f1.setParameter(2, 0.3);//Changed from 2
+	    f1.setParameter(2, 0.15);//Changed from 2
 	    f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
-	    f1.setParameter(3, 2000);
-	    f1.setParameter(4, -2000);//Changed from -0.2
-	    f1.setParameter(5, 500);//Changed from -0.2
+	    f1.setParameter(3, -100);
+	    f1.setParameter(4, 500);//Changed from -0.2
+	    f1.setParameter(5, -100);//Changed from -0.2
 
 		def makefit = {func->
 			hMean = func.getParameter(1)
