@@ -14,7 +14,7 @@ for(arg in args) {
   def run = m[0].toInteger()
 
   def h1 = dir.getObject('/ctof/CTOF TDC-ADC Time Difference')
-  def f1 = CTOFFitter.tdcadcdifffit(h1)
+  def f1 = CTOFFitter.tdcadcdifffit_left(h1)
 
   data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()])
 }
@@ -22,8 +22,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("TDC time - FADC time averaged over CTOF counters (" + name +")")
-  grtl.setTitleY("TDC time - FADC time averaged over CTOF counters (" + name + ") (ns)")
+  grtl.setTitle("TDC time - FADC time averaged over CTOF counters, left peak (" + name +")")
+  grtl.setTitleY("TDC time - FADC time averaged over CTOF counters, left peak  (" + name + ") (ns)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()
@@ -39,5 +39,5 @@ for(arg in args) {
   out.mkdir('/timelines')
   out.cd('/timelines')
   out.addDataSet(grtl)
-  out.writeFile('ctof_tdcadc_time_'+name+'.hipo')
+  out.writeFile('ctof_tdcadc_time_left_'+name+'.hipo')
 }
