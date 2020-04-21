@@ -1,8 +1,6 @@
 # timeline monitoring
 
-Some groovy scripts maintained by Sangbaek Lee (sangbaek@mit.edu) for CLAS12 timeline monitoring. Scripts are based on initial works of Andrey Kim.
-
-These groovy scripts will read offline monitoring codes that was initiated by FX, and later developed by Yordanka Illieva, Andrey Kim, and Sangbaek Lee.
+A set of codes that read output files of [offline monitoring](https://github.com/JeffersonLab/clas12_monitoring) to create timeline monitoring.
 
 ## code structures
 
@@ -50,3 +48,7 @@ At [run.sh](run.sh), switch existing shebang line to
 #!/bin/bash
 ```
 . Also use gtimeout at [run.sh](run.sh) instead of timeout.
+
+## Contact
+
+Sangbaek Lee, sangbaek@mit.edu
