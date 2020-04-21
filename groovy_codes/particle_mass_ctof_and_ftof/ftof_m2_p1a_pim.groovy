@@ -1,17 +1,14 @@
+package particle_mass_ctof_and_ftof
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTOFFitter_mass
 
-data = []
+class ftof_m2_p1a_pim {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = new ConcurrentHashMap()
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def funclist = []
   def meanlist = []
   def sigmalist = []
@@ -28,30 +25,36 @@ for(arg in args) {
     chi2list.add(f1.getChiSquare())
     return h1
   }
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
-['mean', 'sigma'].each{ name ->
-  TDirectory out = new TDirectory()
-  out.mkdir('/timelines')
-  (0..<6).each{ sec->
-    def grtl = new GraphErrors('sec'+(sec+1))
-    grtl.setTitle("FTOF p1a mass^2 for #pi^-  (" + name +")")
-    grtl.setTitleY("FTOF p1a mass^2 for #pi^-  (" + name +")" + " (GeV^2)")
-    grtl.setTitleX("run number")
-    
-    data.each{
-      if (sec==0){
-        out.mkdir('/'+it.run)
-      }
-      out.cd('/'+it.run) 
-      out.addDataSet(it.hlist[sec])
-      out.addDataSet(it.flist[sec])
-      grtl.addPoint(it.run, it[name][sec], 0, 0)
-    }
-    out.cd('/timelines')
-    out.addDataSet(grtl)
-  }
 
-  out.writeFile('ftof_m2_p1a_pim_'+name+'.hipo')
+
+def close() {
+
+  ['mean', 'sigma'].each{ name ->
+    TDirectory out = new TDirectory()
+    out.mkdir('/timelines')
+    (0..<6).each{ sec->
+      def grtl = new GraphErrors('sec'+(sec+1))
+      grtl.setTitle("FTOF p1a mass^2 for #pi^-  (" + name +")")
+      grtl.setTitleY("FTOF p1a mass^2 for #pi^-  (" + name +")" + " (GeV^2)")
+      grtl.setTitleX("run number")
+
+      data.sort{it.key}.each{run,it->
+        if (sec==0){
+          out.mkdir('/'+it.run)
+        }
+        out.cd('/'+it.run)
+        out.addDataSet(it.hlist[sec])
+        out.addDataSet(it.flist[sec])
+        grtl.addPoint(it.run, it[name][sec], 0, 0)
+      }
+      out.cd('/timelines')
+      out.addDataSet(grtl)
+    }
+
+    out.writeFile('ftof_m2_p1a_pim_'+name+'.hipo')
+  }
+}
 }

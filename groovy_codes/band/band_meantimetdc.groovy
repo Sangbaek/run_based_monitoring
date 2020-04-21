@@ -1,39 +1,43 @@
+package band
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-def data = []
+class band_meantimetdc {
 
-TDirectory out = new TDirectory()
-out.mkdir('/timelines')
+def data = new ConcurrentHashMap()
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
-
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def h1 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination1')
   def h2 = dir.getObject('/BAND/H_BAND_MeanTimeTDC_SectorCombination2')
 
-  data.add([run:run, Comb1:h1, Comb2:h2])
-  out.mkdir('/'+run)
+  data[run] = [run:run, Comb1:h1, Comb2:h2]
 }
 
-["Comb1", "Comb2"].each{ name ->
-  def gr = new GraphErrors(name)
-  gr.setTitle("BAND mean time tdc sector combination")
-  gr.setTitleY("maximum location of meantimeTDC – sqrt(x^2+y^2+z^2)/c (ns)")
-  gr.setTitleX("run number")
-  
-  data.each{
-    out.cd('/'+it.run)
-    out.addDataSet(it[name])
-    gr.addPoint(it.run, it[name].getAxis().getBinCenter(it[name].getMaximumBin()), 0, 0)
+
+
+def close() {
+
+
+  TDirectory out = new TDirectory()
+  out.mkdir('/timelines')
+
+  ["Comb1", "Comb2"].each{ name ->
+    def gr = new GraphErrors(name)
+    gr.setTitle("BAND mean time tdc sector combination")
+    gr.setTitleY("maximum location of meantimeTDC – sqrt(x^2+y^2+z^2)/c (ns)")
+    gr.setTitleX("run number")
+
+    data.sort{it.key}.each{run,it->
+      out.mkdir('/'+it.run)
+      out.cd('/'+it.run)
+      out.addDataSet(it[name])
+      gr.addPoint(it.run, it[name].getAxis().getBinCenter(it[name].getMaximumBin()), 0, 0)
+    }
+    out.cd('/timelines')
+    out.addDataSet(gr)
   }
-  out.cd('/timelines')
-  out.addDataSet(gr)
-}
 
-out.writeFile('band_meantimetdc.hipo')
+  out.writeFile('band_meantimetdc.hipo')
+}
+}

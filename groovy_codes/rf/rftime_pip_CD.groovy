@@ -1,43 +1,46 @@
+package rf
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.RFFitter;
 
-def data = []
+class rftime_pip_CD {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = new ConcurrentHashMap()
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def h1 = dir.getObject('/RF/H_pip_RFtime1')
   def f1 = RFFitter.fit(h1)
 
-  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1]
 }
 
 
-['mean', 'sigma'].each{name ->
-  TDirectory out = new TDirectory()
 
-  def grtl = new GraphErrors('RFtime_pip_CD'+name)
-  grtl.setTitle("Average #pi<sup>+</sup> rftime1, CD ("+name+")")
-  grtl.setTitleY("Average #pi<sup>+</sup> rftime1, CD ("+name+") (ns)")
-  grtl.setTitleX("run number")
+def close() {
 
-  data.each{
-    grtl.addPoint(it.run, it[name], 0, 0)
-    out.mkdir('/'+it.run)
-    out.cd('/'+it.run)
-    out.addDataSet(it.h1)
-    out.addDataSet(it.f1)
+
+  ['mean', 'sigma'].each{name ->
+    TDirectory out = new TDirectory()
+
+    def grtl = new GraphErrors('RFtime_pip_CD'+name)
+    grtl.setTitle("Average #pi<sup>+</sup> rftime1, CD ("+name+")")
+    grtl.setTitleY("Average #pi<sup>+</sup> rftime1, CD ("+name+") (ns)")
+    grtl.setTitleX("run number")
+
+    data.sort{it.key}.each{run,it->
+      grtl.addPoint(it.run, it[name], 0, 0)
+      out.mkdir('/'+it.run)
+      out.cd('/'+it.run)
+      out.addDataSet(it.h1)
+      out.addDataSet(it.f1)
+    }
+
+    out.mkdir('/timelines')
+    out.cd('/timelines')
+    out.addDataSet(grtl)
+    out.writeFile('rftime_pip_CD_'+name+'.hipo')
   }
 
-  out.mkdir('/timelines')
-  out.cd('/timelines')
-  out.addDataSet(grtl)
-  out.writeFile('rftime_pip_CD_'+name+'.hipo')
 }
-
+}
