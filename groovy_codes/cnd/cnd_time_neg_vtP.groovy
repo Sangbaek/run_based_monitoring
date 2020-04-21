@@ -2,16 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.CNDFitter
 
-data = []
+class cnd_time_neg_vtP.groovy {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = []
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def funclist = []
   def meanlist = []
   def sigmalist = []
@@ -36,25 +31,31 @@ for(arg in args) {
 }
 
 
-['mean','sigma'].each{name ->
-  TDirectory out = new TDirectory()
-  out.mkdir('/timelines')
-  ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
-    def grtl = new GraphErrors(layer+' '+name)
-    grtl.setTitle("CND time per layer, " + name)
-    grtl.setTitleY("CND time per layer, " + name + " (ns)")
-    grtl.setTitleX("run number")
 
-    data.each{
-      out.mkdir('/'+it.run)
-      out.cd('/'+it.run)
+def close() {
 
-      out.addDataSet(it.hlist[lindex])
-      out.addDataSet(it.flist[lindex])
-      grtl.addPoint(it.run, it[name][lindex], 0, 0)
+
+  ['mean','sigma'].each{name ->
+    TDirectory out = new TDirectory()
+    out.mkdir('/timelines')
+    ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
+      def grtl = new GraphErrors(layer+' '+name)
+      grtl.setTitle("CND time per layer, " + name)
+      grtl.setTitleY("CND time per layer, " + name + " (ns)")
+      grtl.setTitleX("run number")
+
+      data.each{
+        out.mkdir('/'+it.run)
+        out.cd('/'+it.run)
+
+        out.addDataSet(it.hlist[lindex])
+        out.addDataSet(it.flist[lindex])
+        grtl.addPoint(it.run, it[name][lindex], 0, 0)
+      }
+      out.cd('/timelines')
+      out.addDataSet(grtl)
     }
-    out.cd('/timelines')
-    out.addDataSet(grtl)
+    out.writeFile('cnd_time_neg_vtP_'+name+'.hipo')
   }
-  out.writeFile('cnd_time_neg_vtP_'+name+'.hipo')
+}
 }

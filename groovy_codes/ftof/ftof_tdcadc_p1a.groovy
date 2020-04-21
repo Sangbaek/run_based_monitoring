@@ -2,16 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTOFFitter
 
-data = []
+class ftof_tdcadc_p1a.groovy {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = []
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def funclist = []
   def meanlist = []
   def sigmalist = []
@@ -29,27 +24,33 @@ for(arg in args) {
   data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
 }
 
-['mean', 'sigma'].each{ name ->
-  TDirectory out = new TDirectory()
-  out.mkdir('/timelines')
-  (0..<6).each{ sec->
-    def grtl = new GraphErrors('sec'+(sec+1))
-  grtl.setTitle("p1a t_tdc-t_fadc (" + name +")")
-  grtl.setTitleY("p1a t_tdc-t_fadc (" + name +") (ns)")
-  grtl.setTitleX("run number")
-    
-    data.each{
-      if (sec==0){
-        out.mkdir('/'+it.run)
-      }
-      out.cd('/'+it.run) 
-      out.addDataSet(it.hlist[sec])
-      out.addDataSet(it.flist[sec])
-      grtl.addPoint(it.run, it[name][sec], 0, 0)
-    }
-    out.cd('/timelines')
-    out.addDataSet(grtl)
-  }
 
-  out.writeFile('ftof_tdcadc_time_p1a_' + name + '.hipo')
+
+def close() {
+
+  ['mean', 'sigma'].each{ name ->
+    TDirectory out = new TDirectory()
+    out.mkdir('/timelines')
+    (0..<6).each{ sec->
+      def grtl = new GraphErrors('sec'+(sec+1))
+    grtl.setTitle("p1a t_tdc-t_fadc (" + name +")")
+    grtl.setTitleY("p1a t_tdc-t_fadc (" + name +") (ns)")
+    grtl.setTitleX("run number")
+
+      data.each{
+        if (sec==0){
+          out.mkdir('/'+it.run)
+        }
+        out.cd('/'+it.run)
+        out.addDataSet(it.hlist[sec])
+        out.addDataSet(it.flist[sec])
+        grtl.addPoint(it.run, it[name][sec], 0, 0)
+      }
+      out.cd('/timelines')
+      out.addDataSet(grtl)
+    }
+
+    out.writeFile('ftof_tdcadc_time_p1a_' + name + '.hipo')
+  }
+}
 }

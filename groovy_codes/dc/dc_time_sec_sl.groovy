@@ -2,16 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.DCFitter
 
-data = []
+class dc_time_sec_sl.groovy {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = []
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def funclist = [t0:[[],[],[],[],[],[]], tmax:[[],[],[],[],[],[]]] // actually it's dict! not a list!
   def fomlist = [t0:[[],[],[],[],[],[]], tmax:[[],[],[],[],[],[]]]
   def chi2list = [t0:[[],[],[],[],[],[]], tmax:[[],[],[],[],[],[]]]
@@ -37,30 +32,36 @@ for(arg in args) {
   data.add([run:run, hlist:[t0:histlist, tmax:histlist], flist:funclist, fomlist:fomlist, chi2list:chi2list])
 }
 
-['t0', 'tmax'].each{ name ->
-  TDirectory out = new TDirectory()
-  out.mkdir('/timelines')
-  (0..<6).each{ sec->
-    (0..<6).each{sl->
-      def grtl = new GraphErrors('sec'+(sec+1)+' sl'+(sl+1))
-      grtl.setTitle(name+" per sector per superlayer")
-      grtl.setTitleY(name+" per sector per superlayer (ns)")
-      grtl.setTitleX("run number")
-      
-      data.each{
-        if (sec==0 && sl==0) out.mkdir('/'+it.run)
-        out.cd('/'+it.run)
-        def h1 = it.hlist[name][sec][sl]
-        def f1 = it.flist[name][sec][sl]
-        h1.setFunction(f1)
-        out.addDataSet(h1)
-        out.addDataSet(f1)
-        grtl.addPoint(it.run, it.fomlist[name][sec][sl], 0, 0)
-      }
-      out.cd('/timelines')
-      out.addDataSet(grtl)
-    }
-  }
 
-  out.writeFile('dc_' + name + '_sec_sl.hipo')
+
+def close() {
+
+  ['t0', 'tmax'].each{ name ->
+    TDirectory out = new TDirectory()
+    out.mkdir('/timelines')
+    (0..<6).each{ sec->
+      (0..<6).each{sl->
+        def grtl = new GraphErrors('sec'+(sec+1)+' sl'+(sl+1))
+        grtl.setTitle(name+" per sector per superlayer")
+        grtl.setTitleY(name+" per sector per superlayer (ns)")
+        grtl.setTitleX("run number")
+
+        data.each{
+          if (sec==0 && sl==0) out.mkdir('/'+it.run)
+          out.cd('/'+it.run)
+          def h1 = it.hlist[name][sec][sl]
+          def f1 = it.flist[name][sec][sl]
+          h1.setFunction(f1)
+          out.addDataSet(h1)
+          out.addDataSet(f1)
+          grtl.addPoint(it.run, it.fomlist[name][sec][sl], 0, 0)
+        }
+        out.cd('/timelines')
+        out.addDataSet(grtl)
+      }
+    }
+
+    out.writeFile('dc_' + name + '_sec_sl.hipo')
+  }
+}
 }

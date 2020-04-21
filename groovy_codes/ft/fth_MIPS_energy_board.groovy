@@ -2,16 +2,11 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTFitter
 
-data = []
+class fth_MIPS_energy_board.groovy {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = []
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def funclist = [[],[]]
   def meanlist = [[],[]]
   def sigmalist = [[],[]]
@@ -33,25 +28,31 @@ for(arg in args) {
 }
 
 
-TDirectory out = new TDirectory()
-out.mkdir('/timelines')
-['layer1','layer2'].eachWithIndex{layer, lindex ->
-  (1..15).each{board->
-    def grtl = new GraphErrors(layer+'board'+board)
-    grtl.setTitle("FTH MIPS energy per layer per board (mean value)")
-    grtl.setTitleY("FTH MIPS energy per layer per board (mean value) (MeV)")
-    grtl.setTitleX("run number")
 
-    data.each{
-      out.mkdir('/'+it.run)
-      out.cd('/'+it.run)
-      grtl.addPoint(it.run, it.mean[lindex][board-1], 0, 0)
-      out.addDataSet(it.hlist[lindex][board-1])
-      out.addDataSet(it.flist[lindex][board-1])
+def close() {
+
+
+  TDirectory out = new TDirectory()
+  out.mkdir('/timelines')
+  ['layer1','layer2'].eachWithIndex{layer, lindex ->
+    (1..15).each{board->
+      def grtl = new GraphErrors(layer+'board'+board)
+      grtl.setTitle("FTH MIPS energy per layer per board (mean value)")
+      grtl.setTitleY("FTH MIPS energy per layer per board (mean value) (MeV)")
+      grtl.setTitleX("run number")
+
+      data.each{
+        out.mkdir('/'+it.run)
+        out.cd('/'+it.run)
+        grtl.addPoint(it.run, it.mean[lindex][board-1], 0, 0)
+        out.addDataSet(it.hlist[lindex][board-1])
+        out.addDataSet(it.flist[lindex][board-1])
+      }
+      out.cd('/timelines')
+      out.addDataSet(grtl)
     }
-    out.cd('/timelines')
-    out.addDataSet(grtl)
   }
-}
 
-out.writeFile('fth_MIPS_energy_board.hipo')
+  out.writeFile('fth_MIPS_energy_board.hipo')
+}
+}

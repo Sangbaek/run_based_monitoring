@@ -1,16 +1,11 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-data = []
+class ltcc_had_nphe_sector.groovy {
 
-for(arg in args) {
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
+def data = []
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,5}/
-  def run = m[0].toInteger()
-
+def processDirectory(dir, run) {
   def h1 = dir.getObject('/LTCC/H_piplus_S3_nphe')
   def h2 = dir.getObject('/LTCC/H_piplus_S5_nphe')
   def h3 = dir.getObject('/LTCC/H_piminus_S3_nphe')
@@ -20,26 +15,32 @@ for(arg in args) {
 
 
 
-['pip', 'pim'].each{ name ->
-  TDirectory out = new TDirectory()
-  out.mkdir('/timelines')
-  [3,5].each{ sec->
-    def grtl = new GraphErrors('sec'+sec)
-    grtl.setTitle("LTCC Number of Photoelectrons for " + name + " per sector")
-    grtl.setTitleY("LTCC Number of Photoelectrons for " + name + " per sector")
-    grtl.setTitleX("run number")
+def close() {
 
-    data.each{
-      if (sec==3){
-        out.mkdir('/'+it.run)
+
+
+  ['pip', 'pim'].each{ name ->
+    TDirectory out = new TDirectory()
+    out.mkdir('/timelines')
+    [3,5].each{ sec->
+      def grtl = new GraphErrors('sec'+sec)
+      grtl.setTitle("LTCC Number of Photoelectrons for " + name + " per sector")
+      grtl.setTitleY("LTCC Number of Photoelectrons for " + name + " per sector")
+      grtl.setTitleX("run number")
+
+      data.each{
+        if (sec==3){
+          out.mkdir('/'+it.run)
+        }
+        out.cd('/'+it.run)
+        out.addDataSet(it[name+sec])
+        grtl.addPoint(it.run, it[name+sec].getMean(), 0, 0)
       }
-      out.cd('/'+it.run)
-      out.addDataSet(it[name+sec])
-      grtl.addPoint(it.run, it[name+sec].getMean(), 0, 0)
+      out.cd('/timelines')
+      out.addDataSet(grtl)
     }
-    out.cd('/timelines')
-    out.addDataSet(grtl)
-  }
 
-  out.writeFile('ltcc_'+name+'_nphe_sec.hipo')
+    out.writeFile('ltcc_'+name+'_nphe_sec.hipo')
+  }
+}
 }
