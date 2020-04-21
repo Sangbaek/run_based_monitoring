@@ -12,7 +12,7 @@ def processDirectory(dir, run) {
   def h1 = dir.getObject('/ctof/H_CTOF_neg_mass')
   def f1 = CTOFFitter_mass.fit(h1)
 
-  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, h1:h1, f1:f1]
+  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1]
 }
 
 

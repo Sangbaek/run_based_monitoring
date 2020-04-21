@@ -13,7 +13,7 @@ def processDirectory(dir, run) {
 
   def f1 = RFFitter.fit(h1)
 
-  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, h1:h1, f1:f1]
+  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1]
 }
 
 

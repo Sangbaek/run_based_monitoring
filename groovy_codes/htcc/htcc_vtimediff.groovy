@@ -15,6 +15,7 @@ def processDirectory(dir, run) {
       }
     }
   }
+  println("debug: "+run)
   data[run] = [run:run, hlist:histlist]
 }
 

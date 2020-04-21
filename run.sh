@@ -19,7 +19,10 @@ do
   mkdir -p "$dir"
 done
 
-JYPATH=$JYPATH:../groovy_codes $groovy ../run.groovy $@
+for scriptname in `find ../groovy_codes -name "*.groovy"`
+do
+  JYPATH=$JYPATH:../groovy_codes timeout 60 $groovy ../run.groovy $scriptname $@
+done
 
 mv bmt_*.hipo bmtbst/
 mv bst_*.hipo bmtbst/

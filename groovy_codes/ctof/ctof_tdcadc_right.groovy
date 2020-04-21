@@ -13,7 +13,7 @@ def processDirectory(dir, run) {
   def h1 = dir.getObject('/ctof/CTOF TDC-ADC Time Difference')
   def f1 = CTOFFitter.tdcadcdifffit_right(h1)
 
-  data[run] = [run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, chi2:f1.getChiSquare()]
+  data[run] = [run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()]
 }
 
 

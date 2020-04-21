@@ -1,7 +1,7 @@
 import org.jlab.groot.data.TDirectory
 import groovyx.gpars.GParsPool
 
-def monengines = [
+def engines = [
   out_monitor: [new bmtbst.bmt_Occupancy(),
     new bmtbst.bmt_OnTrkLayers(),
     new bmtbst.bst_Occupancy(),
@@ -94,28 +94,25 @@ def monengines = [
 ]
 
 
-GParsPool.withPool 12, {
-args.eachParallel{arg->
-  TDirectory dir = new TDirectory()
-  dir.readFile(arg)
 
-  def name = arg.split('/')[-1]
-  def m = name =~ /\d{4,7}/
-  def run = m[0].toInteger()
+engines.collectMany{key,engs->engs.collect{[key,it]}}
+  .find{name,eng->eng.getClass().getSimpleName()==args[0].split("/")[-1].replace('.groovy','')}
+  ?.with{name,engine->
+    println([name,args[0],engine.getClass().getSimpleName()])
+    def fnames = args.findAll{it.contains(name)}
 
-  println "debug: openning $name $run"
-  monengines.each{key,engines->
-    if(arg.contains(key)) {
-      println "$arg contains $key"
-      engines.each{it.processDirectory(dir, run)}
-    }
-  }
-}
-}
+    GParsPool.withPool 6, {
+      fnames.eachParallel{arg->
+        TDirectory dir = new TDirectory()
+        dir.readFile(arg)
+        def fname = arg.split('/')[-1]
+        def m = fname =~ /\d{4,7}/
+        def run = m[0].toInteger()
 
-
-monengines.collectMany{it.value}.each{engine->
-  println("debug: closing "+engine.getClass().getSimpleName())
-  engine.close()
-}
+        println("debug: "+engine.getClass().getSimpleName()+" processes $arg")
+        engine.processDirectory(dir, run)
+      }
+   }
+   engine.close()
+ }
 
