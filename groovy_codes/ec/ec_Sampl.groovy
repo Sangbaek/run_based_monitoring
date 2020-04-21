@@ -1,21 +1,8 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
-// import ROOTFitter
+import fitter.ECFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("ECAL Sampling Fraction per sector")
-  gr.setTitleY("ECAL Sampling Fraction per sector")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -25,67 +12,45 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-
-  (0..<6).each{
-    def h2 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1))
-    def h1 = h2.projectionY()
+  def funclist = []
+  def meanlist = []
+  def sigmalist = []
+  def chi2list = []
+  def histlist =   (0..<6).collect{
+    def h1 = dir.getObject('/elec/H_trig_ECALsampl_S'+(it+1)).projectionY()
     h1.setName("sec"+(it+1))
     h1.setTitle("ECAL Sampling Fraction")
     h1.setTitleX("ECAL Sampling Fraction")
-
-    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", 0.15, 0.35);
-    f1.setLineWidth(2);
-    f1.setOptStat("1111");
-    initTimeGaussFitPar(f1,h1);
-    DataFitter.fit(f1,h1,"LQ");
-    recursive_Gaussian_fitting(f1,h1)
-    // grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    // grtl[it].addPoint(run, h1.getMean(), 0, 0)
-    out.addDataSet(h1)
-    out.addDataSet(f1)
+    def f1 = ECFitter.samplfit(h1)
+    funclist.add(f1)
+    meanlist.add(f1.getParameter(1))
+    sigmalist.add(f1.getParameter(2).abs())
+    chi2list.add(f1.getChiSquare())
+    return h1
   }
+  data.add([run:run, hlist:histlist, flist:funclist, Sampling:meanlist, sigma:sigmalist, clist:chi2list])
 }
 
 
+TDirectory out = new TDirectory()
 out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+(0..<6).each{ sec->
+  def grtl = new GraphErrors('sec'+(sec+1))
+  grtl.setTitle("ECAL Sampling Fraction per sector")
+  grtl.setTitleY("ECAL Sampling Fraction per sector")
+  grtl.setTitleX("run number")
+  
+  data.each{
+    if (sec==0){
+      out.mkdir('/'+it.run)
+    }
+    out.cd('/'+it.run) 
+    out.addDataSet(it.hlist[sec])
+    out.addDataSet(it.flist[sec])
+    grtl.addPoint(it.run, it.Sampling[sec], 0, 0)
+  }
+  out.cd('/timelines')
+  out.addDataSet(grtl)
+}
+
 out.writeFile('ec_Sampling.hipo')
-
-private void initTimeGaussFitPar(F1D f1, H1F h1) {
-        double hAmp  = h1.getBinContent(h1.getMaximumBin());
-        double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = h1.getRMS(); //ns
-        // double rangeMin = (hMean - (3*hRMS));
-        // double rangeMax = (hMean + (3*hRMS));
-        // double pm = hRMS;
-        // f1.setRange(rangeMin, rangeMax);
-        f1.setParameter(0, hAmp);
-        // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
-        f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-pm, hMean+(pm));
-        f1.setParameter(2, hRMS);
-        // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
-}
-
-private void recursive_Gaussian_fitting(F1D f1, H1F h1){
-        double rangeMin = f1.getParameter(1)-2*f1.getParameter(2)
-        double rangeMax = f1.getParameter(1)+2*f1.getParameter(2)
-        // limit fitting range as 2 sigma
-        f1.setRange(rangeMin, rangeMax)
-        // if with noise, don't fit such noise
-        if(f1.getNPars()>3){
-          (3..f1.getNPars()-1).each{
-            f1.setParLimits(it,f1.getParameter(it)*0.8, f1.getParameter(it)*1.2)
-          }
-        }
-        DataFitter.fit(f1,h1,"LQ");
-        System.out.println("chi2 too large")
-        if (f1.getChiSquare()>500){
-          initTimeGaussFitPar(f1,h1);
-          DataFitter.fit(f1,h1,"LQ");
-        }
-}

@@ -1,16 +1,7 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-// import ROOTFitter
 
-def grtl = (1..6).collect{
-  def gr = new GraphErrors('sec'+it)
-  gr.setTitle("Average Forward Reconstruction chi2, positives")
-  gr.setTitleY("Average Forward Reconstruction chi2, positives")
-  gr.setTitleX("run number")
-  return gr
-}
-
-TDirectory out = new TDirectory()
+data = []
 
 for(arg in args) {
   TDirectory dir = new TDirectory()
@@ -20,23 +11,31 @@ for(arg in args) {
   def m = name =~ /\d{4,5}/
   def run = m[0].toInteger()
 
-  out.mkdir('/'+run)
-  out.cd('/'+run)
-
-  (0..<6).each{
+  def histlist =   (0..<6).collect{
     def h1 = dir.getObject('/dc/H_dcm_chi2_S'+(it+1))
-    // def f1 = ROOTFitter.fit(h1)
-
-    //grtl[it].addPoint(run, h1.getDataX(h1.getMaximumBin()), 0, 0)
-    // grtl[it].addPoint(run, f1.getParameter(1), 0, 0)
-    grtl[it].addPoint(run, h1.getMean(), 0, 0)
-    out.addDataSet(h1)
-    // out.addDataSet(f1)
+    return h1
   }
+  data.add([run:run, hlist:histlist])
 }
 
-
+TDirectory out = new TDirectory()
 out.mkdir('/timelines')
-out.cd('/timelines')
-grtl.each{ out.addDataSet(it) }
+(0..<6).each{ sec->
+  def grtl = new GraphErrors('sec'+(sec+1))
+  grtl.setTitle("Average Forward Reconstruction chi2 for positives")
+  grtl.setTitleY("Average Forward Reconstruction chi2 for positives")
+  grtl.setTitleX("run number")
+  
+  data.each{
+    if (sec==0){
+      out.mkdir('/'+it.run)
+    }
+    out.cd('/'+it.run) 
+    out.addDataSet(it.hlist[sec])
+    grtl.addPoint(it.run, it.hlist[sec].getMean(), 0, 0)
+  }
+  out.cd('/timelines')
+  out.addDataSet(grtl)
+}
+
 out.writeFile('forward_positive_chi2.hipo')

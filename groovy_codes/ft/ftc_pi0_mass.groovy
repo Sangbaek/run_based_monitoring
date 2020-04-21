@@ -1,8 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import FTFitter;
+import fitter.FTFitter
 
 data = []
 
@@ -23,8 +21,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("FTC pi0 mass")
-  grtl.setTitleY("FTC pi0 mass ("+name+" value) (MeV)")
+  grtl.setTitle("FTC pi0 mass ("+name+")")
+  grtl.setTitleY("FTC pi0 mass ("+name+") (MeV)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()

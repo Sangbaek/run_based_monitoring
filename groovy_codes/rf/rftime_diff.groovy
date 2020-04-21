@@ -1,11 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.data.H1F
-import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
-import RFFitter;
+import fitter.RFFitter;
 
 def data = []
 
@@ -30,7 +25,7 @@ for(arg in args) {
 
   def grtl = new GraphErrors('RFtime_diff_'+name)
   grtl.setTitle("Average rftime difference ("+name+")")
-  grtl.setTitleY("Average rftime difference (ns)")
+  grtl.setTitleY("Average rftime difference ("+name+") (ns)")
   grtl.setTitleX("run number")
 
   data.each{

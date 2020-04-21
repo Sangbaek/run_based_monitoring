@@ -1,11 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
-
+import fitter.RFFitter;
 
 def data = []
 
@@ -29,7 +24,7 @@ for(arg in args) {
 
   def grtl = new GraphErrors('RFtime_pim_CD'+name)
   grtl.setTitle("Average #pi<sup>-</sup> rftime1, CD ("+name+")")
-  grtl.setTitleY("Average #pi<sup>-</sup> rftime1, CD (ns)")
+  grtl.setTitleY("Average #pi<sup>-</sup> rftime1, CD ("+name+") (ns)")
   grtl.setTitleX("run number")
 
   data.each{

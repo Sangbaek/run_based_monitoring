@@ -1,8 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import CTOFFitter;
+import fitter.CTOFFitter;
 
 
 data = []
@@ -24,8 +22,8 @@ for(arg in args) {
 
 ['mean', 'sigma'].each{name->
   def grtl = new GraphErrors(name)
-  grtl.setTitle("Corrected CTOF_vtime-STT for negative tracks, all pads")
-  grtl.setTitleY("Corrected CTOF_vtime-STT for negative tracks, all pads ("+name+") (ns)")
+  grtl.setTitle("Corrected CTOF_vtime-STT for negative tracks, all pads (" + name +")")
+  grtl.setTitleY("Corrected CTOF_vtime-STT for negative tracks, all pads (" + name + ") (ns)")
   grtl.setTitleX("run number")
 
   TDirectory out = new TDirectory()

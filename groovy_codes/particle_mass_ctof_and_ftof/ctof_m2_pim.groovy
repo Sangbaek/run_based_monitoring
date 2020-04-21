@@ -1,11 +1,6 @@
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
-import org.jlab.groot.data.H1F
-import org.jlab.groot.group.DataGroup;
-import org.jlab.groot.math.F1D;
-import org.jlab.groot.fitter.DataFitter;
-import org.jlab.groot.graphics.EmbeddedCanvas;
-import CTOFFitter_mass;
+import fitter.CTOFFitter_mass;
 
 def data = []
 
@@ -20,15 +15,15 @@ for(arg in args) {
   def h1 = dir.getObject('/ctof/H_CTOF_neg_mass')
   def f1 = CTOFFitter_mass.fit(h1)
 
-  data.add([run:run, peak:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
 }
 
-['peak', 'sigma'].each{name ->
+['mean', 'sigma'].each{name ->
   TDirectory out = new TDirectory()
 
   def grtl = new GraphErrors(name)
-  grtl.setTitle("CTOF mass^2 "+name+", #pi^-")
-  grtl.setTitleY("CTOF mass^2 "+name+", #pi^- (GeV^2)")
+  grtl.setTitle("CTOF mass^2 for #pi^- ("+name+")")
+  grtl.setTitleY("CTOF mass^2 for #pi^- ("+name+") (GeV^2)")
   grtl.setTitleX("run number")
 
   data.each{
