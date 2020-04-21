@@ -1,11 +1,13 @@
+package ctof
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.CTOFFitter;
 
-class ctof_edep.groovy {
+class ctof_edep {
 
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/ctof/PathLCorrected Edep_p5')
@@ -16,7 +18,7 @@ def processDirectory(dir, run) {
   h1.setTitle(h1.getTitle()+"_10")
   def f1 = CTOFFitter.edepfit(h1)
 
-  data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), chi2:f1.getChiSquare()])
+  data[run] = [run:run, h1:h1, f1:f1, mean:f1.getParameter(1), chi2:f1.getChiSquare()]
 }
 
 
@@ -31,7 +33,7 @@ def close() {
 
   TDirectory out = new TDirectory()
 
-  data.each{
+  data.sort{it.key}.each{run,it->
     out.mkdir('/'+it.run)
     out.cd('/'+it.run)
     out.addDataSet(it.h1)

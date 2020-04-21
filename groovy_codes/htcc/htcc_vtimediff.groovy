@@ -1,9 +1,11 @@
+package htcc
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class htcc_vtimediff.groovy {
+class htcc_vtimediff {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def histlist =   (0..<6).collect{s->
@@ -13,7 +15,7 @@ def processDirectory(dir, run) {
       }
     }
   }
-  data.add([run:run, hlist:histlist])
+  data[run] = [run:run, hlist:histlist]
 }
 
 
@@ -30,7 +32,7 @@ def close() {
         grtl.setTitleY("HTCC vtime - STT, electrons, per PMTs (ns)")
         grtl.setTitleX("run number")
 
-        data.each{
+        data.sort{it.key}.each{run,it->
           if (sec==0 && ring==0 && side==0){
             out.mkdir('/'+it.run)
           }

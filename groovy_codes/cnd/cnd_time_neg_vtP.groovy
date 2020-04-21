@@ -1,10 +1,12 @@
+package cnd
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.CNDFitter
 
-class cnd_time_neg_vtP.groovy {
+class cnd_time_neg_vtP {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = []
@@ -27,7 +29,7 @@ def processDirectory(dir, run) {
     return h1
   }
 
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -44,7 +46,7 @@ def close() {
       grtl.setTitleY("CND time per layer, " + name + " (ns)")
       grtl.setTitleX("run number")
 
-      data.each{
+      data.sort{it.key}.each{run,it->
         out.mkdir('/'+it.run)
         out.cd('/'+it.run)
 

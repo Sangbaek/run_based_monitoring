@@ -1,16 +1,18 @@
+package cvt
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class cvt_pathlen.groovy {
+class cvt_pathlen {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/cvt/hpathlen')
   h1.setTitle("CVT pathlength");
   h1.setTitleX("CVT pathlength (cm)");
 
-  data.add([run:run, h1:h1])
+  data[run] = [run:run, h1:h1]
 }
 
 
@@ -24,7 +26,7 @@ def close() {
   grtl.setTitleY("Average CVT pathlength (cm)")
   grtl.setTitleX("run number")
 
-  data.each{
+  data.sort{it.key}.each{run,it->
     out.mkdir('/'+it.run)
     out.cd('/'+it.run)
     out.addDataSet(it.h1)

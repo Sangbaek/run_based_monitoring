@@ -1,14 +1,16 @@
+package central
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class central_Kp_num.groovy {
+class central_Kp_num {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/trig/H_trig_central_kplus_rat')
 
-  data.add([run:run, h1:h1])
+  data[run] = [run:run, h1:h1]
 }
 
 
@@ -22,7 +24,7 @@ def close() {
   grtl.setTitleY("K^+ per trigger")
   grtl.setTitleX("run number")
 
-  data.each{
+  data.sort{it.key}.each{run,it->
     out.mkdir('/'+it.run)
     out.cd('/'+it.run)
     out.addDataSet(it.h1)

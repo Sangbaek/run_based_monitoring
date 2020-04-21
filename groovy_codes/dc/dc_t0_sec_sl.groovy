@@ -1,10 +1,12 @@
+package dc
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.DCFitter
 
-class dc_t0_sec_sl.groovy {
+class dc_t0_sec_sl {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def t0fitlist = [[],[],[],[],[],[]]
@@ -24,7 +26,7 @@ def processDirectory(dir, run) {
     }
   }
 
-  data.add([run:run, hlist:histlist, t0list:t0fitlist, t0:t0list, t0chi2:t0chi2list])
+  data[run] = [run:run, hlist:histlist, t0list:t0fitlist, t0:t0list, t0chi2:t0chi2list]
 }
 
 
@@ -42,7 +44,7 @@ def close() {
       grtl.setTitleY(name+" per sector per superlayer (ns)")
       grtl.setTitleX("run number")
 
-      data.each{
+      data.sort{it.key}.each{run,it->
         if (sec==0 && sl==0) out.mkdir('/'+it.run)
         out.cd('/'+it.run)
         out.addDataSet(it.hlist[sec][sl])

@@ -1,10 +1,12 @@
+package ft
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTFitter
 
-class fth_MIPS_time_board.groovy {
+class fth_MIPS_time_board {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = [[],[]]
@@ -24,7 +26,7 @@ def processDirectory(dir, run) {
     return list
   }
 
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -41,7 +43,7 @@ def close() {
         grtl.setTitleY("FTH MIPS time per layer (" + name + ") (ns)")
         grtl.setTitleX("run number")
 
-        data.each{
+        data.sort{it.key}.each{run,it->
           out.mkdir('/'+it.run)
           out.cd('/'+it.run)
           grtl.addPoint(it.run, it[name][lindex][board-1], 0, 0)

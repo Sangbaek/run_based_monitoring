@@ -1,10 +1,12 @@
+package rf
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.RFFitter;
 
-class rftime_prot_FD.groovy {
+class rftime_prot_FD {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def rr = [run:run, mean:[], sigma:[], h1:[], f1:[]]
@@ -16,7 +18,7 @@ def processDirectory(dir, run) {
     rr.mean.add(f1.getParameter(1))
     rr.sigma.add(f1.getParameter(2).abs())
   }
-  data.add(rr)
+  data[run] = rr
 }
 
 
@@ -35,7 +37,7 @@ def close() {
       return gr
     }
 
-    data.each{rr->
+    data.sort{it.key}.each{run,rr->
       out.mkdir('/'+rr.run)
       out.cd('/'+rr.run)
 

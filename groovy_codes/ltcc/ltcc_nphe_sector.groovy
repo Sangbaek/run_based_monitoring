@@ -1,9 +1,11 @@
+package ltcc
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class ltcc_nphe_sector.groovy {
+class ltcc_nphe_sector {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def hlist = [3,5].collect{
@@ -13,7 +15,7 @@ def processDirectory(dir, run) {
     hist.setTitleX("LTCC Number of Photoelectrons for electrons")
     hist
   }
-  data.add([run:run, h3:hlist[0], h5:hlist[1]])
+  data[run] = [run:run, h3:hlist[0], h5:hlist[1]]
 }
 
 
@@ -30,7 +32,7 @@ def close() {
     grtl.setTitleY("LTCC Number of Photoelectrons for electrons per sector")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       if (sec==3){
         out.mkdir('/'+it.run)
       }

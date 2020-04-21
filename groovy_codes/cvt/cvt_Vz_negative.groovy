@@ -1,14 +1,16 @@
+package cvt
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class cvt_Vz_negative.groovy {
+class cvt_Vz_negative {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/cvt/H_CVT_z_neg')
 
-  data.add([run:run, h1:h1])
+  data[run] = [run:run, h1:h1]
 }
 
 
@@ -22,7 +24,7 @@ def close() {
   grtl.setTitleY("Average VZ for negatives (cm)")
   grtl.setTitleX("run number")
 
-  data.each{
+  data.sort{it.key}.each{run,it->
     out.mkdir('/'+it.run)
     out.cd('/'+it.run)
     out.addDataSet(it.h1)

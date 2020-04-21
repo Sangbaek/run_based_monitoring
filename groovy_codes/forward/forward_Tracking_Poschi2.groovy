@@ -1,16 +1,18 @@
+package forward
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class forward_Tracking_Poschi2.groovy {
+class forward_Tracking_Poschi2 {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def histlist =   (0..<6).collect{
     def h1 = dir.getObject('/dc/H_dcm_chi2_S'+(it+1))
     return h1
   }
-  data.add([run:run, hlist:histlist])
+  data[run] = [run:run, hlist:histlist]
 }
 
 
@@ -25,7 +27,7 @@ def close() {
     grtl.setTitleY("Average Forward Reconstruction chi2 for positives")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       if (sec==0){
         out.mkdir('/'+it.run)
       }

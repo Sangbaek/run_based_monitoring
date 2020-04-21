@@ -1,16 +1,18 @@
+package particle_mass_ctof_and_ftof
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.CTOFFitter_mass;
 
-class ctof_m2_pim.groovy {
+class ctof_m2_pim {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/ctof/H_CTOF_neg_mass')
   def f1 = CTOFFitter_mass.fit(h1)
 
-  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, h1:h1, f1:f1]
 }
 
 
@@ -25,7 +27,7 @@ def close() {
     grtl.setTitleY("CTOF mass^2 for #pi^- ("+name+") (GeV^2)")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       grtl.addPoint(it.run, it[name], 0, 0)
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)

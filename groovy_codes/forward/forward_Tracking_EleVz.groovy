@@ -1,10 +1,12 @@
+package forward
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.ForwardFitter
 
-class forward_Tracking_EleVz.groovy {
+class forward_Tracking_EleVz {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = []
@@ -25,7 +27,7 @@ def processDirectory(dir, run) {
     chi2list.add(f1.getChiSquare())
     return h1
   }
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -40,7 +42,7 @@ def close() {
     grtl.setTitleY("VZ (peak value) for electrons per sector (cm)")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       if (sec==0){
         out.mkdir('/'+it.run)
       }

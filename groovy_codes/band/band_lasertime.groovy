@@ -1,15 +1,17 @@
+package band
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class band_lasertime.groovy {
+class band_lasertime {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/BAND/H_BAND_LaserTimeFADC_SectorCombination1')
   def h2 = dir.getObject('/BAND/H_BAND_LaserTimeFADC_SectorCombination2')
 
-  data.add([run:run, Comb1:h1, Comb2:h2])
+  data[run] = [run:run, Comb1:h1, Comb2:h2]
 }
 
 
@@ -26,7 +28,7 @@ def close() {
     gr.setTitleY("maximum location of laser time (ns)")
     gr.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)
       out.addDataSet(it[name])

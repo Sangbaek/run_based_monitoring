@@ -1,13 +1,15 @@
+package trigger
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class rat_Km_num.groovy {
+class rat_Km_num {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/trig/H_trig_sector_kminus_rat')
-  data.add([run:run, h1:h1])
+  data[run] = [run:run, h1:h1]
 }
 
 
@@ -24,7 +26,7 @@ def close() {
     grtl.setTitleY("K^- per trigger per sector")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       if (sec==0){
         out.mkdir('/'+it.run)
         out.cd('/'+it.run)

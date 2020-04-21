@@ -1,10 +1,12 @@
+package dc
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.DCFitter
 
-class dc_time_sec_sl.groovy {
+class dc_time_sec_sl {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = [t0:[[],[],[],[],[],[]], tmax:[[],[],[],[],[],[]]] // actually it's dict! not a list!
@@ -29,7 +31,7 @@ def processDirectory(dir, run) {
     }
   }
 
-  data.add([run:run, hlist:[t0:histlist, tmax:histlist], flist:funclist, fomlist:fomlist, chi2list:chi2list])
+  data[run] = [run:run, hlist:[t0:histlist, tmax:histlist], flist:funclist, fomlist:fomlist, chi2list:chi2list]
 }
 
 
@@ -46,7 +48,7 @@ def close() {
         grtl.setTitleY(name+" per sector per superlayer (ns)")
         grtl.setTitleX("run number")
 
-        data.each{
+        data.sort{it.key}.each{run,it->
           if (sec==0 && sl==0) out.mkdir('/'+it.run)
           out.cd('/'+it.run)
           def h1 = it.hlist[name][sec][sl]

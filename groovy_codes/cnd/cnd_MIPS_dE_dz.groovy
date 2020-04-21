@@ -1,10 +1,12 @@
+package cnd
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.CNDFitter
 
-class cnd_MIPS_dE_dz.groovy {
+class cnd_MIPS_dE_dz {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = []
@@ -28,7 +30,7 @@ def processDirectory(dir, run) {
     hist
   }
 
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -45,7 +47,7 @@ def close() {
       grtl.setTitleY("MIPS dE/dz, " + name + " (GeV/cm)")
       grtl.setTitleX("run number")
 
-      data.each{
+      data.sort{it.key}.each{run,it->
         out.mkdir('/'+it.run)
         out.cd('/'+it.run)
 

@@ -1,9 +1,11 @@
+package htcc
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class htcc_nphe_ring_sector.groovy {
+class htcc_nphe_ring_sector {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def histlist =   (0..<6).collect{s->
@@ -17,7 +19,7 @@ def processDirectory(dir, run) {
       return h1
     }
   }
-  data.add([run:run, hlist:histlist])
+  data[run] = [run:run, hlist:histlist]
 }
 
 
@@ -33,7 +35,7 @@ def close() {
       grtl.setTitleY("Average HTCC Number of Photoelectrons per sector per ring")
       grtl.setTitleX("run number")
 
-      data.each{
+      data.sort{it.key}.each{run,it->
         if (sec==0 && ring ==0){
           out.mkdir('/'+it.run)
         }

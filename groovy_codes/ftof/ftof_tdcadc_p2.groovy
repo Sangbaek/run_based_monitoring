@@ -1,10 +1,12 @@
+package ftof
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTOFFitter
 
-class ftof_tdcadc_p2.groovy {
+class ftof_tdcadc_p2 {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = []
@@ -21,7 +23,7 @@ def processDirectory(dir, run) {
     chi2list.add(f1.getChiSquare())
     return h1
   }
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -37,7 +39,7 @@ def close() {
     grtl.setTitleY("p2 t_tdc-t_fadc (" + name +") (ns)")
     grtl.setTitleX("run number")
 
-      data.each{
+      data.sort{it.key}.each{run,it->
         if (sec==0){
           out.mkdir('/'+it.run)
         }

@@ -1,16 +1,18 @@
+package cvt
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 
-class cvt_pt.groovy {
+class cvt_pt {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/cvt/hpt')
   h1.setTitle("CVT track transverse momentum");
   h1.setTitleX("CVT track transverse momentum (GeV/c)");
 
-  data.add([run:run, h1:h1])
+  data[run] = [run:run, h1:h1]
 }
 
 
@@ -24,7 +26,7 @@ def close() {
   grtl.setTitleY("Average CVT transverse momentum (GeV/c)")
   grtl.setTitleX("run number")
 
-  data.each{
+  data.sort{it.key}.each{run,it->
     out.mkdir('/'+it.run)
     out.cd('/'+it.run)
     out.addDataSet(it.h1)

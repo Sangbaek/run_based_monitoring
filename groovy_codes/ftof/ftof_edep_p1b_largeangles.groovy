@@ -1,10 +1,12 @@
+package ftof
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTOFFitter
 
-class ftof_edep_p1b_largeangles.groovy {
+class ftof_edep_p1b_largeangles {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def funclist = []
@@ -21,7 +23,7 @@ def processDirectory(dir, run) {
     chi2list.add(f1.getChiSquare())
     return h1
   }
-  data.add([run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list])
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
 }
 
 
@@ -36,7 +38,7 @@ def close() {
     grtl.setTitleY("p1b Path-length Corrected Edep for negative tracks, large angles (>23 deg) (MeV)")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       if (sec==0){
         out.mkdir('/'+it.run)
       }

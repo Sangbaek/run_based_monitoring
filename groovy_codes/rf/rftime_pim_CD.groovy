@@ -1,16 +1,18 @@
+package rf
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.RFFitter;
 
-class rftime_pim_CD.groovy {
+class rftime_pim_CD {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/RF/H_pim_RFtime1')
   def f1 = RFFitter.fit(h1)
 
-  data.add([run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), h1:h1, f1:f1])
+  data[run] = [run:run, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, h1:h1, f1:f1]
 }
 
 
@@ -26,7 +28,7 @@ def close() {
     grtl.setTitleY("Average #pi<sup>-</sup> rftime1, CD ("+name+") (ns)")
     grtl.setTitleX("run number")
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       grtl.addPoint(it.run, it[name], 0, 0)
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)

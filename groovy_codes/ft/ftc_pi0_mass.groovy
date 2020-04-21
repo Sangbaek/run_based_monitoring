@@ -1,16 +1,18 @@
+package ft
+import java.util.concurrent.ConcurrentHashMap
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.FTFitter
 
-class ftc_pi0_mass.groovy {
+class ftc_pi0_mass {
 
-def data = []
+def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/ft/hpi0sum')
   def f1 = FTFitter.pi0fit(h1)
 
-  data.add([run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()])
+  data[run] = [run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs, chi2:f1.getChiSquare()]
 }
 
 
@@ -26,7 +28,7 @@ def close() {
 
     TDirectory out = new TDirectory()
 
-    data.each{
+    data.sort{it.key}.each{run,it->
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)
       out.addDataSet(it.h1)
