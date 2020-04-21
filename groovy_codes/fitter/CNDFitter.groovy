@@ -64,7 +64,7 @@ class CNDFitter{
 		def makefit = {func->
 			hMean = func.getParameter(1)
 			hRMS = func.getParameter(2).abs()
-			func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
+			func.setRange(hMean-2.5*hRMS,hMean+1.5*hRMS)
 			DataFitter.fit(func,h1,"Q")
 			return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
 		}
