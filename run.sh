@@ -19,7 +19,7 @@ do
   mkdir -p "$dir"
 done
 
-for scriptname in `find ../groovy_codes -name "*.groovy" ! -name "*Fitter*"`
+for scriptname in `find ../groovy_codes -name "*.groovy"`
 do
   JYPATH=$JYPATH:../groovy_codes timeout 60 $groovy ../run.groovy $scriptname $@
 done
