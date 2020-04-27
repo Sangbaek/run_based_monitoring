@@ -22,7 +22,7 @@ class DCFitter{
         f1.setRange(hMean-1, hMean+1);
         f1.setParameter(0, hAmp);
         f1.setParameter(1, hMean);
-        // f1.setParLimits(1, hMean-0.5, hMean+0.5);
+        f1.setParLimits(1, hMean-0.5, hMean+0.5);
         f1.setParameter(2, hRMS);
         f1.setParameter(3,0);
 
@@ -70,39 +70,39 @@ class DCFitter{
 		def P2 = (T10+T90)/2
 		if (slayer == 1) {
 			// min = 100.0; max = 240.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut10,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10,T90);
+			f1.setParameter(0,P0); if (cut90>cut10) f1.setParLimits(1,2*cut10,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90>T10) f1.setParLimits(2,T10,T90);
 		}
 		if (slayer == 2) {
 			// min = 120.0; max = 240.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut10,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10,T90);
+			f1.setParameter(0,P0); if (cut90>cut10) f1.setParLimits(1,2*cut10,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90>T10) f1.setParLimits(2,T10,T90);
 		}
 		if (slayer == 3) {
 			// min = 200.0; max = 450.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut10,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10-50,T90+50);
+			f1.setParameter(0,P0); if (cut90>cut10) f1.setParLimits(1,2*cut10,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90+50>T10-50) f1.setParLimits(2,T10-50,T90+50);
 		}
 		if (slayer == 4) {
 			// min = 200.0; max = 500.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut_test,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10-50,T90+50);
+			f1.setParameter(0,P0); if (cut90>cut_test) f1.setParLimits(1,2*cut_test,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90+50>T10-50) f1.setParLimits(2,T10-50,T90+50);
 		}
 		if (slayer == 5) {
 			// min = 400.0; max = 700.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut10,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10-50,T90+50);
+			f1.setParameter(0,P0); if (cut90>cut10)  f1.setParLimits(1,2*cut10,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90+50>T10-50) f1.setParLimits(2,T10-50,T90+50);
 		}
 		if (slayer == 6) {
 			// min = 480.0; max = 700.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*cut10,2*cut90);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T10-50,T90+50);
+			f1.setParameter(0,P0); if (cut90>cut10)  f1.setParLimits(1,2*cut10,2*cut90);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T90+50>T10-50) f1.setParLimits(2,T10-50,T90+50);
 		}
 		f1.setRange(T_test,T_test2);
 		DataFitter.fit(f1,h1,"LQ");
@@ -132,39 +132,39 @@ class DCFitter{
 		def P2 = (T10+T_cut)/2
 		if (slayer == 1) {
 			// min = 100.0; max = 240.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut,T10);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10>T_cut) f1.setParLimits(2,T_cut,T10);
 		}
 		if (slayer == 2) {
 			// min = 120.0; max = 240.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut,T10);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10>T_cut) f1.setParLimits(2,T_cut,T10);
 		}
 		if (slayer == 3) {
 			// min = 200.0; max = 450.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut-50,T10+50);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 4) {
 			// min = 200.0; max = 500.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut-50,T10+50);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 5) {
 			// min = 400.0; max = 700.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut-50,T10+50);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 6) {
 			// min = 480.0; max = 700.0;
-			f1.setParameter(0,P0); // f1.setParLimits(1,2*y10,2*y_cut);
-			f1.setParameter(1,P1); // f1.setParLimits(1,P1*0.1,P1*2);
-			f1.setParameter(2,P2); // f1.setParLimits(2,T_cut-50,T10+50);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
+			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		f1.setRange(T_cut,T10);
 		DataFitter.fit(f1,h1,"LQ");

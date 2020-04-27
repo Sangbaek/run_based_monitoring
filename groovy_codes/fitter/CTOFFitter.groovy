@@ -144,13 +144,13 @@ class CTOFFitter {
     double hRMS  = h1.getRMS(); //ns
     f1.setRange(hMean*0.65, hMean*2);
     f1.setParameter(0, hAmp);
-    // f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
+    if (hAmp>0)f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
     f1.setParameter(1, hMean);
-    // f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+    if (hMean>0) f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
     f1.setParameter(2, 0.3);//Changed from 2
-    // f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
-    // f1.setParLimits(3,0, hAmp);
-    // f1.setParLimits(4,0,100);
+    f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+    if (hAmp>0) f1.setParLimits(3,0, hAmp);
+    f1.setParLimits(4,0,100);
 
     def makefit = {func->
       hMean = func.getParameter(1)

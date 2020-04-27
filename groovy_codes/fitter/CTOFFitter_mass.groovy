@@ -7,6 +7,7 @@ import org.jlab.groot.math.F1D
 
 class CTOFFitter_mass {
   static F1D fit(H1F h1) {
+    def hAmp = h1.getBinContent(h1.getMaximumBin())
     double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin())
     double xmin = hMean-0.2
     double xmax = hMean+0.2
@@ -15,9 +16,9 @@ class CTOFFitter_mass {
 
     f1.setParameter(1, hMean)
     f1.setParameter(2, hRMS)
-    // f1.setParLimits(2, 0, 0.4)
+    f1.setParLimits(2, 0, 0.4)
     f1.setParameter(3, 0)
-    // f1.setParLimits(3, 0, h1.getMax()*0.2)
+    if (hAmp>0) f1.setParLimits(3, 0, hAmp*0.2)
 
     def makefit = {func->
       hMean = func.getParameter(1)
