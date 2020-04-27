@@ -43,9 +43,9 @@ class FTFitter {
     double pm = hRMS*3;
     f1.setRange(rangeMin, rangeMax);
     f1.setParameter(0, hAmp);
-    f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
+    // f1.setParLimits(0, hAmp*0.8, hAmp*1.2);
     f1.setParameter(1, hMean);
-    f1.setParLimits(1, hMean-pm, hMean+(pm));
+    // f1.setParLimits(1, hMean-pm, hMean+(pm));
     f1.setParameter(2, 0.2);
     // f1.setParLimits(2, 0.1*hRMS, 0.8*hRMS);
 
@@ -73,9 +73,9 @@ class FTFitter {
     double rangeMax = (hMean + (3*hRMS));
     f1.setRange(rangeMin, rangeMax);
     f1.setParameter(0, hAmp);
-    f1.setParLimits(0, hAmp*0.9, hAmp*1.1);
+    // f1.setParLimits(0, hAmp*0.9, hAmp*1.1);
     f1.setParameter(1, hMean);
-    f1.setParLimits(1, hMean-2*hRMS, hMean+2*hRMS);
+    // f1.setParLimits(1, hMean-2*hRMS, hMean+2*hRMS);
     f1.setParameter(2, 1.2);
 
 
@@ -103,11 +103,11 @@ class FTFitter {
     double hRMS  = h1.getRMS(); //ns
     f1.setRange(f1.getRange().getMin(), hMean*2.0);
     f1.setParameter(0, hAmp);
-    f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
+    // f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
     f1.setParameter(1, hMean);
-    f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+    // f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
     f1.setParameter(2, 0.3);//Changed from 2
-    f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+    // f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
     f1.setParameter(3, 0.2*hAmp);
     f1.setParameter(4, -0.3);//Changed from -0.2
 

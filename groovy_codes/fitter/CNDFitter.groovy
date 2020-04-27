@@ -20,11 +20,11 @@ class CNDFitter{
 	    def f1=new F1D("fit:"+h1.getName(),"[amp]*landau(x,[mean],[sigma])+[p0]+[p1]*x+[p2]*x*x", 1.0, 4.0);
 	    f1.setRange(f1.getRange().getMin(), hMean*2.0);
 	    f1.setParameter(0, hAmp);
-	    f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
+	    // f1.setParLimits(0, 0.5*hAmp, 1.5*hAmp);
 	    f1.setParameter(1, hMean);
-	    f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
+	    // f1.setParLimits(1, 0.8*hMean, 1.2*hMean);//Changed from 5-30
 	    f1.setParameter(2, 0.15);//Changed from 2
-	    f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
+	    // f1.setParLimits(2, 0.1, 1);//Changed from 0.5-10
 	    f1.setParameter(3, -100);
 	    f1.setParameter(4, 500);//Changed from -0.2
 	    f1.setParameter(5, -100);//Changed from -0.2
@@ -54,10 +54,10 @@ class CNDFitter{
 		double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
 		double hRMS = h1.getRMS()
 		f1.setParameter(1,hMean);
-		f1.setParLimits(1,hMean-0.5,hMean+1);
+		// f1.setParLimits(1,hMean-0.5,hMean+1);
 		f1.setRange(hMean-0.5,hMean+0.5);
 		f1.setParameter(0,maxt);
-		f1.setParLimits(0,maxt*0.95,maxt*1.1);
+		// f1.setParLimits(0,maxt*0.95,maxt*1.1);
 		f1.setParameter(2,0.2);
 		DataFitter.fit(f1, h1, "");
 
@@ -86,7 +86,7 @@ class CNDFitter{
 		f1.setRange(-7,7);
 		f1.setParameter(1,0.0);
 		f1.setParameter(0,maxz);
-		f1.setParLimits(0,maxz*0.9,maxz*1.1);
+		// f1.setParLimits(0,maxz*0.9,maxz*1.1);
 		f1.setParameter(2,3.0);
 
 		double hMean, hRMS
