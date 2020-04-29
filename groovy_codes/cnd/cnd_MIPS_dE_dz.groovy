@@ -22,7 +22,7 @@ def processDirectory(dir, run) {
       }
     }
     hist.setName("layer"+(lindex+1))
-    hist.setTitle("dE/dz (GeV/cm)")
+    hist.setTitle("dE/dz (MeV/cm)")
     funclist.add(CNDFitter.edepfit(hist))
     meanlist.add(funclist[lindex].getParameter(1))
     sigmalist.add(funclist[lindex].getParameter(2).abs())
