@@ -71,7 +71,7 @@ class ECFitter {
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS)
+      func.setRange(hMean-1.5*hRMS, hMean+2.5*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
