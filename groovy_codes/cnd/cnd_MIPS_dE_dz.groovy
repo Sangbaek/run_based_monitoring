@@ -44,7 +44,7 @@ def close() {
     ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
       def grtl = new GraphErrors(layer+' '+name)
       grtl.setTitle("MIPS dE/dz, "+ name)
-      grtl.setTitleY("MIPS dE/dz, " + name + " (GeV/cm)")
+      grtl.setTitleY("MIPS dE/dz, " + name + " (MeV/cm)")
       grtl.setTitleX("run number")
 
       data.sort{it.key}.each{run,it->
