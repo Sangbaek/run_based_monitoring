@@ -22,7 +22,7 @@ def processDirectory(dir, run) {
       }
     }
     hist.setName("layer"+(lindex+1))
-    hist.setTitle("dE/dz (GeV/cm)")
+    hist.setTitle("dE/dz (MeV/cm)")
     funclist.add(CNDFitter.edepfit(hist))
     meanlist.add(funclist[lindex].getParameter(1))
     sigmalist.add(funclist[lindex].getParameter(2).abs())
@@ -44,7 +44,7 @@ def close() {
     ['layer1','layer2','layer3'].eachWithIndex{layer, lindex ->
       def grtl = new GraphErrors(layer+' '+name)
       grtl.setTitle("MIPS dE/dz, "+ name)
-      grtl.setTitleY("MIPS dE/dz, " + name + " (GeV/cm)")
+      grtl.setTitleY("MIPS dE/dz, " + name + " (MeV/cm)")
       grtl.setTitleX("run number")
 
       data.sort{it.key}.each{run,it->

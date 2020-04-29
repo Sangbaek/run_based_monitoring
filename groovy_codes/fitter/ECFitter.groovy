@@ -41,12 +41,14 @@ class ECFitter {
     double hRMS  = h1.getRMS(); //ns
     f1.setParameter(0, hAmp);
     f1.setParameter(1, hMean);
-    f1.setParameter(2, hRMS);
+    f1.setParameter(2, 0.1);
+    f1.setRange(hMean-1,hMean+1)
+    DataFitter.fit(f1,h1,"")
 
     def makefit = {func->
       hMean = func.getParameter(1)
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-1.5*hRMS,hMean+1.5*hRMS)
+      func.setRange(hMean-2.5*hRMS,hMean+2.5*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
@@ -71,7 +73,7 @@ class ECFitter {
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS)
+      func.setRange(hMean-2*hRMS, hMean+2.5*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
