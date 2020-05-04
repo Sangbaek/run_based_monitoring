@@ -14,7 +14,7 @@ class FTOFFitter {
 		f1.setRange(hMean-2.5*hRMS, hMean+2.5*hRMS);
 		f1.setParameter(0, hAmp);
 		f1.setParameter(1, hMean);
-		f1.setParameter(2, hRMS);
+		f1.setParameter(2, Math.min(hRMS,0.1));
 
 		def makefit = {func->
 		  hMean = func.getParameter(1)
@@ -35,7 +35,7 @@ class FTOFFitter {
 	    def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])", -0.5, 0.5);
         double hAmp  = h1.getBinContent(h1.getMaximumBin());
         double hMean = h1.getAxis().getBinCenter(h1.getMaximumBin());
-        double hRMS  = 0.35;//h1.getRMS(); //ns
+        double hRMS  = 0.3;//h1.getRMS(); //ns
         double rangeMin = (hMean - 2.5*hRMS);
         double rangeMax = (hMean + 2.5*hRMS);
         f1.setRange(rangeMin, rangeMax);
