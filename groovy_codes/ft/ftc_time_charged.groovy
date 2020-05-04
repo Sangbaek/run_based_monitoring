@@ -9,7 +9,7 @@ class ftc_time_charged {
 def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
-  def h1 = dir.getObject('/ft/hi_cal_time_cut_ch')
+  def h1 = dir.getObject('/ft/hi_cal_time_ch')
   def f1 = FTFitter.ftctimefit(h1)
 
   data[run] = [run:run, h1:h1, f1:f1, mean:f1.getParameter(1), sigma:f1.getParameter(2).abs(), chi2:f1.getChiSquare()]
