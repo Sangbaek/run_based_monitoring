@@ -59,10 +59,10 @@ class DCFitter{
 		def cut10=0.1*h1.getMax()
 		def cut90=0.9*h1.getMax()
 		for(int bin =0; bin < h1.getMaximumBin(); bin++){
-		  if (h1.getBinContent(bin)<cut_test && h1.getBinContent(bin+1)>cut_test) T_test=h1.getDataX(bin)
-		  if (h1.getBinContent(bin)<cut_test2 && h1.getBinContent(bin+1)>cut_test2) T_test2=h1.getDataX(bin+1)
-		  if (h1.getBinContent(bin)<cut10 && h1.getBinContent(bin+1)>cut10) T10=h1.getDataX(bin)
-		  if (h1.getBinContent(bin)<cut90 && h1.getBinContent(bin+1)>cut90) T90=h1.getDataX(bin+1)
+		  if (h1.getBinContent(bin)<cut_test && h1.getBinContent(bin+1)>=cut_test) T_test=h1.getDataX(bin)
+		  if (h1.getBinContent(bin)<cut_test2 && h1.getBinContent(bin+1)>=cut_test2) T_test2=h1.getDataX(bin+1)
+		  if (h1.getBinContent(bin)<cut10 && h1.getBinContent(bin+1)>=cut10) T10=h1.getDataX(bin)
+		  if (h1.getBinContent(bin)<cut90 && h1.getBinContent(bin+1)>=cut90) T90=h1.getDataX(bin+1)
 		}
 		if (T_test==-10000) T_test=T10
 		def P0 = h1.getMax()
@@ -118,11 +118,16 @@ class DCFitter{
 		double max = 220.0;
 		def cut=0.1*h1.getMax()
 		def T_cut, T10
-		for(int bin = h1.getXaxis().getNBins(); bin >0; bin--){
-		  if (h1.getBinContent(bin)<cut && h1.getBinContent(bin-1)>cut){
+		for(int bin = h1.getXaxis().getNBins(); bin >h1.getAxis().getBinCenter(h1.getMaximumBin()); bin--){
+		  if (h1.getBinContent(bin)<cut && h1.getBinContent(bin-1)>=cut){
 		    T_cut=h1.getDataX(bin)-100
 		    T10=h1.getDataX(bin)
 		  }
+		}
+		def T10_array = [250, 270, 420, 450, 650, 670]
+		if (!T10){
+			T10 = T10_array[slayer-1]
+			T_cut = T10 -100
 		}
 		def bin_cut = h1.getXaxis().getBin(T_cut)
 		def y_cut = h1.getBinContent(bin_cut)
@@ -132,37 +137,37 @@ class DCFitter{
 		def P2 = (T10+T_cut)/2
 		if (slayer == 1) {
 			// min = 100.0; max = 240.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10>T_cut) f1.setParLimits(2,T_cut,T10);
 		}
 		if (slayer == 2) {
 			// min = 120.0; max = 240.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10>T_cut) f1.setParLimits(2,T_cut,T10);
 		}
 		if (slayer == 3) {
 			// min = 200.0; max = 450.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 4) {
 			// min = 200.0; max = 500.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 5) {
 			// min = 400.0; max = 700.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
 		if (slayer == 6) {
 			// min = 480.0; max = 700.0;
-			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(1,2*y10,2*y_cut);
+			f1.setParameter(0,P0); if (y_cut>y10) f1.setParLimits(0,2*y10,2*y_cut);
 			f1.setParameter(1,P1); if (P1>0) f1.setParLimits(1,P1*0.1,P1*2);
 			f1.setParameter(2,P2); if (T10+50>T_cut-50) f1.setParLimits(2,T_cut-50,T10+50);
 		}
