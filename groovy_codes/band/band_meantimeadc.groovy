@@ -25,7 +25,7 @@ def close() {
   ["Comb1", "Comb2"].each{ name ->
     def gr = new GraphErrors(name)
     gr.setTitle("BAND maximum time fadc sector combination")
-    gr.setTitleY("maximum location of meantimeFadc – sqrt(x^2+y^2+z^2)/c (ns)")
+    gr.setTitleY("maximum location of meantimeFadc - STT – sqrt(x^2+y^2+z^2)/c (ns)")
     gr.setTitleX("run number")
 
     data.sort{it.key}.each{run,it->
