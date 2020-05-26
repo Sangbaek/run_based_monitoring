@@ -30,7 +30,7 @@ def close() {
     data.sort{it.key}.each{run,it->
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)
-      it.h1.setName(it.h1.getName() + ", max at "+it.h1.getAxis().getBinCenter(h1.getMaximumBin()))
+      it.h1.setName(it.h1.getName() + ", max at "+it.h1.getAxis().getBinCenter(it.h1.getMaximumBin()))
       out.addDataSet(it.h1)
       grtl.addPoint(it.run, it[name], 0, 0)
     }
