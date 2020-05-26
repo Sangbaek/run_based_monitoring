@@ -4,14 +4,13 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import fitter.RICHFitter;
 
-class rich_timediff {
+class rich_fwhm_pmt {
 
 
 def data = new ConcurrentHashMap()
 
 def processDirectory(dir, run) {
   def h1 = dir.getObject('/RICH/H_RICH_FWHM')
-  h1.setName(h1.getName + ", max at "+h1.getAxis().getBinCenter(h1.getMaximumBin()))
   data[run] = [run:run, h1:h1, fwhm_max:h1.getBinContent(h1.getMaximumBin())]
 }
 
@@ -22,8 +21,8 @@ def close() {
 
   ['fwhm_max'].each{name->
     def grtl = new GraphErrors(name)
-    grtl.setTitle("RICH FWHM of T_meas-T_calc per pmt photons ("+name+")")
-    grtl.setTitleY("RICH FWHM of T_meas-T_calc per pmt photons ("+name+") (ns)")
+    grtl.setTitle("RICH maximum FWHM of T_meas-T_calc per pmt photons")
+    grtl.setTitleY("RICH maximum FWHM of T_meas-T_calc per pmt photons (ns)")
     grtl.setTitleX("run number")
 
     TDirectory out = new TDirectory()
@@ -31,6 +30,7 @@ def close() {
     data.sort{it.key}.each{run,it->
       out.mkdir('/'+it.run)
       out.cd('/'+it.run)
+      it.h1.setName(it.h1.getName() + ", max at "+it.h1.getAxis().getBinCenter(h1.getMaximumBin()))
       out.addDataSet(it.h1)
       grtl.addPoint(it.run, it[name], 0, 0)
     }
