@@ -14,7 +14,11 @@ def processDirectory(dir, run) {
   def sigmalist = []
   def chi2list = []
 
-  def histlist = [def h1, def h2, def h3].withIndex().collect{hist, lindex ->
+  def h1
+  def h2
+  def h3
+
+  def histlist = [h1, h2, h3].withIndex().collect{hist, lindex ->
     for(int sector=0;sector<24;sector++){
       for(int comp=0;comp<2;comp++){
         if (!hist) hist = dir.getObject(String.format("/cnd/CND_alignE_L%d_S%d_C%d",lindex+1,sector+1,comp+1))

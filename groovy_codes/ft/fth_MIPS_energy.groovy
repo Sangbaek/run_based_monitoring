@@ -14,7 +14,10 @@ def processDirectory(dir, run) {
   def sigmalist = []
   def chi2list = []
 
-  def histlist = [def h1, def h2].withIndex().collect{hist, it ->
+  def h1
+  def h2
+
+  def histlist = [h1, h2].withIndex().collect{hist, it ->
     hist = dir.getObject('/ft/hi_hodo_ematch_l'+(it+1))
     funclist.add(FTFitter.fthedepfit(hist, it))
     meanlist.add(funclist[it].getParameter(1))
