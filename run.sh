@@ -21,7 +21,7 @@ done
 
 for scriptname in `find ../groovy_codes -name "*.groovy"`
 do
-  JYPATH=$JYPATH:../groovy_codes timeout 60 $groovy ../run.groovy $scriptname $@
+  JYPATH=$JYPATH:../groovy_codes $groovy ../run.groovy $scriptname $@
 done
 
 mv bmt_*.hipo bmtbst/
