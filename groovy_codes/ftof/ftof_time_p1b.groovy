@@ -22,8 +22,8 @@ def processDirectory(dir, run) {
     meanlist.add(f1.getParameter(1))
     sigmalist.add(f1.getParameter(2).abs())
     chi2list.add(f1.getChiSquare())
-    meanerrorlist.add(f1.getParError(1))
-    sigmaerrorlist.add(f1.getParError(2))
+    meanerrorlist.add(f1.parameter(1).error())
+    sigmaerrorlist.add(f1.parameter(2).error())
     return h1
   }
   data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list, meanerrorlist:meanerrorlist, sigmaerrorlist:sigmaerrorlist]
