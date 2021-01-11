@@ -35,8 +35,8 @@ def close() {
     out.mkdir('/timelines')
     (0..<6).each{ sec->
       def grtl = new GraphErrors('sec'+(sec+1))
-      grtl.setTitle("p1a Vertex-time difference FTOF_vtime-RFT for e+, e-, pi+, and pi- (" + name + ")")
-      grtl.setTitleY("p1a Vertex-time difference FTOF_vtime-RFT for e+, e-, pi+, and pi- (" + name + ") (ns)")
+      grtl.setTitle("p1a Vertex-time difference FTOF_vtime-RFT for e-, e+, pi-, and pi+ (" + name + ")")
+      grtl.setTitleY("p1a Vertex-time difference FTOF_vtime-RFT for e-, e+, pi-, and pi+ (" + name + ") (ns)")
       grtl.setTitleX("run number")
 
       data.sort{it.key}.each{run,it->
