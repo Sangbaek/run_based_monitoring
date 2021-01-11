@@ -34,8 +34,8 @@ def close() {
   out.mkdir('/timelines')
   (0..<6).each{ sec->
     def grtl = new GraphErrors('sec'+(sec+1))
-    grtl.setTitle("p1b Path-length Corrected Edep for negative tracks, mid. angles (11, 23 deg)")
-    grtl.setTitleY("p1b Path-length Corrected Edep for negative tracks, mid. angles (11, 23 deg) (MeV)")
+    grtl.setTitle("p1b Path-length Corrected Edep for e-, e+, pi-, and pi+, mid. angles (11, 23 deg)")
+    grtl.setTitleY("p1b Path-length Corrected Edep for e-, e+, pi-, and pi+, mid. angles (11, 23 deg) (MeV)")
     grtl.setTitleX("run number")
 
     data.sort{it.key}.each{run,it->
