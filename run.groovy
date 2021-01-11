@@ -84,6 +84,8 @@ def engines = [
     new ftof.ftof_edep_p2(),
     new ftof.ftof_time_p1a(),
     new ftof.ftof_time_p1b(),
+    new ftof.ftof_time_noTriggers_p1a(),
+    new ftof.ftof_time_noTriggers_p1b(),
     new ftof.ftof_time_p2(),
     new ftof.ftof_tdcadc_p1a(),
     new ftof.ftof_tdcadc_p1b(),
