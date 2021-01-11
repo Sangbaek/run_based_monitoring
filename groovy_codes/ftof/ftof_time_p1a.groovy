@@ -21,9 +21,11 @@ def processDirectory(dir, run) {
     meanlist.add(f1.getParameter(1))
     sigmalist.add(f1.getParameter(2).abs())
     chi2list.add(f1.getChiSquare())
+    meanerrorlist.add(f1.parameter(1).error())
+    sigmaerrorlist.add(f1.parameter(2).error())
     return h1
   }
-  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list]
+  data[run] = [run:run, hlist:histlist, flist:funclist, mean:meanlist, sigma:sigmalist, clist:chi2list, meanerrorlist:meanerrorlist, sigmaerrorlist:sigmaerrorlist]
 }
 
 
@@ -46,7 +48,7 @@ def close() {
         out.cd('/'+it.run)
         out.addDataSet(it.hlist[sec])
         out.addDataSet(it.flist[sec])
-        grtl.addPoint(it.run, it[name][sec], 0, 0)
+        grtl.addPoint(it.run, it[name][sec], 0, it[name+'errorlist'][sec])
       }
       out.cd('/timelines')
       out.addDataSet(grtl)
