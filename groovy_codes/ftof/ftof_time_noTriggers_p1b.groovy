@@ -56,7 +56,7 @@ def close() {
       out.addDataSet(grtl)
     }
 
-    out.writeFile('ftof_time_p1b_' + name + '.hipo')
+    out.writeFile('ftof_time_noTriggers_p1b_' + name + '.hipo')
   }
 }
 }
