@@ -13,6 +13,8 @@ def processDirectory(dir, run) {
   def meanlist = []
   def sigmalist = []
   def chi2list = []
+  def meanerrorlist = []
+  def sigmaerrorlist = []
   def histlist =   (0..<6).collect{
     def h1 = dir.getObject('/tof/p2_dt_S'+(it+1))
     def f1 = FTOFFitter.timefit_p2(h1)
