@@ -10,7 +10,7 @@ class RICHFitter {
     def f1 = new F1D("fit:"+h1.getName(), "[amp]*gaus(x,[mean],[sigma])+[p0]", -1.0, 1.0)
     def hAmp  = h1.getBinContent(h1.getMaximumBin());
     def hMean = h1.getAxis().getBinCenter(h1.getMaximumBin())
-    double hRMS = h1.getRMS()
+    def hRMS = Math.min(h1.getRMS(),0.44)
 
     f1.setParameter(0, hAmp)
     f1.setParameter(1, hMean)
@@ -19,7 +19,7 @@ class RICHFitter {
 
     def makefits = {func->
       hRMS = func.getParameter(2).abs()
-      func.setRange(hMean-3*hRMS, hMean+3*hRMS)
+      func.setRange(hMean-3.0*hRMS, hMean+3.0*hRMS)
       DataFitter.fit(func,h1,"Q")
       return [func.getChiSquare(), (0..<func.getNPars()).collect{func.getParameter(it)}]
     }
