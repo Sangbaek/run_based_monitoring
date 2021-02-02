@@ -121,7 +121,7 @@ engines.collectMany{key,engs->engs.collect{[key,it]}}
 
     GParsPool.withPool 12, {
       fnames.eachParallel{arg->
-        TDirectory dir = new org.jlab.clas.timeline.timeline.TDirectory()
+        TDirectory dir = new TDirectory()
         dir.readFile(arg)
         def fname = arg.split('/')[-1]
         def m = fname =~ /\d{4,7}/
