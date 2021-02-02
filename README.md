@@ -4,8 +4,8 @@ A set of codes that read output files of [offline monitoring](https://github.com
 
 ## code structures
 
-Individual processes are sorted in src/main/java/org/jlab/clas/timeline/timeline directory as groovy classes.
-Fitting procedures are stored in ../fitter separately.
+Individual processes are sorted in [timeline](src/main/java/org/jlab/clas/timeline/timeline) directory as groovy classes.
+Fitting procedures are stored in [fitter](src/main/java/org/jlab/clas/timeline/fitter) separately.
 
 ## How to compile them
 ```
@@ -19,7 +19,7 @@ in ifarm.
 
 ## How to run them
 
-After compile, run timeline monitoring with
+After compile, run timeline monitoring with [run.sh](bin/run.sh)
 
 ```
 ./bin/run.sh /path/to/monitoring/files
@@ -27,16 +27,16 @@ After compile, run timeline monitoring with
 
 ## For rg-b
 
-Add following lines inside engines of run.groovy for rg-b.
+Following lines inside engines of run.groovy are added for rg-b, and saved as [run_rgb.groovy](src/main/java/org/jlab/clas/timeline/run_rgb.groovy).
 
-1. add this inside out_CTOF
+1. inside out_CTOF
 
 ```groovy
     , new particle_mass_ctof_and_ftof.ctof_m2_pim()
     , new particle_mass_ctof_and_ftof.ctof_m2_pim()
 ```
 
-2. add these lines after out_RICH
+2. after out_RICH
 
 ```groovy
   , out_BAND: [new band.band_adccor(),
@@ -50,6 +50,11 @@ Add following lines inside engines of run.groovy for rg-b.
     new particle_mass_ctof_and_ftof.ftof_m2_p1b_pim(),
     new particle_mass_ctof_and_ftof.ftof_m2_p1b_pip(),
     new particle_mass_ctof_and_ftof.ftof_m2_p1b_prot()],
+```
+
+To run rgb monitoring, simply use [run_rgb.sh](bin/run_rgb.sh) instead of [run.sh](bin/run.sh)
+```
+./bin/run_rgb.sh /path/to/monitoring/files
 ```
 
 ## Contact
