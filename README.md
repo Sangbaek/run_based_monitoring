@@ -4,14 +4,25 @@ A set of codes that read output files of [offline monitoring](https://github.com
 
 ## code structures
 
-Individual processes are sorted in groovy_codes directory as groovy classes.
-Fitting procedures are stored in groovy_codes/fitter separately.
-[run.groovy](run.groovy) will run all scripts.
+Individual processes are sorted in src/main/java/org/jlab/clas/timeline/timeline directory as groovy classes.
+Fitting procedures are stored in ../fitter separately.
+
+## How to compile them
+```
+mvn clean package
+```
+or,
+```
+/apps/maven/PRO/bin/mvn clean package   
+```
+in ifarm.
 
 ## How to run them
 
-```bash
-./run.sh `find /path/to/offline/monitoring/hipo/files -name "*.hipo"`
+After compile, run timeline monitoring with
+
+```
+./bin/run.sh /path/to/monitoring/files
 ```
 
 ## For rg-b
@@ -40,14 +51,6 @@ Add following lines inside engines of run.groovy for rg-b.
     new particle_mass_ctof_and_ftof.ftof_m2_p1b_pip(),
     new particle_mass_ctof_and_ftof.ftof_m2_p1b_prot()],
 ```
-
-## For offline use (Mac OS X)
-
-At [run.sh](run.sh), switch existing shebang line to
-```bash
-#!/bin/bash
-```
-. Also use gtimeout at [run.sh](run.sh) instead of timeout.
 
 ## Contact
 
