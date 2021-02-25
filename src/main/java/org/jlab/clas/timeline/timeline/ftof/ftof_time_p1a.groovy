@@ -50,7 +50,7 @@ def close() {
         out.cd('/'+it.run)
         out.addDataSet(it.hlist[sec])
         out.addDataSet(it.flist[sec])
-        grtl.addPoint(it.run, it[name][sec], 0, it[name+'errorlist'][sec])
+        grtl.addPoint(it.run, it[name][sec], 0, 0)
       }
       out.cd('/timelines')
       out.addDataSet(grtl)
