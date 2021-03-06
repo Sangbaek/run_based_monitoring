@@ -4,21 +4,24 @@
 rungroup="rga"
 cookver="pass0v2.2.10"
 out_dir=$rungroup"_"$cookver
-binDir=`dirname 0`
+binDir=`dirname $0`
+export binDir=`realpath $binDir`
+inputdir=`realpath $1`
 mkdir $out_dir
 cd $out_dir
 
 #subdirectory names
 #bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger
-for dir in band bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger particle_mass_ctof_and_ftof rich
+for dir in log band bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger particle_mass_ctof_and_ftof rich
 do
   mkdir -p "$dir"
 done
 
-for scriptname in `find $binDir/../src/main/java/org/jlab/clas/timeline/timeline -name "*.groovy"`
-do
-  java -cp $binDir/../target/timelineMon-1.0-SNAPSHOT.jar org.jlab.clas.timeline.run $scriptname $@
-done
+#JAVA_OPTS="-Dsun.java2d.pmoffscreen=false -Xms1024m -Xmx12288m"; export JAVA_OPTS
+
+find $binDir/../src/main/java/org/jlab/clas/timeline/timeline -name "*.groovy" -print0 | xargs -I{} -0 -n1 --max-procs 4 bash -c '
+java -cp $binDir/../target/timelineMon-1.0-SNAPSHOT.jar org.jlab.clas.timeline.run $@ >& log/`basename $1`.log' -- {} $inputdir
+
 
 mv bmt_*.hipo bmtbst/
 mv bst_*.hipo bmtbst/
