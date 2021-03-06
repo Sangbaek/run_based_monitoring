@@ -51,8 +51,8 @@ class DCFitter{
 
 		def test = 0.05
 		def cut_test = test* h1.getMax()
-		def T_test=-10000
-		def T_test2, T10, T90
+		def T_test = -37, T_test2 = 46
+		def T10 = -9, T90 = 52
 		def test2 = 0.85
 		def cut_test2 = test2* h1.getMax()
 		def cut10=0.1*h1.getMax()
