@@ -1,7 +1,6 @@
 package org.jlab.clas.timeline
 
 import org.jlab.groot.data.TDirectory
-import groovyx.gpars.GParsPool
 
 def engines = [
   out_monitor: [new org.jlab.clas.timeline.timeline.bmtbst.bmt_Occupancy(),
@@ -102,24 +101,31 @@ def engines = [
 
 
 
-engines.collectMany{key,engs->engs.collect{[key,it]}}
+def eng = engines.collectMany{key,engs->engs.collect{[key,it]}}
   .find{name,eng->eng.getClass().getSimpleName()==args[0].split("/")[-1].replace('.groovy','')}
-  ?.with{name,engine->
-    println([name,args[0],engine.getClass().getSimpleName()])
-    def fnames = args.findAll{it.contains(name)}
 
-    GParsPool.withPool 6, {
-      fnames.eachParallel{arg->
-        TDirectory dir = new TDirectory()
-        dir.readFile(arg)
-        def fname = arg.split('/')[-1]
-        def m = fname =~ /\d{4,7}/
-        def run = m[0].toInteger()
+if(eng) {
+  def (name,engine) = eng
+  def input = new File(args[1])
+  println([name,args[0],engine.getClass().getSimpleName(),input])
+  def fnames = []
+  input.traverse {
+    if(it.name.endsWith('.hipo') && it.name.contains(name))
+      fnames.add(it.absolutePath)
+  }
 
-        println("debug: "+engine.getClass().getSimpleName()+" processes $arg")
-        engine.processDirectory(dir, run)
-      }
-   }
-   engine.close()
- }
+  fnames.each{arg->
+    TDirectory dir = new TDirectory()
+    dir.readFile(arg)
+    def fname = arg.split('/')[-1]
+    def m = fname =~ /\d{4,7}/
+    def run = m[0].toInteger()
 
+    println("debug: "+engine.getClass().getSimpleName()+" processes $arg")
+    engine.processDirectory(dir, run)
+  }
+  engine.close()
+  println("debug: "+engine.getClass().getSimpleName()+" ended")
+} else {
+  println("debug: "+args[0]+" not found")
+}
