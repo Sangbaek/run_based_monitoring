@@ -22,9 +22,9 @@ in ifarm.
 After compile, run timeline monitoring with [run.sh](bin/run.sh)
 
 ```
-./bin/run.sh /path/to/monitoring/files
+./bin/run.sh /path/to/dir/containing/monitoring/files
 ```
-
+From the commit [4841242](https://github.com/Sangbaek/run_based_monitoring/commit/4841242b74f73670053d116874d63db9c1df51ae#diff-00a80c5821edea2ebf676056aa4c9a24e57379ef52cefecb2ccffaaf4cc362c9), [run.sh](bin/run.sh) shouid accept directory as argument instead of lists of files
 ## For rg-b
 
 Following lines inside engines of run.groovy are added for rg-b, and saved as [run_rgb.groovy](src/main/java/org/jlab/clas/timeline/run_rgb.groovy).
@@ -54,7 +54,7 @@ Following lines inside engines of run.groovy are added for rg-b, and saved as [r
 
 To run rgb monitoring, simply use [run_rgb.sh](bin/run_rgb.sh) instead of [run.sh](bin/run.sh)
 ```
-./bin/run_rgb.sh /path/to/monitoring/files
+./bin/run_rgb.sh /path/to/dir/containing/monitoring/files
 ```
 
 ## Contact
