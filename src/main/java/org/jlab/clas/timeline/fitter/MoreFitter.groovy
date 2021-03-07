@@ -3,8 +3,24 @@ package org.jlab.clas.timeline.fitter
 import org.jlab.groot.data.H1F
 import org.jlab.groot.math.F1D
 import org.jlab.groot.fitter.DataFitter
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.CompletableFuture
 
-class SmartFitter {
+class MoreFitter {
+  static void fit(F1D f1, H1F h1, String opts) {
+    def out = System.out
+    def err = System.err
+    def fut = CompletableFuture.runAsync{DataFitter.fit(f1,h1,opts)}
+    try {
+      fut.get(10, TimeUnit.SECONDS)
+    } catch(def ex) {
+      System.setOut(out)
+      System.setErr(err)
+      println("FIT timeout")
+      f1.setParameters(0,h1.getDataX(0),0)
+    }
+  }
+
   static F1D gausFit(H1F h1, String opts) {
     def f1 = new F1D('fit:'+h1.getName(), '[amp]*gaus(x,[mean],[sigma])', 0,1)
 
