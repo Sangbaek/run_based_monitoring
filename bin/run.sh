@@ -12,7 +12,7 @@ cd $out_dir
 
 #subdirectory names
 #bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger
-for dir in log band bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger particle_mass_ctof_and_ftof rich
+for dir in log band bmtbst central cnd ctof cvt dc ec forward ft ftof htcc ltcc rf trigger particle_mass_ctof_and_ftof rich epics
 do
   mkdir -p "$dir"
 done
@@ -43,3 +43,4 @@ mv ctof/*m2* particle_mass_ctof_and_ftof/
 mv ftof/*m2* particle_mass_ctof_and_ftof
 mv band_* band/
 mv rich_* rich/
+mv epics_* epics/

@@ -115,7 +115,7 @@ if(eng) {
       fnames.add(it.absolutePath)
   }
 
-  fnames.each{arg->
+  fnames.sort().each{arg->
     TDirectory dir = new TDirectory()
     dir.readFile(arg)
     def fname = arg.split('/')[-1]

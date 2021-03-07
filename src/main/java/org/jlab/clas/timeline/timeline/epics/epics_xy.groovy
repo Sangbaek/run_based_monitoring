@@ -1,9 +1,11 @@
 package org.jlab.clas.timeline.timeline.epics
 
+import org.apache.groovy.dateutil.extensions.DateUtilExtensions
+import java.text.SimpleDateFormat
 import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.H1F
 import org.jlab.groot.data.GraphErrors
-import org.jlab.clas.timeline.fitter.SmartFitter
+import org.jlab.clas.timeline.fitter.MoreFitter
 
 
 class epics_xy {
@@ -19,15 +21,17 @@ class epics_xy {
 
     def ts = REST.get("https://clas12mon.jlab.org/rcdb/runs/time?runmin=$runmin&runmax=$runmax").findAll{it[0] in runlist}
     def (t0,t1) = [ts[0][1], ts[-1][2]].collect{new Date(((long)it)*1000)}
-    def (t0str, t1str) = [t0, t1.plus(1)].collect{it.format("yyyy-MM-dd")}
+    t1 = DateUtilExtensions.plus(t1, 1)
+    print([t0,t1])
+    def (t0str, t1str) = [t0, t1].collect{DateUtilExtensions.format(it, "yyyy-MM-dd")}
 
     def epics = [:].withDefault{[:]}
     def xs = REST.get("https://myaweb.acc.jlab.org/myquery/interval?c=IPM2H01.XPOS&b=$t0str&e=$t1str&l=&t=eventsimple&m=history&f=3&v=&d=on&p=on").data
-      .each{epics[Date.parse("yyyy-MM-dd HH:mm:ss.SSS", it.d).getTime()].x = it.v}
+      .each{epics[new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSS').parse(it.d).getTime()].x = it.v}
     def ys = REST.get("https://myaweb.acc.jlab.org/myquery/interval?c=IPM2H01.YPOS&b=$t0str&e=$t1str&l=&t=eventsimple&m=history&f=3&v=&d=on&p=on").data
-      .each{epics[Date.parse("yyyy-MM-dd HH:mm:ss.SSS", it.d).getTime()].y = it.v}
+      .each{epics[new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSS').parse(it.d).getTime()].y = it.v}
     def is = REST.get("https://myaweb.acc.jlab.org/myquery/interval?c=IPM2H01&b=$t0str&e=$t1str&l=&t=eventsimple&m=history&f=3&v=&d=on&p=on").data
-      .each{epics[Date.parse("yyyy-MM-dd HH:mm:ss.SSS", it.d).getTime()].i = it.v}
+      .each{epics[new SimpleDateFormat('yyyy-MM-dd HH:mm:ss.SSS').parse(it.d).getTime()].i = it.v}
 
     println('dl finished')
 
@@ -73,8 +77,8 @@ class epics_xy {
         hy.fill(it[2], it[0]*it[3]/1000)
       }
 
-      def fx = SmartFitter.gausFit(hx, "Q")
-      def fy = SmartFitter.gausFit(hy, "Q")
+      def fx = MoreFitter.gausFit(hx, "Q")
+      def fy = MoreFitter.gausFit(hy, "Q")
       grx.addPoint(run, fx.getParameter(1), 0,0)
       gry.addPoint(run, fy.getParameter(1), 0,0)
 
