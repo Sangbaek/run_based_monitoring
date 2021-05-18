@@ -17,6 +17,10 @@ def processDirectory(dir, run) {
     def h1 = dir.getObject('/tof/p1a_tdcadc_dt_S'+(it+1))
     def f1 = FTOFFitter.tdcadcdifffit_p1a(h1)
 
+    def peak = f1.getParameter(1)
+    def sigma = f1.getParameter(2).abs()
+    h1.getXaxis().set([peak-2.5*sigma, peak + 2.5*sigma])
+
     funclist.add(f1)
     meanlist.add(f1.getParameter(1))
     sigmalist.add(f1.getParameter(2).abs())
