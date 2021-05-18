@@ -4,7 +4,7 @@ import org.jlab.groot.data.TDirectory
 import org.jlab.groot.data.GraphErrors
 import org.jlab.clas.timeline.fitter.FTOFFitter
 
-class ftof_tdcadc_p2 {
+class ftof_tdcadc_p2_zoomed {
 
 def data = new ConcurrentHashMap()
 
