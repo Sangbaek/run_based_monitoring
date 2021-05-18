@@ -73,7 +73,7 @@ def close() {
       out.addDataSet(grtl)
     }
 
-    out.writeFile('ftof_tdcadc_time_p2_' + name + '.hipo')
+    out.writeFile('ftof_tdcadc_time_p2_zoomed_' + name + '.hipo')
   }
 }
 }
